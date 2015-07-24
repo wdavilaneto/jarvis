@@ -1,0 +1,20 @@
+{
+  "name": "main.js",
+  "version": "0.0.0",
+  "description": "Main Jarvis Runner",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Walter D'Avila Neto",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "node-google-text-to-speech": "~0.1.0",
+    "request": "2.34.0",
+    "stream-buffers": "0.2.5",
+    "node-tts-api": "0.0.5",
+    "global-tunnel": "~1.2.0",
+    "player": "~0.5.0"
+  },
+  "devDependencies": {}
+}
