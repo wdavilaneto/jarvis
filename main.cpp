@@ -7,23 +7,30 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
-#include "curl.h"
 
-size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    size_t written = fwrite(ptr, size, nmemb, stream);
-    return written;
-}
-
+#include <iostream>
+#include "brain/NeuronCore.h"
+#include <boost/lexical_cast.hpp>
+#include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 
 int main(int argc, char *argv[]) {
-    CURLcode res;
-    CURL *curl = curl_easy_init();
-    if (curl) {
-        char *output = curl_easy_escape(curl, "Hello Walter, I am Jarvis.", 15);
-        curl_easy_setopt(curl, CURLOPT_URL, "http://translate.google.com/translate_tts?tl=en&q=Hello Walter");
-        res = curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
-        curl_free(output);
+    using namespace std;
+    using namespace brain;
+    using namespace boost;
+
+    cout << "Initializing Jarvis..." << endl;
+
+    NeuronCore neuron;
+    cout << "Neuron Id:" << boost::lexical_cast<std::string>(neuron.getId()) << endl;
+
+    for (int iCounter = 0; iCounter < 10; iCounter++) {
+        neuron.connections.push_back(make_shared<NeuronCore>());
     }
+
+    while (true) {
+        neuron.onTimeElapse();
+    }
+
     return 0;
 }

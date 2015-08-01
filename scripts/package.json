@@ -9,12 +9,13 @@
   "author": "Walter D'Avila Neto",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "node-google-text-to-speech": "~0.1.0",
-    "request": "2.34.0",
-    "stream-buffers": "0.2.5",
-    "node-tts-api": "0.0.5",
     "global-tunnel": "~1.2.0",
-    "player": "~0.5.0"
+    "google-tts": "^1.1.0",
+    "node-mplayer": "0.0.3",
+    "node-tts-api": "0.0.5",
+    "node-tts-google": "0.0.1",
+    "request": "2.34.0",
+    "stream-buffers": "0.2.5"
   },
   "devDependencies": {}
 }
