@@ -62,7 +62,7 @@ namespace brain {
                 }
                 child->onTimeElapse();
             }
-            if (innerVoltage > 1 ) {
+            if (innerVoltage > 2 ) {
                 cout << getId() << " - " << innerVoltage << endl;
             }
         }
