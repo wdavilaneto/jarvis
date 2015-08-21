@@ -18,13 +18,13 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 include_directories(${Boost_INCLUDE_DIR})
 #include_directories(
 #    ${OIS_INCLUDE_DIRS}
-#	${OGRE_INCLUDE_DIRS}
+#	${OGRE_INCLUDE_DIRS}cpp
 #	${OGRE_SAMPLES_INCLUDEPATH}
 #	${OGRE_Overlay_INCLUDE_DIRS}
 #)
 
-set(SOURCE_FILES main.cpp)
-add_executable(jarvis ${SOURCE_FILES} brain/NeuronCore.cpp brain/NeuronCore.h voice/Voice.cpp voice/Voice.h)
+set(SOURCE_FILES src/main/cpp/main.cpp)
+add_executable(jarvis ${SOURCE_FILES} src/main/cpp/NeuronCore.cpp src/main/headers/NeuronCore.h src/main/headers/identifiable.h)
 
 target_link_libraries( jarvis
     pthread
