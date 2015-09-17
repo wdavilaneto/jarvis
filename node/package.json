@@ -1,29 +1,80 @@
 {
-  "name": "Jarvis",
-  "version": "0.0.0",
-  "description": "Main Jarvis Runner",
+  "name": "ogredit",
+  "version": "0.0.1",
   "main": "app/main.js",
-  "scripts": {
-    "test": "test"
+  "scripts":
+  {
+    "build_dev": "node index && gulp watch",
+    "start": "node index",
+    "test-client": "gulp coverage_frontend",
+    "test-server": "mocha ./tests/server/**/*_test.js --recursive --check-leaks --reporter min --compilers js:babel/register",
+    "coverage-server": "istanbul cover ./node_modules/mocha/bin/_mocha -- tests/*_test.js --compilers js:babel/register",
+    "coveralls-server": "istanbul cover ./node_modules/mocha/bin/_mocha -- tests/*_test.js --compilers js:babel/register --report lcovonly && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
-  "author": "Walter D'Avila Neto",
-  "license": "BSD-2-Clause",
-  "dependencies": {
-    "global-tunnel": "1.2.0",
-    "light-tts": "^1.2.3",
-    "request": "2.34.0",
-    "stream-buffers": "0.2.5",
-    "typescript": "^1.5.3"
+  "dependencies":
+  {
+    "lodash": "^3.6.0",
+    "bluebird": "^2.9.24",
+    "body-parser": "^1.12.2",
+    "express": "~4.12.3",
+    "express-content-length-validator": "0.0.4",
+    "mongoose": "^3.8.23",
+    "babel": "^5.0.12",
+    "morgan": "^1.5.2",
+    "socket.io": "^1.3.5",
+    "socket.io-client": "^1.3.5",
+    "newrelic": "^1.18.2",
+    "helmet": "^0.7.1"
+
   },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-contrib-nodeunit": "~0.4.1",
-    "grunt-contrib-qunit": "^0.7.0",
-    "grunt-contrib-uglify": "~0.5.0",
-    "grunt-typescript": "^0.7.0",
-    "load-grunt-tasks": "^3.2.0",
-    "time-grunt": "^1.2.1"
+  "devDependencies":
+  {
+    "karma-ng-html2js-preprocessor": "^0.1.2",
+    "del": "^1.1.1",
+  	"gulp": "^3.8.11",
+    "protractor": "^2.0.0",
+    "wiredep": "^2.2.2",
+    "gulp-inject": "^1.2.0",
+    "browser-sync": "^2.5.2",
+    "gulp-concat": "^2.4.3",
+    "gulp-coveralls": "^0.1.3",
+    "gulp-less": "^3.0.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-minify-css": "^0.4.5",
+    "gulp-rename": "^1.2.0",
+    "gulp-rev": "^3.0.0",
+    "gulp-uglify": "^1.1.0",
+    "gulp-usemin": "^0.3.11",
+    "gulp-util": "^3.0.3",
+    "jasmine-core": "^2.1.3",
+    "karma": "^0.12.28",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-coverage": "^0.2.7",
+    "karma-firefox-launcher": "^0.1.3",
+    "karma-ie-launcher": "^0.1.5",
+    "karma-jasmine": "^0.3.3",
+    "karma-opera-launcher": "^0.1.0",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-safari-launcher": "^0.1.1",
+    "mocha": "^2.1.0",
+    "chai": "^2.0.0",
+    "coveralls": "^2.11.2",
+    "istanbul": "^0.3.5"
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/wdavilaneto/ogredit.git"
+  },
+  "author": "wdavilaneto",
+  "license": "MIT",
+  "bugs":
+  {
+    "url": "https://github.com/wdavilaneto/ogredit/issues"
+  },
+  "homepage": "https://github.com/wdavilaneto/ogredit",
+  "engines":
+  {
+    "node": "=> 0.12.x"
   }
 }

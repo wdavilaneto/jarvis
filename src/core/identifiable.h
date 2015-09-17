@@ -17,7 +17,7 @@ namespace jarvis {
         class Identifiable {
         public:
 
-            Identifiable() : id(boost::uuids::random_generator()()) {
+            Identifiable() : id( boost::uuids::random_generator()()) {
             }
 
             boost::uuids::uuid getId() { return id; }

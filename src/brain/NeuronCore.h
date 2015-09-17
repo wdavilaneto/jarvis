@@ -5,11 +5,9 @@
 #ifndef JARVIS_NEURONCORE_H
 #define JARVIS_NEURONCORE_H
 
-
 #include <vector>
 #include <boost/foreach.hpp>
-#include "identifiable.h"
-
+#include "core/identifiable.h"
 
 namespace brain {
 

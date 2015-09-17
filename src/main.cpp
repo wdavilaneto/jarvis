@@ -4,12 +4,13 @@
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 
-#include "../headers/NeuronCore.h"
+#include <brain/NeuronCore.h>
 
 int main(int argc, char *argv[]) {
-    using namespace std;
-    using namespace brain;
+
     using namespace boost;
+    using namespace brain;
+    using namespace std;
 
     cout << "Initializing Jarvis..." << endl;
 
@@ -21,6 +22,7 @@ int main(int argc, char *argv[]) {
 
     for (int iCounter = 0; iCounter < 10; iCounter++) {
         neuron.connections.push_back(make_shared<NeuronCore>());
+        neuron.getId();
     }
 
     while (true) {

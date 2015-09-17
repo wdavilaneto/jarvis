@@ -3,16 +3,18 @@
 //
 
 #include <boost/smart_ptr/shared_ptr.hpp>
-#include "../headers/NeuronCore.h"
+#include "NeuronCore.h"
+#include "core/identifiable.h"
 
 namespace brain {
 
     void NeuronCore::onTimeElapse(void) {
+
         // Random variation on inner voltage
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_real_distribution<> dis(-.01f, 0.01);
-        float variation = static_cast <float> (dis(gen));
+        std::uniform_real_distribution<> dis(-.01f, 0.01f);
+        float variation = static_cast<float>(dis(gen));
         if (connections.empty()) {
             variation = variation * 1.618;
         }
@@ -20,12 +22,12 @@ namespace brain {
         if ((innerVoltage + variation) > 0 && innerVoltage < 100) {
             innerVoltage += variation;
         }
-        BOOST_FOREACH(shared_ptr<NeuronCore> child, connections) {
+        BOOST_FOREACH(shared_ptr < NeuronCore > child, connections)
+        {
             if (innerVoltage > 1) {
                 float disposevalue = ((innerVoltage - 1) * 0.618);
                 child->sendSignal(disposevalue);
                 innerVoltage -= disposevalue;
-
             }
             child->onTimeElapse();
         }
@@ -39,5 +41,4 @@ namespace brain {
             innerVoltage += signal;
         }
     }
-
 };
