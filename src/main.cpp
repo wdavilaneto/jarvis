@@ -1,10 +1,11 @@
-
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 
 #include <brain/NeuronCore.h>
+#include <client/JarvisApplication.h>
+#include <OGRE/OgreException.h>
 
 int main(int argc, char *argv[]) {
 
@@ -14,20 +15,12 @@ int main(int argc, char *argv[]) {
 
     cout << "Initializing Jarvis..." << endl;
 
-    NeuronCore neuron;
-    cout << "Neuron Id:" << boost::lexical_cast<std::string>(neuron.getId()) << endl;
-
-    string stuff("hello world!");
-    stuff.length();
-
-    for (int iCounter = 0; iCounter < 10; iCounter++) {
-        neuron.connections.push_back(make_shared<NeuronCore>());
-        neuron.getId();
-    }
-
-    while (true) {
-        neuron.onTimeElapse();
-    }
+//    JarvisApplication jarvisApplication;
+//    try {
+//        jarvisApplication.go();
+//    } catch (Ogre::Exception &e) {
+//        std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
+//    }
 
     return 0;
 }

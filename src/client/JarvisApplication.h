@@ -10,13 +10,14 @@
 class JarvisApplication : public BaseApplication
 {
 public:
+
     JarvisApplication(void);
     virtual ~JarvisApplication(void);
 
 protected:
     virtual void createScene();
-    virtual void createCamera();
-    virtual void createViewports();
+//    virtual void createCamera();
+//    virtual void createViewports();
 };
 
 

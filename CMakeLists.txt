@@ -41,6 +41,10 @@ set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 
 include_directories(
     "${PROJECT_SOURCE_DIR}/src"
+    ${OIS_INCLUDE_DIRS}
+    ${OGRE_INCLUDE_DIRS}
+    ${OGRE_SAMPLES_INCLUDEPATH}
+    ${OGRE_Overlay_INCLUDE_DIRS}
 )
 
 add_subdirectory(src/client)
@@ -53,6 +57,9 @@ target_link_libraries(jarvis
         brain
         pthread
         ${Boost_LIBRARIES}
+        ${OGRE_LIBRARIES}
+        ${OIS_LIBRARIES}
+        ${OGRE_Overlay_LIBRARIES}
 )
 
 ## POSTMAKE
@@ -62,16 +69,18 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/dist/media)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/dist/bin)
 
 install(TARGETS jarvis
-    RUNTIME DESTINATION bin
-    CONFIGURATIONS All)
+        RUNTIME
+        DESTINATION bin
+        CONFIGURATIONS All)
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources/media
+install(
+        DIRECTORY ${CMAKE_SOURCE_DIR}/resources/media
     DESTINATION ./
     CONFIGURATIONS Release RelWithDebInfo Debug
 )
 
-install(FILES ${CMAKE_SOURCE_DIR}/resources/bin/plugins.cfg
-    ${CMAKE_SOURCE_DIR}/dist/bin/resources.cfg
+install(FILES ${CMAKE_SOURCE_DIR}/resources/plugins.cfg
+    ${CMAKE_SOURCE_DIR}/resources/resources.cfg
     DESTINATION bin
     CONFIGURATIONS Release RelWithDebInfo Debug
 )

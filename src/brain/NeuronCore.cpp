@@ -1,7 +1,7 @@
 //
 // Created by walter on 20/07/15.
 //
-
+#include <iostream>
 #include <boost/smart_ptr/shared_ptr.hpp>
 #include "NeuronCore.h"
 #include "core/identifiable.h"
@@ -32,7 +32,7 @@ namespace brain {
             child->onTimeElapse();
         }
         if (innerVoltage > 2) {
-            cout << getId() << " - " << innerVoltage << endl;
+            std::cout << getId() << " - " << innerVoltage << endl;
         }
     }
 

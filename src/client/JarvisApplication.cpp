@@ -2,18 +2,33 @@
 // Created by walter on 16/09/15.
 //
 
+#include <brain/NeuronCore.h>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include "JarvisApplication.h"
 
-JarvisApplication::JarvisApplication(void) {}
+JarvisApplication::JarvisApplication(void) { }
 
-JarvisApplication::~JarvisApplication(void) {}
+JarvisApplication::~JarvisApplication(void) { }
 
-void JarvisApplication::createCamera() {
-}
-
-void JarvisApplication::createViewports() {
-}
+//void JarvisApplication::createCamera() {
+//}
+//
+//void JarvisApplication::createViewports() {
+//}
 
 void JarvisApplication::createScene() {
+    mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
+
+    Ogre::Light *light = mSceneMgr->createLight("MainLight");
+    light->setPosition(20, 80, 50);
+
+    Ogre::SceneNode* brainPart = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+
+    using brain::NeuronCore;
+    NeuronCore neuron;
+    for (int iCounter = 0; iCounter < 10; iCounter++) {
+        neuron.connections.push_back(boost::make_shared<NeuronCore>());
+        neuron.getId();
+    }
 
 }

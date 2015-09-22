@@ -44,7 +44,7 @@ public:
     virtual void go(void);
 
 protected:
-    virtual bool setup();
+    virtual bool setup(void);
     virtual bool configure(void);
     virtual void chooseSceneManager(void);
     virtual void createCamera(void);
