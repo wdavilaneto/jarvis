@@ -14,6 +14,9 @@ namespace jarvis {
 
     namespace util {
 
+        /**
+         * Utility class to interface and implement a universal unique Id (uuid)
+         */
         class Identifiable {
         public:
 

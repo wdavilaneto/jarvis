@@ -49,6 +49,7 @@ include_directories(
 
 add_subdirectory(src/client)
 add_subdirectory(src/brain)
+add_subdirectory(test)
 
 add_executable(jarvis src/main.cpp)
 
