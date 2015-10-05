@@ -24,11 +24,4 @@ void JarvisApplication::createScene() {
 
     Ogre::SceneNode* brainPart = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 
-    using brain::NeuronCore;
-    NeuronCore neuron;
-    for (int iCounter = 0; iCounter < 10; iCounter++) {
-        neuron.connections.push_back(boost::make_shared<NeuronCore>());
-        neuron.getId();
-    }
-
 }

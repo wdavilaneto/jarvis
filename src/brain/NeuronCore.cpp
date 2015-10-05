@@ -2,9 +2,7 @@
 // Created by walter on 20/07/15.
 //
 #include <iostream>
-#include <boost/smart_ptr/shared_ptr.hpp>
 #include "NeuronCore.h"
-#include "core/identifiable.h"
 
 namespace brain {
 
@@ -27,7 +25,6 @@ namespace brain {
             static InnerVoltageVariation s;
             return s;
             // Micro Random Voltage Synaptic Weight Variation
-
         }
 
         float get() {
@@ -48,37 +45,22 @@ namespace brain {
         float maxVariation;
         std::random_device rd;
         std::mt19937 gen;
-
     };
 
-
-    void NeuronCore::onTimeElapse(void) {
-
-        // Random variation on inner voltage
-        InnerVoltageVariation &ivv = InnerVoltageVariation::Default();
-        float variation = ivv.get();
-
-        if (connections.empty()) {
-            variation = variation * 1.618; // TODO remove this test multiplier
-        }
-        // if it will not empty cell voltage (death ?)
-        if ((innerVoltage + variation) > 0 && innerVoltage < 100) {
-            innerVoltage += variation;
-        }
-
-        if (innerVoltage > 2) {
-            std::cout << getId() << " - " << innerVoltage << std::endl;
-        }
+    void NeuronCore::connectTo(boost::shared_ptr<NeuronCore> otherNeuron) {
+        connections.push_back(otherNeuron);
     };
 
-     getConnections
+    vector<boost::shared_ptr<NeuronCore> > NeuronCore::getConnections() {
+        return connections;
+    };
 
-    void NeuronCore::onRecieveSignal(float signal) {
-
+    float NeuronCore::doSignal(float signal) {
+        innerValue = signal;
     };
 
     float NeuronCore::getValue() {
-        return innerVoltage;
+        return innerValue;
     };
 
 };

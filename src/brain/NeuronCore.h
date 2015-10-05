@@ -6,6 +6,8 @@
 #define JARVIS_NEURONCORE_H
 
 #include <vector>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 #include "core/identifiable.h"
 
 #define NEURON_CORE_DEFAULT_VOLTAGE_LIMIT 100
@@ -14,11 +16,6 @@
 namespace brain {
 
     using std::vector;
-    using std::shared_ptr;
-
-    class Connection;
-
-    typedef shared_ptr<Connection> connection_ptr;
 
     /**
      *
@@ -29,41 +26,21 @@ namespace brain {
     class NeuronCore : public jarvis::util::Identifiable {
     public:
 
-        NeuronCore() :
-                Identifiable(),
-                innerVoltage(NEURON_CORE_DEFAULT_INNER_VOLTAGE),
-                actionPotential(NEURON_CORE_DEFAULT_VOLTAGE_LIMIT) {
+        NeuronCore() : innerValue(NEURON_CORE_DEFAULT_INNER_VOLTAGE), actionPotential(NEURON_CORE_DEFAULT_VOLTAGE_LIMIT) {
         };
 
-        void onTimeElapse();
+        void connectTo(boost::shared_ptr<NeuronCore> otherNeuron);
 
-        float onRecieveSignal(float signal);
+        vector<boost::shared_ptr<NeuronCore> > getConnections();
 
-        void getConnections();
+        float doSignal(float signal);
 
         float getValue();
 
     private:
-        float innerVoltage;
+        float innerValue;
         float actionPotential;
-        vector<connection_ptr> connections;
-    };
-
-
-    /**
-     * Represents an Connection between 2 "neurons cores"
-     */
-    class Connection : public jarvis::util::Identifiable {
-    public:
-
-        float sendValue(float value) {
-
-        }
-
-    private:
-        float weight;
-        shared_ptr<NeuronCore> from;
-        shared_ptr<NeuronCore> to;
+        vector<boost::shared_ptr<NeuronCore> > connections;
     };
 
 }

@@ -5,22 +5,33 @@
 #ifndef JARVIS_NEURONGROUP_H
 #define JARVIS_NEURONGROUP_H
 
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
+
 #include "NeuronCore.h"
 
 namespace brain {
 
-    using std::shared_ptr;
     using std::vector;
 
-    class NeuronGroup {
-    public:
-        NeuronGroup(){
+    typedef std::vector<boost::shared_ptr<NeuronCore> > NeuronLayer;
 
-        }
+    class NeuronGroupBuilder;
+
+    class NeuronGroup {
+        friend class NeuronGroupBuilder;
+    public:
+        NeuronGroup();
+
+        virtual ~NeuronGroup();
+
+        boost::shared_ptr<NeuronCore> getOutput();
 
     private:
-        shared_ptr<vector<NeuronCore> > inputLayer;
-        shared_ptr<vector<NeuronCore> > outputLayer;
+        vector<NeuronLayer> layers;
+        // TODO multiple is multiple outputs viable for backlearning ?
+        //vector<boost::shared_ptr<NeuronCore> > outputLayer;
+        boost::shared_ptr<NeuronCore> output;
     };
 
 }
