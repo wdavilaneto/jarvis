@@ -28,7 +28,7 @@ endif (UNIX)
 
 
 find_package(Threads)
-find_package(Boost 1.54 REQUIRED thread system)
+find_package(Boost 1.58 REQUIRED thread system)
 find_package(OGRE REQUIRED)
 find_package(OIS REQUIRED)
 

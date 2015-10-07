@@ -3,7 +3,7 @@
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 
-#include <brain/NeuronCore.h>
+#include "NeuronCore.hpp"
 #include <client/JarvisApplication.h>
 #include <OGRE/OgreException.h>
 

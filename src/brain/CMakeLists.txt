@@ -1,4 +1,4 @@
-add_library(brain NeuronCore.cpp NeuronGroup.cpp NeuronGroup.h NeuronGroupBuilder.cpp NeuronGroupBuilder.h)
+add_library(brain NeuronGroup.hpp NeuronGroupBuilder.cpp NeuronGroupBuilder.h INeuronCore.hpp INeuronGroup.hpp INeuronConnection.hpp)
 
 target_link_libraries( brain
     ${Boost_LIBRARIES}

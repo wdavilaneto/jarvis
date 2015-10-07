@@ -5,6 +5,7 @@
 #ifndef JARVIS_IDENTIFIABLE_H
 #define JARVIS_IDENTIFIABLE_H
 
+#include <boost/noncopyable.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
@@ -17,7 +18,7 @@ namespace jarvis {
         /**
          * Utility class to interface and implement a universal unique Id (uuid)
          */
-        class Identifiable {
+        class Identifiable : boost::noncopyable {
         public:
 
             Identifiable() : id( boost::uuids::random_generator()()) {

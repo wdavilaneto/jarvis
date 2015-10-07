@@ -2,7 +2,7 @@
 // Created by walter on 16/09/15.
 //
 
-#include <brain/NeuronCore.h>
+#include "NeuronCore.hpp"
 #include <boost/smart_ptr/make_shared_object.hpp>
 #include "JarvisApplication.h"
 

@@ -5,7 +5,7 @@
 #ifndef JARVIS_NEURONGROUPBUILDER_H
 #define JARVIS_NEURONGROUPBUILDER_H
 
-#include <brain/NeuronGroup.h>
+#include "NeuronGroup.hpp"
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 

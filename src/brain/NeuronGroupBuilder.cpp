@@ -5,7 +5,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include "NeuronGroupBuilder.h"
-#include "NeuronCore.h"
+#include "NeuronCore.hpp"
 
 namespace brain {
 
@@ -43,7 +43,7 @@ namespace brain {
         size_t lastHiddenLayer = layers.size() -1;
 
         for(size_t iCounter = 0 ; iCounter < layers[lastHiddenLayer].size() ; iCounter++){
-            layers[lastHiddenLayer].at(iCounter)->connectTo(output);
+            //layers[lastHiddenLayer].at(iCounter)->connectTo(output);
         }
 
         boost::shared_ptr<NeuronGroup> ng = boost::make_shared<NeuronGroup>();
