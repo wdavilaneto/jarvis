@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     try {
         jarvisApplication.go();
     } catch (Ogre::Exception &e) {
-        std::cerr << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
+        std::cout << "An exception has occured: " << e.getFullDescription().c_str() << std::endl;
     }
 
 
