@@ -11,8 +11,11 @@ namespace brain {
 
     class INeuronGroup {
     public:
+
+        virtual ~INeuronGroup() {};
         virtual INeuronCore * createNeuron() = 0;
         virtual const size_t getSize() = 0;
+
     };
 };
 

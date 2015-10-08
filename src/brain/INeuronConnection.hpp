@@ -9,19 +9,16 @@
 namespace brain {
 
     template<class T>
-    class IConnection<T> {
+    class INeuronConnection {
     public:
 
-        virtual IConnection() = 0;
+        virtual ~INeuronConnection() { };
 
-        virtual IConnection(<T> from, <T> to) = 0;
+        virtual void setWeight(float) = 0;
 
-        virtual ~IConnection() = 0;
+        virtual float getWeight() = 0;
 
-        virtual void setOrigin(<T> from) = 0;
-
-        virtual void setTarget(<T> to) = 0;
-
+        virtual T *getTarget() = 0;
     };
 
 };

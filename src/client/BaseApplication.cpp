@@ -130,6 +130,7 @@ void BaseApplication::createFrameListener(void) {
     OgreBites::InputContext inputContext;
     inputContext.mMouse = mMouse;
     inputContext.mKeyboard = mKeyboard;
+
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", mWindow, inputContext, this);
     mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);

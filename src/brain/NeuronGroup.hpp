@@ -14,22 +14,24 @@
 namespace brain {
 
     using std::vector;
-    typedef std::vector<boost::shared_ptr<NeuronCore> > NeuronLayer;
 
-    class NeuronGroupBuilder;
+    typedef std::vector<INeuronCore *> NeuronLayer;
 
     class NeuronGroup : public INeuronGroup {
         friend class NeuronGroupBuilder;
-
     public:
+
         // Empty Contructor
-        NeuronGroup() {
-        };
+        NeuronGroup();
+
         // Destructor will delete all created neurons (he owns)
         virtual ~NeuronGroup() {
             if (!neurons.empty()) {
-                for (std::vector<INeuronCore *>::reverse_iterator it = neurons.rbegin(); it != neurons.rend(); ++it) {
-                        delete (*it);
+                for (size_t i = 0; i < neurons.size(); i++) {
+                    INeuronCore *n = neurons.at(i);
+                    if (n != 0) {
+                        delete (n);
+                    }
                 }
                 neurons.clear();
             }
@@ -41,18 +43,21 @@ namespace brain {
             return neuron;
         };
 
-
-        const size_t getSize()  {
+        const size_t getSize() {
             return neurons.size();
+        }
+
+        virtual vector<INeuronCore *> allNeurons() {
+            return neurons;
         }
 
     private:
         vector<INeuronCore *> neurons; // hold pointers to neurons on this system
         vector<NeuronLayer> layers;
-        // TODO multiple is multiple outputs viable for backlearning ?
-        //vector<boost::shared_ptr<NeuronCore> > outputLayer;
-        boost::shared_ptr<NeuronCore> output;
     };
+
+    // Empty Contructor
+
 
 };
 #endif //JARVIS_NEURONGROUP_H
