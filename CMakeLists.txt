@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(jarvis)
 
+#SET(CMAKE_CXX_COMPILER mpic++)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 if (WIN32)
@@ -28,7 +29,7 @@ endif (UNIX)
 
 
 find_package(Threads)
-find_package(Boost 1.58 REQUIRED thread system)
+find_package(Boost 1.59 REQUIRED thread system)
 find_package(OGRE REQUIRED)
 find_package(OIS REQUIRED)
 

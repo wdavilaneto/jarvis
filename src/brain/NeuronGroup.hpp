@@ -22,10 +22,10 @@ namespace brain {
         friend class NeuronGroupBuilder;
 
     public:
+        // Empty Contructor
         NeuronGroup() {
-
         };
-
+        // Destructor will delete all created neurons (he owns)
         virtual ~NeuronGroup() {
             if (!neurons.empty()) {
                 for (std::vector<INeuronCore *>::reverse_iterator it = neurons.rbegin(); it != neurons.rend(); ++it) {
@@ -34,9 +34,6 @@ namespace brain {
                 neurons.clear();
             }
         };
-
-        boost::shared_ptr<NeuronCore> getOutput() { };
-
 
         virtual INeuronCore *createNeuron() {
             INeuronCore *neuron = new NeuronCore;

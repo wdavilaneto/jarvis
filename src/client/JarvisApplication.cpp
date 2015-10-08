@@ -2,19 +2,12 @@
 // Created by walter on 16/09/15.
 //
 
-#include "NeuronCore.hpp"
 #include <boost/smart_ptr/make_shared_object.hpp>
 #include "JarvisApplication.h"
 
 JarvisApplication::JarvisApplication(void) { }
 
 JarvisApplication::~JarvisApplication(void) { }
-
-//void JarvisApplication::createCamera() {
-//}
-//
-//void JarvisApplication::createViewports() {
-//}
 
 void JarvisApplication::createScene() {
     mSceneMgr->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
