@@ -6,8 +6,8 @@
 #define JARVIS_NEURONCORE_H
 
 #include "core/identifiable.h"
-#include "INeuronCore.hpp"
-#include "NeuronConnection.hpp"
+#include <brain/INeuronCore.hpp>
+#include <brain/NeuronConnection.hpp>
 
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>

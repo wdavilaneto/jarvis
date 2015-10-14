@@ -19,10 +19,11 @@ namespace brain {
 
     class NeuronGroup : public INeuronGroup {
         friend class NeuronGroupBuilder;
+
     public:
 
         // Empty Contructor
-        NeuronGroup();
+        NeuronGroup(){};
 
         // Destructor will delete all created neurons (he owns)
         virtual ~NeuronGroup() {
@@ -51,13 +52,19 @@ namespace brain {
             return neurons;
         }
 
+        virtual vector<INeuronCore *> getInputLayer(){
+            if (layers.size()>0) {
+                return layers.at(0);
+            }
+            return vector<INeuronCore *>(); // empty vector
+        }
+
     private:
         vector<INeuronCore *> neurons; // hold pointers to neurons on this system
         vector<NeuronLayer> layers;
     };
 
     // Empty Contructor
-
 
 };
 #endif //JARVIS_NEURONGROUP_H

@@ -42,6 +42,25 @@ BOOST_AUTO_TEST_CASE(NeuronTest) {
     delete network;
     BOOST_CHECK(neuron1 == neuron2 == 0 );
 
+    BOOST_TEST_MESSAGE("Testsing Builder Behaviour\n Building a Simple layer with a single layer");
+    NeuronGroupBuilder builder;
+    // set the "fist", and so, the input layer size to ..
+    boost::shared_ptr<NeuronGroup> newwork = builder.initNetwork().addLayer(2).build();
+    BOOST_CHECK(newwork->getInputLayer().size() == 2);
+
+    NeuronCore*  nc = (NeuronCore*)newwork->getInputLayer().at(0);
+    BOOST_CHECK( !nc->getId().is_nil() );
+    BOOST_TEST_MESSAGE( nc->getId() );
+
+    BOOST_TEST_MESSAGE("Building a new layer with 3 inputs and a single output");
+    newwork = builder.initNetwork().addLayer(3).addLayer(1).build();
+    BOOST_CHECK(newwork->getInputLayer().size() == 3);
+
+    // Test Simple AND Operation
+    for (size_t i =0 ; i < newwork->getInputLayer().size() ; i++) {
+        INeuronCore* bluberg;
+    }
+
 //    NeuronGroupBuilder *builder = new NeuronGroupBuilder;
 //    shared_ptr<NeuronGroup> group = builder->addInputLayerSize(2).build();
 //    BOOST_TEST_MESSAGE("*** Deleting Builder");
