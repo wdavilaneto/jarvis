@@ -5,6 +5,8 @@
 #ifndef JARVIS_NEURONGROUP_H
 #define JARVIS_NEURONGROUP_H
 
+#include <iostream>
+#include <vector>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
@@ -15,52 +17,24 @@ namespace brain {
 
     using std::vector;
 
-    typedef std::vector<INeuronCore *> NeuronLayer;
+    typedef vector<NeuronCore> NeuronLayer;
 
     class NeuronGroup : public INeuronGroup {
-        friend class NeuronGroupBuilder;
-
     public:
 
         // Empty Contructor
-        NeuronGroup(){};
+        NeuronGroup() { };
 
         // Destructor will delete all created neurons (he owns)
         virtual ~NeuronGroup() {
-            if (!neurons.empty()) {
-                for (size_t i = 0; i < neurons.size(); i++) {
-                    INeuronCore *n = neurons.at(i);
-                    if (n != 0) {
-                        delete (n);
-                    }
-                }
-                neurons.clear();
-            }
         };
 
-        virtual INeuronCore *createNeuron() {
-            INeuronCore *neuron = new NeuronCore;
-            neurons.push_back(neuron);
-            return neuron;
-        };
-
-        const size_t getSize() {
-            return neurons.size();
-        }
-
-        virtual vector<INeuronCore *> allNeurons() {
-            return neurons;
-        }
-
-        virtual vector<INeuronCore *> getInputLayer(){
-            if (layers.size()>0) {
-                return layers.at(0);
-            }
-            return vector<INeuronCore *>(); // empty vector
+        virtual vector<NeuronCore>& getInputLayer() {
+            return layers.front();
         }
 
     private:
-        vector<INeuronCore *> neurons; // hold pointers to neurons on this system
+        friend class NeuronGroupBuilder;
         vector<NeuronLayer> layers;
     };
 

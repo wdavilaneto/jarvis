@@ -5,6 +5,7 @@
 #ifndef JARVIS_INEURONCORE_H
 #define JARVIS_INEURONCORE_H
 
+#include <iostream>
 #include <vector>
 #include <boost/smart_ptr/shared_ptr.hpp>
 

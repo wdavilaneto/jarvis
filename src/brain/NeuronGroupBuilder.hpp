@@ -12,22 +12,22 @@
 namespace brain {
 
     using std::vector;
+    using boost::shared_ptr;
+    using boost::make_shared;
 
     class NeuronGroupBuilder {
     public:
 
-        NeuronGroupBuilder() : network(0) { };
+        NeuronGroupBuilder() : network(nullptr){ };
 
         virtual ~NeuronGroupBuilder() {
-
         };
 
         NeuronGroupBuilder &initNetwork() {
-            if (network == 0) {
-                network = new NeuronGroup;
-            } else {
-                //BOOST_THROW_EXCEPTION(BuilderException("Incorrect use of builder. This builder is already buinding a network"));
+            if (network != 0) {
+                network.reset();
             }
+            network = make_shared<NeuronGroup>();
             return *this;
         }
 
@@ -35,48 +35,35 @@ namespace brain {
          * Prepare the input layer of a given network
          */
         NeuronGroupBuilder &addLayer(size_t counter) {
-            if (network == 0) {
+            if (network == nullptr) {
                 //BOOST_THROW_EXCEPTION(BuilderException("This builder has already prepared an input layer"));
             }
-            // TODO change to a more optimized way to factory in blocks
-            if (counter > 0) {
-                // Reference to be Copied into NeronGroup
-                NeuronLayer inputLayer;
+            vector<NeuronCore> newLayer(counter);
+            // Reference to be Copied into NeronGroup
+            if (network->layers.size() > 0) {
+                // get position of the last layer
+                NeuronLayer &lastlayer = network->layers.back();
                 // lop counter times to add neuron
                 for (size_t iCounter = 0; iCounter < counter; iCounter++) {
-                    INeuronCore *newNeuron = network->createNeuron();
-                    // add neuron to this layer
-                    inputLayer.push_back(newNeuron);
-                    // lets connect if possible, last layer to this one
-                    if (layers.size() > 0) {
-                        // get position of the last layer
-                        size_t lastLayerSize = layers.size() - 1;
-                        for (size_t innerCounter = 0; innerCounter < layers[lastLayerSize].size(); innerCounter++) {
-                            layers.at(lastLayerSize).at(innerCounter)->connectTo(newNeuron);
-                        }
+                    INeuronCore &newNeuron = newLayer.at(iCounter);
+                    for (size_t innerCounter = 0; innerCounter < lastlayer.size(); innerCounter++) {
+                        lastlayer.at(innerCounter).connectTo(&newNeuron);
                     }
                 }
-                // add this recentlycreted layer to network layers
-                layers.push_back(inputLayer);
-            } else {
-                //boost::throw_exception(BuilderException("Neuron networks can not have input layer zero length or less"));
             }
+            // add this recently creted layer to network layers
+            network->layers.push_back(newLayer);
             return *this;
         };
 
         boost::shared_ptr<NeuronGroup> build() {
-            // Pass this pointer to sharedPointer administration
-            boost::shared_ptr<NeuronGroup> ng((NeuronGroup *) network);
-            // value copy .. TODO enhance the performance of this operation
-            ng->layers = layers;
-            network = NULL; // set pointer reference to ZERO and
-            layers.clear(); // clear inner layers
-            return ng; // return container managed pointer...
+            shared_ptr<NeuronGroup> result = network;
+            network.reset();
+            return result; // return container managed pointer...
         };
 
     private:
-        vector<NeuronLayer> layers;
-        INeuronGroup *network;
+        shared_ptr<NeuronGroup> network;
     };
 
 };

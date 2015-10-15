@@ -18,13 +18,13 @@ namespace jarvis {
         /**
          * Utility class to interface and implement a universal unique Id (uuid)
          */
-        class Identifiable : boost::noncopyable {
+        class Identifiable {
         public:
 
             Identifiable() : id( boost::uuids::random_generator()()) {
             }
 
-            boost::uuids::uuid getId() { return id; }
+            virtual boost::uuids::uuid getId() { return id; }
 
         private:
             boost::uuids::uuid id;

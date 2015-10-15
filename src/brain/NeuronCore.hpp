@@ -27,7 +27,6 @@ namespace brain {
     */
     class NeuronCore : public INeuronCore, public jarvis::util::Identifiable {
     public:
-
         NeuronCore() {
             currentVoltage = NEURON_CORE_DEFAULT_INNER_VOLTAGE;
             actionPotentialVoltage = NEURON_CORE_DEFAULT_VOLTAGE_LIMIT;
