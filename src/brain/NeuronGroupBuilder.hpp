@@ -61,7 +61,6 @@ namespace brain {
             network.reset();
             return result; // return container managed pointer...
         };
-
     private:
         shared_ptr<NeuronGroup> network;
     };

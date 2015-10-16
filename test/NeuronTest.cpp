@@ -31,10 +31,10 @@ BOOST_AUTO_TEST_CASE(NeuronTest) {
     network = builder.initNetwork().addLayer(SIZE).addLayer(1).build();
     BOOST_CHECK(network->getInputLayer().size() == SIZE);
 
-    // Test Simple AND Operation
+    // Test Simple and Operation
     for (size_t i = 0; i < network->getInputLayer().size(); i++) {
         NeuronCore &neuron = network->getInputLayer().at(i);
         neuron.signal(30.0);
-    }
+    };
 
 };
