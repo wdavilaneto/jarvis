@@ -37,4 +37,6 @@ BOOST_AUTO_TEST_CASE(NeuronTest) {
         neuron.signal(30.0);
     };
 
+
+
 };
