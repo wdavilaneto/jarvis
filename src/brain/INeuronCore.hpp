@@ -19,9 +19,13 @@ namespace brain {
 
         virtual ~INeuronCore() { };
 
-        virtual void connectTo(INeuronCore *otherNeuron) = 0;
+        virtual void connectTo(shared_ptr<INeuronCore> otherNeuron) = 0;
 
-        virtual void signal(float) = 0;
+        virtual float signal(float) = 0;
+
+        virtual void process() = 0;
+
+        virtual float getValue() = 0;
 
 //        virtual vector<shared_ptr<INeuronCore> > getConnections() = 0;
 //

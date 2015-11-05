@@ -14,6 +14,7 @@
 
 #define NEURON_CORE_DEFAULT_VOLTAGE_LIMIT 100
 #define NEURON_CORE_DEFAULT_INNER_VOLTAGE 0
+#define NEURON_DEFAULT_SYNAPSE_WEIGHT  1
 
 namespace brain {
 
@@ -27,14 +28,17 @@ namespace brain {
     */
     class NeuronCore : public INeuronCore, public jarvis::util::Identifiable {
     public:
+
         NeuronCore() {
             currentVoltage = NEURON_CORE_DEFAULT_INNER_VOLTAGE;
             actionPotentialVoltage = NEURON_CORE_DEFAULT_VOLTAGE_LIMIT;
+            isInput = false;
         };
 
         virtual ~NeuronCore() {
+            // Destructor deletes all Connections
             if (!connections.empty()) {
-                for (size_t i = 0; i < connections.size(); i++) {
+                for (size_t i = 0; i < getConnections().size(); i++) {
                     NeuronConnection *n = connections.at(i);
                     if (n != 0) {
                         delete n;
@@ -44,41 +48,76 @@ namespace brain {
             }
         };
 
-        virtual void connectTo(INeuronCore *otherNeuron) {
-            NeuronConnection *connection = new NeuronConnection(otherNeuron, 0);
+        /**
+         * Connect this neuron with other one
+         */
+        void connectTo(shared_ptr<INeuronCore> otherNeuron) {
+            BOOST_ASSERT_MSG( this != otherNeuron.get() , "A Neuron can't be connected to itself");
+            NeuronConnection *connection = new NeuronConnection(otherNeuron, NEURON_DEFAULT_SYNAPSE_WEIGHT);
             connections.push_back(connection);
         };
 
-        virtual void signal(float s) {
+        virtual float signal(float s) {
             currentVoltage += s;
+            return currentVoltage;
         }
+
+        virtual void process(){
+            if (isInputLayer()) {
+                foreach_ (NeuronConnection* connection, getConnections() ){
+                    connection->synapse(currentVoltage);
+                }
+                // if input-layer or any hidden layer clear value
+                if (! isOutputLayer()){
+                    currentVoltage = 0 ;
+                } // OutputLayer should mantain last value unless cleared by NeuronGroup
+            }
+        };
 
         // Non interface getter method
         virtual vector<NeuronConnection *> getConnections() {
             return connections;
         };
 
-        // Non interface getter method
-        virtual float getCurrentVoltage() {
+        float getValue(){
             return currentVoltage;
-        };
+        }
 
-        // Non interface getter method
-        virtual void setCurrentVoltage(float t) {
-            currentVoltage = t;
-        };
+        void setValue(float f){
+            this->currentVoltage = f;
+        }
 
         // Non interface getter method
         virtual float getActionPotentialVoltage() {
             return actionPotentialVoltage;
-        };
+        }
 
-        // Non interface getter method
-        virtual void setActionPotentialVoltage(float t) {
-            actionPotentialVoltage = t;
-        };
+        virtual bool isInputLayer() {
+            return isInput;
+        }
+
+        virtual bool isOutputLayer() {
+            return connections.size() == 0;
+        }
+
+        virtual void markAsInputLayer() {
+            isInput = true;
+        }
+
+        virtual float getActivationValue(){
+            return activation() ? getActionPotentialVoltage() : 0;
+        }
+
+    protected:
+        virtual bool activation() {
+            if (currentVoltage > getActionPotentialVoltage()) {
+                return true;
+            }
+            return false;
+        }
 
     private:
+        bool isInput;
         float currentVoltage;
         float actionPotentialVoltage;
         vector<NeuronConnection *> connections;

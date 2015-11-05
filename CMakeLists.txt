@@ -6,7 +6,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 
 find_package(Threads)
-find_package(Boost 1.59 REQUIRED thread system)
+find_package(Boost 1.59 REQUIRED COMPONENTS unit_test_framework serialization mpi log log_setup thread system filesystem date_time)
 
 ## Checking BOOST dependency block
 set(Boost_USE_STATIC_LIBS OFF)

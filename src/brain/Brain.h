@@ -9,11 +9,9 @@
 class Brain {
 
 public:
-    Brain(){}
+    Brain();
 
-    virtual ~Brain(){
-
-    }
+    virtual ~Brain();
 
 
 };

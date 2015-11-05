@@ -14,6 +14,8 @@ namespace brain {
 
         virtual ~INeuronGroup() { };
 
+        virtual void process() = 0;
+
     };
 };
 

@@ -5,22 +5,21 @@
 #ifndef JARVIS_NEURONCONNECTION_H
 #define JARVIS_NEURONCONNECTION_H
 
-#include "INeuronConnection.hpp"
 #include "INeuronCore.hpp"
 
 namespace brain {
 
-    class NeuronConnection : public INeuronConnection<INeuronCore> {
+    using boost::shared_ptr;
+
+    class NeuronConnection {
     public:
 
-        NeuronConnection(INeuronCore *target, float weight) {
-            this->target = target;
-            this->weight = weight;
+        NeuronConnection(shared_ptr<INeuronCore> t, float w) : target(t), weight(w) {
         }
 
         virtual ~NeuronConnection() { };
 
-        virtual INeuronCore *getTarget() {
+        virtual shared_ptr<INeuronCore> getTarget() {
             return target;
         };
 
@@ -32,9 +31,14 @@ namespace brain {
             return weight;
         };
 
+        virtual float synapse(float f) {
+            return getTarget()->signal(f * getWeight());
+        }
+
+
     private:
         float weight;
-        INeuronCore *target;
+        shared_ptr<INeuronCore> target;
     };
 
 };
