@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(NeuronBuilderTest) {
     size_t connSize = neuron->getConnections().size();
     BOOST_CHECK( connSize == 0 );
     shared_ptr<NeuronCore> neuron1 = network->getOutputLayer().at(1);
-    neuron->connectTo(neuron1,);
+    neuron->connectTo(neuron1,10);
 
 
 
