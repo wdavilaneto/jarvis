@@ -29,12 +29,24 @@ BOOST_AUTO_TEST_CASE(NeuronBuilderTest) {
 
     NeuronLayer inputLayer = network->getInputLayer();
     BOOST_REQUIRE(!inputLayer.empty());
-    shared_ptr<NeuronCore> neuron1 = network->getInputLayer().at(0);
-    BOOST_CHECK(!neuron1->getId().is_nil());
+    shared_ptr<NeuronCore> neuron = network->getInputLayer().at(0);
+    BOOST_CHECK(!neuron->getId().is_nil());
 
-    BOOST_TEST_MESSAGE("Check Point: Building a new layer with 3 inputs and a single output");
+    BOOST_TEST_MESSAGE("Check Point: Building a new layer with 2 inputs and a single output");
     size_t SIZE = 2;
     network = builder.initNetwork().addLayer(SIZE).addLayer(1).build();
     BOOST_CHECK(network->getInputLayer().size() == SIZE);
+
+    BOOST_TEST_MESSAGE("Check Point: Building a new layer with 3 inputs and a single output and autoconnect = false");
+    network = builder.initNetwork(false).addLayer(SIZE+1).addLayer(1).build();
+    BOOST_CHECK( network->getInputLayer().size() == SIZE+1);
+    neuron = network->getInputLayer().at(0);
+    size_t connSize = neuron->getConnections().size();
+    BOOST_CHECK( connSize == 0 );
+    shared_ptr<NeuronCore> neuron1 = network->getOutputLayer().at(1);
+    neuron->connectTo(neuron1,);
+
+
+
 
 };

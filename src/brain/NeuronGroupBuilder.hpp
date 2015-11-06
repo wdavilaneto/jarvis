@@ -32,12 +32,13 @@ namespace brain {
         virtual ~NeuronGroupBuilder() {
         };
 
-        NeuronGroupBuilder &initNetwork() {
+        NeuronGroupBuilder &initNetwork(bool autoconnect = true) {
             BOOST_LOG_TRIVIAL(debug) << "Initializing a new NeuralGroup via Default Builder";
             if (network != 0) {
                 network.reset();
             }
             network = make_shared<NeuronGroup>();
+            this->autoconnect = autoconnect;
             return *this;
         }
 

@@ -14,12 +14,14 @@ namespace brain {
     using std::vector;
     using boost::shared_ptr;
 
+    // TODO: change float to template
+    //typename <class T>
     class INeuronCore {
     public:
 
         virtual ~INeuronCore() { };
 
-        virtual void connectTo(shared_ptr<INeuronCore> otherNeuron) = 0;
+        virtual void connectTo(shared_ptr<INeuronCore> otherNeuron, float weight) = 0;
 
         virtual float signal(float) = 0;
 
@@ -27,11 +29,6 @@ namespace brain {
 
         virtual float getValue() = 0;
 
-//        virtual vector<shared_ptr<INeuronCore> > getConnections() = 0;
-//
-//        virtual vector<float> doSignal(vector<float> signal) = 0;
-
-        //virtual INeuronCore* clone() const = 0; // The Virtual (Copy) Constructor
     };
 
 };

@@ -51,9 +51,9 @@ namespace brain {
         /**
          * Connect this neuron with other one
          */
-        void connectTo(shared_ptr<INeuronCore> otherNeuron) {
+        void connectTo(shared_ptr<INeuronCore> otherNeuron, float weight = NEURON_DEFAULT_SYNAPSE_WEIGHT) {
             BOOST_ASSERT_MSG( this != otherNeuron.get() , "A Neuron can't be connected to itself");
-            NeuronConnection *connection = new NeuronConnection(otherNeuron, NEURON_DEFAULT_SYNAPSE_WEIGHT);
+            NeuronConnection *connection = new NeuronConnection(otherNeuron, weight);
             connections.push_back(connection);
         };
 
