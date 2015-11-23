@@ -6,12 +6,15 @@
 #define JARVIS_NETWORKREPOSITORY_HPP
 
 
-class NetworkRepository {
-public:
+namespace repository {
+
+    class NetworkRepository {
+    public:
 
 
+
+    };
 
 };
-
 
 #endif //JARVIS_NETWORKREPOSITORY_HPP

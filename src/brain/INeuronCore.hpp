@@ -15,7 +15,7 @@ namespace brain {
     using boost::shared_ptr;
 
     // TODO: change float to template
-    //typename <class T>
+    //template <class T>
     class INeuronCore {
     public:
 

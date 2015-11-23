@@ -1,7 +1,7 @@
 find_package(Boost REQUIRED COMPONENTS unit_test_framework serialization mpi)
 find_package(Threads)
 
-add_library(brain Brain.cpp Brain.h NeuronGroup.hpp NeuronGroupBuilder.hpp INeuronCore.hpp NeuronCore.hpp INeuronGroup.hpp NeuronConnection.hpp Brain.cpp Brain.h)
+add_library(brain Brain.cpp Brain.h NeuronGroup.hpp NeuronGroupBuilder.hpp INeuronCore.hpp NeuronCore.hpp INeuronGroup.hpp NeuronConnection.hpp Brain.cpp Brain.h ICommand.hpp)
 
 
 target_link_libraries( brain
