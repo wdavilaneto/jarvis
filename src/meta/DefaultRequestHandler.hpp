@@ -1,0 +1,14 @@
+//
+// Created by walter on 23/11/15.
+//
+
+#ifndef JARVIS_DEFAULTREQUESTHANDLER_HPP
+#define JARVIS_DEFAULTREQUESTHANDLER_HPP
+
+namespace meta {
+
+
+
+}
+
+#endif //JARVIS_DEFAULTREQUESTHANDLER_HPP
