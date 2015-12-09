@@ -23,7 +23,7 @@ add_subdirectory(src/client)
 add_subdirectory(src/brain)
 add_subdirectory(test)
 
-add_executable(jarvis src/main.cpp src/repository/NetworkRepository.hpp src/meta/TextAnalysis.hpp)
+add_executable(jarvis src/main.cpp src/repository/NetworkRepository.hpp src/meta/TextAnalysis.hpp src/server/server.hpp)
 
 target_link_libraries(jarvis
         jarvisApp

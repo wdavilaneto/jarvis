@@ -19,7 +19,9 @@ using namespace boost::filesystem;
 using std::stringstream;
 
 std::string slurp (const char* _path ) {
+    // set path to meta/resources file path
     static fs::path resource_path( fs::system_complete("../../resources/meta/"));
+    // open input file
     fs::ifstream configFile( resource_path / _path);
     return string(static_cast<stringstream const&>(stringstream() << configFile.rdbuf()).str());
 }

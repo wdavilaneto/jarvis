@@ -1,18 +1,21 @@
 /* jslint node: true */
 (function () {
     "use strict";
-    var text = "Hello Sir. I am Jarvis.";
+    //var text = "Hello Sir. I am Jarvis.";
+    var text = "Rafaela, I'm the program your husband is making";
 
-    process.env.http_proxy = 'http://127.0.0.1:3128';
+    //process.env.http_proxy = 'http://127.0.0.1:3128';
 
-    var LightTTS = require('say.js');
-    LightTTS.set_opts({api_name: 'google', lang: 'en'});
+    var say = require('say');
+    var translate = require('translate');
 
-    // GoogleTTS.convert(text , 'hello');
-    LightTTS.say(text);
+    // output some text to the console as the callback
+    //say.speak('Alex', text, function () {
+    //    console.log('text to speech complete');
+    //});
 
-    var stuff = {
-        name: "walter", age: 32
-    };
+    translate.text('pt', text, function(result){
+        say.speak('Alex', result);
+    });
 
 })();
