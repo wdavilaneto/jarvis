@@ -1,34 +1,21 @@
 #include <iostream>
-#include <boost/network.hpp>
-#include <boost/network/protocol/http/server.hpp>
+#include <nghttp2/asio_http2_server.h>
 
-namespace http = boost::network::http;
-
-struct handler;
-typedef http::server<handler> http_server;
-
-struct handler {
-    void operator()(http_server::request const &request, http_server::response &response) {
-        response = http_server::response::stock_reply(http_server::response::ok, "{Hello, world!}");
-    }
-
-    void log(http_server::string_type const &info) {
-        std::cerr << "ERROR: " << info << '\n';
-    }
-};
+using namespace nghttp2::asio_http2;
+using namespace nghttp2::asio_http2::server;
 
 int main(int arg, char *argv[]) {
 
-    handler handler_;
-    http_server::options options(handler_);
-    http_server server_(options.address("0.0.0.0").port("8000"));
+    http2 server;
 
-    try {
-        server_.run();
-    } catch (std::exception &ex) {
-        server_.stop();
-        std::cerr << ex.what();
-        return EXIT_FAILURE;
+    server.handle("/", [](const request &req, const response &res) {
+        res.write_head(200);
+        res.end("hello, world\n");
+    });
+
+    boost::system::error_code ec;
+    if (server.listen_and_serve(ec, "0.0.0.0", "8080")) {
+        std::cerr << "error: " << ec.message() << std::endl;
     }
     return EXIT_SUCCESS;
 };
