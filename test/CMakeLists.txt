@@ -23,3 +23,4 @@ target_link_libraries(
 
 add_subdirectory(mpi)
 add_subdirectory(meta)
+add_subdirectory(repository)

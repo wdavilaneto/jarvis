@@ -8,7 +8,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <iostream>
-
+#include "cppto
 
 using boost::shared_ptr;
 using boost::make_shared;
@@ -24,6 +24,7 @@ std::string slurp (const char* _path ) {
     // open input file
     fs::ifstream configFile( resource_path / _path);
     return string(static_cast<stringstream const&>(stringstream() << configFile.rdbuf()).str());
+
 }
 
 
