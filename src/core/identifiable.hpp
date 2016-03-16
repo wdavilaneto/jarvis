@@ -15,13 +15,14 @@ namespace jarvis {
 
     namespace util {
 
+        boost::uuids::random_generator random_generator;
         /**
          * Utility class to interface and implement a universal unique Id (uuid)
          */
         class Identifiable {
         public:
 
-            Identifiable() : id( boost::uuids::random_generator()()) {
+            Identifiable() : id( random_generator()) {
             }
 
             virtual boost::uuids::uuid getId() { return id; }

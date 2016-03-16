@@ -1,27 +1,34 @@
 #include <iostream>
-#include <nghttp2/asio_http2_server.h>
-
-using namespace nghttp2::asio_http2;
-using namespace nghttp2::asio_http2::server;
+#include <server/server.h>
 
 int main(int arg, char *argv[]) {
 
-    http2 server;
+//    Server server = Server::getInstance();
+//
+//    try {
+//        server.run();
+//    } catch (std::exception &ex) {
+//        server.stop();
+//        //std::cerr << ex.what();
+//        return EXIT_FAILURE;
+//    }
 
-    server.num_threads(4);
+//    const unsigned int num_layers = 3;
+//    const unsigned int num_input = 2;
+//    const unsigned int num_hidden = 3;
+//    const unsigned int num_output = 1;
+//
+//    const float desired_error = (const float) 0.001;
+//    const unsigned int max_epochs = 500000;
+//    const unsigned int epochs_between_reports = 1000;
+//
+//    neural_net net;
+//
+//    net.create_standard(num_layers, num_input, num_hidden, num_output);
+//    net.set_activation_function_hidden(activation_function_enum::SIGMOID_SYMMETRIC);
+//    net.set_activation_function_output(activation_function_enum::SIGMOID_SYMMETRIC);
+//    net.train_on_file("xor_float.data", max_epochs, epochs_between_reports, desired_error);
+//    net.save("xor_float.net");
 
-    server.handle("/", [](const request &req, const response &res) {
-        res.write_head(200);
-        res.end("hello, world\n");
-    });
-
-    try {
-        boost::system::error_code ec;
-        if (server.listen_and_serve(ec, "localhost", "8000")) {
-            std::cerr << "error: " << ec.message() << std::endl;
-        }
-    } catch (const std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
-
+    return EXIT_SUCCESS;
 };

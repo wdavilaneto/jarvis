@@ -7,9 +7,17 @@ set(Boost_USE_MULTITHREADED ON)
 
 ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK)
 
-add_executable(MetaTest MetaTest.cpp)
+add_executable(NeuronTest NeuronTest.cpp)
+add_executable(NeuronBuilderTest NeuronBuilderTest.cpp)
 
 target_link_libraries(
-    MetaTest
+    NeuronTest
+    brain
     ${Boost_LIBRARIES}
+)
+
+target_link_libraries(
+        NeuronBuilderTest
+        brain
+        ${Boost_LIBRARIES}
 )

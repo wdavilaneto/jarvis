@@ -5,7 +5,7 @@
 #ifndef JARVIS_NEURONCORE_H
 #define JARVIS_NEURONCORE_H
 
-#include "core/identifiable.h"
+#include <core/identifiable.hpp>
 #include <brain/INeuronCore.hpp>
 #include <brain/NeuronConnection.hpp>
 
