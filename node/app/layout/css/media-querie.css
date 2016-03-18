@@ -1,0 +1,68 @@
+/*MEDIA QUERIES*/
+
+    /*MEDIA 560*/
+    @media (max-width: 560px) {
+        .form-group .btn.btn-primary{width:100%; text-align:left; margin-bottom:3px;}
+        .box-footer .btn{width:100%;margin-top:7px;text-transform:uppercase;text-align:left;}
+        .form-group .btn.btn-primary, .form-group .btn.btn-danger, .form-group .btn.btn-default, .form-group .btn.btn-success, .form-group .btn.btn-info {width:100%; text-align:left; margin-bottom:3px;}
+        }
+    /**/
+
+    /*MEDIA 767*/
+    @media (max-width:767px) {
+        .modal-lg{width:97% !important;}
+        .navbar-nav > li > a{padding:7px 2px !important ;}
+        span.user-name {margin-left: 6px;}
+        .navbar-nav{margin:0 -15px;}
+        aside.right-side {top: 33px;position:relative;}
+        .container-fluid{padding-left:15px !important;padding-right:15px !important;}
+        nav.navbar.navbar-default.navbar-fixed-top{margin-top:-81px !important;}
+         nav.navbar.navbar-default.navbar-fixed-top.stash{margin-top:-14px !important;}
+        .right-side{margin-left:32px !important;margin-top:-81px !important;}
+        }
+    /**/
+
+    /*MEDIA 992*/
+    @media (max-width: 992px){
+        .content-header h1{top:0 !important;}
+        .right-side{margin-left:32px !important;margin-top:-48px ;}
+        .navbar-brand{display:none;}
+        .navbar-nav > li > a{color:#fff;padding: 7px;}
+        .navbar-nav > li > a:hover, .navbar-nav > li > a:focus, .navbar-nav > li > a:visited, .navbar-nav > li > a:active{background:none !important;}
+        body > .header .navbar .sidebar-toggle{display:none;}
+        body{padding-top:53px !important;}
+        a.dropdown-toggle{padding:14px;}
+        nav.navbar.navbar-default.navbar-fixed-top{margin-top:-55px;}
+        nav.navbar.navbar-default.navbar-fixed-top.stash{margin-top: 0px !important ;box-shadow: 0px 0px 30px #000;transtion:0.3s;-webkit-transition: 0.3s;-moz-transiton: 0.3s;}
+        .left-bar{margin-left:0 !important;}
+        }
+    /**/
+
+    /*MEDIA PRINT*/
+    @media print{
+        a{
+            display:none;
+        }
+        body{
+            visibility:hidden;margin:0; padding:0;height:800px;
+        }
+        #ad{
+            display:none;
+            }
+        #leftbar{
+            display:none;
+        }
+        #contentarea{
+            width:100%;
+        }
+        #printArea{
+            visibility:visible;
+            }
+        .btn{
+            visibility:hidden;
+            }
+        .modal{
+            display:table;width:100% important!;margin:0;padding:0;position:absolute;
+            }
+        }
+        /**/

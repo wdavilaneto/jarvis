@@ -3,7 +3,7 @@ project(jarvis)
 
 #SET(CMAKE_CXX_COMPILER mpic++)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-SET(CMAKE_CXX_FLAGS_DEBUG "-O2")
+##set(CMAKE_CXX_FLAGS_DEBUG "-O2")
 
 find_package(Threads)
 #find_package(Boost 1.59 REQUIRED COMPONENTS unit_test_framework serialization mpi log log_setup thread system filesystem date_time)
@@ -27,11 +27,8 @@ add_subdirectory(test)
 
 add_executable(jarvis src/main.cpp)
 
-target_link_libraries(
-        jarvis
+target_link_libraries( jarvis
         server
-        brain
-        fann
         ${Boost_LIBRARIES}
 )
 

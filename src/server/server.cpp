@@ -4,13 +4,11 @@
 
 #include "server.h"
 
-Server::Server() {
-    handler = new CoreRequestHandler;
-    options = new ServerOptions(*handler);
-    server = new HttpServer(options->address("0.0.0.0").port("8080"));
+
+RestfulServer::RestfulServer() {
+    std::cout << "sanity test \n";
 }
 
-Server::~Server(){
-    delete handler;
-    delete options;
+RestfulServer::~RestfulServer() {
+    std::cout << "bye \n";
 }

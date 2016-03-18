@@ -1,0 +1,13 @@
+
+
+<div class="col-md-3 form-group" show-errors>
+    <label class="control-label" for="ufed">Ufed <i class="fa fa-asterisk fa-sm" popover-trigger="mouseenter"  popover-placement="up" popover="Campo obrigatório"/></label>
+    <input class="form-control" type="text" ng-maxlength="22" ng-model="entity.ufed" required placeholder="Ufed"  id="ufed" />
+    <span class="help-block" ng-show="ufed.$error.required">Obrigatório</span>
+</div>
+<div class="col-md-3 form-group" show-errors>
+    <label class="control-label" for="nome">Nome <i class="fa fa-asterisk fa-sm" popover-trigger="mouseenter"  popover-placement="up" popover="Campo obrigatório"/></label>
+    <input class="form-control" type="text" ng-maxlength="40" ng-model="entity.nome" required placeholder="Nome"  id="nome" />
+    <span class="help-block" ng-show="nome.$error.required">Obrigatório</span>
+</div>
+

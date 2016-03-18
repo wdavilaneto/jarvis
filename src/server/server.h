@@ -4,61 +4,67 @@
 #ifndef JARVIS_SERVER_H
 #define JARVIS_SERVER_H
 
-#include <boost/network.hpp>
-#include <boost/network/protocol/http/server.hpp>
+#include "Poco/Net/HTTPServer.h"
+#include "Poco/Net/HTTPRequestHandler.h"
+#include "Poco/Net/HTTPRequestHandlerFactory.h"
+#include "Poco/Net/HTTPServerParams.h"
+#include "Poco/Net/HTTPServerRequest.h"
+#include "Poco/Net/HTTPServerResponse.h"
+#include "Poco/Net/HTTPServerParams.h"
+#include "Poco/Net/ServerSocket.h"
+#include "Poco/Timestamp.h"
+#include "Poco/DateTimeFormatter.h"
+#include "Poco/DateTimeFormat.h"
+#include "Poco/Exception.h"
+#include "Poco/ThreadPool.h"
+#include "Poco/Util/ServerApplication.h"
+#include "Poco/Util/Option.h"
+#include "Poco/Util/OptionSet.h"
+#include "Poco/Util/HelpFormatter.h"
+#include "MainRequestHandler.hpp"
+#include <iostream>
 
+using Poco::Net::ServerSocket;
+using Poco::Net::HTTPRequestHandler;
+using Poco::Net::HTTPRequestHandlerFactory;
+using Poco::Net::HTTPServer;
+using Poco::Net::HTTPServerRequest;
+using Poco::Net::HTTPServerResponse;
+using Poco::Net::HTTPServerParams;
+using Poco::Timestamp;
+using Poco::DateTimeFormatter;
+using Poco::DateTimeFormat;
+using Poco::ThreadPool;
+using Poco::Util::ServerApplication;
+using Poco::Util::Application;
+using Poco::Util::Option;
+using Poco::Util::OptionSet;
+using Poco::Util::OptionCallback;
+using Poco::Util::HelpFormatter;
 
-namespace http = boost::network::http;
-
-// Forward declaration of main handler
-class CoreRequestHandler;
-
-typedef http::server<CoreRequestHandler> HttpServer;
-typedef HttpServer::request Request;
-typedef HttpServer::response Response;
-typedef HttpServer::options ServerOptions;
-
-// CoreRequestHandler chains possible
-class CoreRequestHandler {
+class RestfulServer : public Poco::Util::ServerApplication {
 public:
-    void operator()(Request const &request, Response &response) {
-        std::string source = boost::network::http::source(request);
-        std::cout << source << std::endl;
-        response = HttpServer::response::stock_reply(HttpServer::response::ok, "{server_status:\"OK!\"}");
-    }
 
-    void log(HttpServer::string_type const &info) {
-        std::cerr << "ERROR: " << info << std::endl;
+    RestfulServer();
+
+    ~RestfulServer();
+
+protected:
+
+    int main(const std::vector<std::string> &args) {
+
+        unsigned short port = (unsigned short) config().getInt("RestfulServer.port", 8080);
+
+        std::string format(config().getString("RestfulServer.format", DateTimeFormat::SORTABLE_FORMAT));
+        ServerSocket svs(port);
+        HTTPServer srv(new MainRequestHandlerFactory, svs, new HTTPServerParams);
+        srv.start();
+        waitForTerminationRequest();
+        srv.stop();
+
+        return Application::EXIT_OK;
     }
 
 };
-
-//  Very very Simple singleton implementation
-
-class Server {
-private:
-    Server();
-
-    CoreRequestHandler *handler;
-    ServerOptions *options;
-    HttpServer *server;
-public:
-    static Server &getInstance() {
-        static Server server; // not thread safe... but ok after first non concurrent use
-        return server;
-    }
-
-    virtual ~Server();
-
-    void run() {
-        server->run();
-    }
-
-    void stop() {
-        server->stop();
-    }
-
-};
-
 
 #endif //JARVIS_SERVER_H
