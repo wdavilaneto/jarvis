@@ -31,3 +31,10 @@ script/node_modules
 *.iml
 
 build
+
+node/node_modules
+node/client
+node/.bowerrc
+node/.jshintrc
+node/.travis.yml
+node/.yo-rc.json

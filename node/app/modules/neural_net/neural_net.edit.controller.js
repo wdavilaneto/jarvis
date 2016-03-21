@@ -4,32 +4,32 @@
 
     /**
      * @ngdoc function
-     * @name medicamentosApp.controller:cidadeController
+     * @name jarvisApp.controller:neuralNetController
      * @description
-     * # cidadeController
-     * Controller of the medicamentosApp
+     * # neuralNetController
+     * Controller of the jarvisApp
      */
-    angular.module('medicamentosApp')
-        .controller('cidadeEditController', cidadeEditController);
+    angular.module('jarvisApp')
+        .controller('neuralNetEditController', neuralNetEditController);
 
-        cidadeEditController.$inject = ['$scope', '$state', '$stateParams', '$modal', '$location',
-            'jsog', 'cidadeService', 'solicitacaoService'];
+        neuralNetEditController.$inject = ['$scope', '$state', '$stateParams', '$modal', '$location',
+            'jsog', 'neuralNetService'];
 
-        function cidadeEditController($scope, $state, $stateParams , $modal, $location, jsog, cidadeService , solicitacaoService ) {
+        function neuralNetEditController($scope, $state, $stateParams , $modal, $location, jsog, neuralNetService  ) {
 
             var vm = this;
 
             // ***************************
             // Model Initializations
             // ***************************
-            vm.master = 'cidade';
+            vm.master = 'neuralNet';
             vm.maxSelectBoxSize = 300;
             vm.original = {};
-            vm.entity = cidadeService.create();
-            vm.searchSelects = cidadeService.factorySearchSelect(); // Text Search Select utility Object
+            vm.entity = neuralNetService.create();
+            vm.searchSelects = neuralNetService.factorySearchSelect(); // Text Search Select utility Object
             vm.searchSelects.fromEntity(vm.entity);
 
-            // ***************************************cidade
+            // ***************************************neuralNet
             // Controller Methods definitions
             // ***************************************
             vm.get = function( id ) {
@@ -37,7 +37,7 @@
                     id = $stateParams.id;                           // get id parameter from ui-router
                 }
                 console.log('retrieving rename.id = ' + id  );
-                cidadeService.get( {'id':id} , function (data) {
+                neuralNetService.get( {'id':id} , function (data) {
                     vm.entity = data;                           // set managed entity from service
                     vm.original = angular.copy(vm.entity);                // backup original values;
                     vm.searchSelects.fromEntity($scope.entity); // update search selects values;
@@ -62,9 +62,9 @@
             // Controller init (on load) service calls
             // ****************************************
             vm.tabs = [];
-            vm.tabs.push({heading: "Principal", route: "cidadeEdit.main", icon: "mdi-home", visible: "true"});
+            vm.tabs.push({heading: "Principal", route: "neuralNetEdit.main", icon: "mdi-home", visible: "true"});
 
-            vm.tabSelected = 'cidadeEdit.main';
+            vm.tabSelected = 'neuralNetEdit.main';
 
             // ******************************************************************************************
             // Master Details: Operations for Search and  editing of OneToMany/ManyToMany

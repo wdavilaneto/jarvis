@@ -1,27 +1,16 @@
 {
-  "aplicacao":" Project Description ",
+  "aplicacao":" Jarvis ",
 
-  "home": "Tela inicial",
-
-  "menu.inicial": "Início",
-  "menu.principal": "Principal",
-  "menu.administracao": "Administração",
-  "menu.tipos": "Tipos",
-  "menu.sair": "Sair",
-  "menu.sobre": "Sobre",
-  "menu.restapi": "REST API",
+  "menu.home": "Home",
   "menu.sistema": "Sistema",
+  "menu.fann":"FANN",
+  "menu.meta":"Meta Toolkit",
+  "menu.neural_net":"Neural Networks",
 
   "add":"Adicionar",
   "remove":"Remover",
   "associate":"Associar",
   "disassociate":"Desassociar",
-
-  "login.restricted_area": "Área Restrita",
-  "login.obrigatorio": "Obrigatório",
-  "login.login": "Login",
-  "login.senha": "Senha",
-  "login.authenticate": "Autenticar",
 
   "sucesso" : "Sucesso",
   "erro" : "Erro",

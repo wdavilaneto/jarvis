@@ -5,8 +5,10 @@
 #ifndef JARVIS_MAINREQUESTHANDLER_HPP
 #define JARVIS_MAINREQUESTHANDLER_HPP
 
-#include <Poco/Net/HTTPRequestHandler.h>
+#include <TrainingDataService.hpp>
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
+#include <boost/smart_ptr/shared_ptr.hpp>
+#include <boost/smart_ptr/make_shared_object.hpp>
 #include "Poco/Net/HTTPServerParams.h"
 #include "Poco/Net/HTTPServerRequest.h"
 #include "Poco/Net/HTTPServerResponse.h"
@@ -36,12 +38,16 @@ public:
 };
 
 class MainRequestHandlerFactory : public HTTPRequestHandlerFactory {
+private:
+    std::vector<boost::shared_ptr<HTTPRequestHandler> > handlers;
 public:
 
-    MainRequestHandlerFactory() {
+    MainRequestHandlerFactory() : handlers() {
+        handlers.push_back(boost::make_shared(TrainingDataService));
     }
 
     HTTPRequestHandler *createRequestHandler(const HTTPServerRequest &request) {
+
         if (request.getURI() == "/")
             return new RootHandler();
         else

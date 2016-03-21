@@ -17,18 +17,15 @@ using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::HTTPRequestHandler;
 
-class RootHandler : public HTTPRequestHandler {
+class TrainingDataService : public HTTPRequestHandler {
 public:
 
     void handleRequest(HTTPServerRequest &request, HTTPServerResponse &response) {
         Application &app = Application::instance();
         app.logger().information("Request from " + request.clientAddress().toString());
-
         response.setChunkedTransferEncoding(true);
         response.setContentType("text/html");
         std::ostream &ostr = response.send();
-
-
 
     }
 

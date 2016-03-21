@@ -9,14 +9,14 @@
      *  license url http://www.apache.org/licenses/LICENSE-2.0.txt
      */
 
-    angular.module('medicamentosApp.cidade')
-    .directive('cidadeFieldset', function(){
+    angular.module('jarvisApp.neuralNet')
+    .directive('neuralNetFieldset', function(){
         return {
             restrict: 'E',
             scope: {
                 entity: '=model'
             },
-            templateUrl: 'modules/cidade/directives/neura_net.fieldset.directive.html'
+            templateUrl: 'modules/neuralNet/directives/neural_net.fieldset.directive.html'
         };
     });
 

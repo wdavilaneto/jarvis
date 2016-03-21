@@ -8,11 +8,24 @@
         <div class="panel panel-default ng-scope">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a href="#/dashboard" class="ng-binding"><i class="fa fa-bar-chart-o"></i> Painel de Controle</a>
+                    <a href="#/dashboard" class="ng-binding"><i class="fa fa-home-o"></i> Home </a>
                 </h4>
             </div>
         </div>
-
+        <div accordion-group>
+            <div accordion-heading>
+                <span>{{"menu.fann" | translate}}</span>
+                <i class="pull-right mdi"></i>
+            </div>
+            <a href="#/neuralNet"><i class="mdi mdi-apps"></i>{{"menu.neural_net" | translate}}</a>
+        </div>
+        <div accordion-group>
+            <div accordion-heading>
+                <span>{{"menu.meta" | translate}}</span>
+                <i class="pull-right mdi"></i>
+            </div>
+            <a href="#/meta"><i class="mdi mdi-apps"></i>{{"menu.sobre" | translate}}</a>
+        </div>
         <div accordion-group>
             <div accordion-heading>
                 <span>{{"menu.sistema" | translate}}</span>

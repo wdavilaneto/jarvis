@@ -9,21 +9,21 @@
  *  license url http://www.apache.org/licenses/LICENSE-2.0.txt
  *
  * @ngdoc function
- * @name medicamentosApp.controller:cidadeController
+ * @name jarvisApp.controller:neuralNetController
  * @description
- * # cidadeController
- * Controller of the medicamentosApp
+ * # neuralNetController
+ * Controller of the jarvisApp
  */
-angular.module('medicamentosApp')
-    .controller('cidadeEditMainController', cidadeEditMainController);
+angular.module('jarvisApp')
+    .controller('neuralNetEditMainController', neuralNetEditMainController);
 
-    cidadeEditMainController.$inject = ['$scope', '$state', '$stateParams', '$modal', '$location', 'jsog', 'cidadeService', 'solicitacaoService'];
+    neuralNetEditMainController.$inject = ['$scope', '$state', '$stateParams', '$modal', '$location', 'jsog', 'neuralNetService'];
 
-    function cidadeEditMainController($scope, $state, $stateParams , $modal, $location, jsog, cidadeService , solicitacaoService ) {
+    function neuralNetEditMainController($scope, $state, $stateParams , $modal, $location, jsog, neuralNetService  ) {
 
         var vm = this;
 
-        vm.searchSelects = cidadeService.factorySearchSelect(); // Text Search Select utility Object
+        vm.searchSelects = neuralNetService.factorySearchSelect(); // Text Search Select utility Object
 
         // ***************************
         // Model Initializations
@@ -38,12 +38,12 @@ angular.module('medicamentosApp')
             //    return;
             //}
 
-            console.log('Requesting save on cidade');
+            console.log('Requesting save on neuralNet');
                 vm.searchSelects.toEntity(vm.entity);
-                cidadeService.save(vm.entity, function (successResult) {
+                neuralNetService.save(vm.entity, function (successResult) {
                 console.log(successResult);
-                    vm.entity = cidadeService.create();
-                    $state.go('cidadeSearch', {}, {reload: true});
+                    vm.entity = neuralNetService.create();
+                    $state.go('neuralNetSearch', {}, {reload: true});
             });
         };
 
@@ -55,11 +55,11 @@ angular.module('medicamentosApp')
             //    return;
             //}
 
-            console.log('Requesting save on cidade');
+            console.log('Requesting save on neuralNet');
                 vm.searchSelects.toEntity(vm.entity);
-                cidadeService.save(vm.entity, function (successResult) {
+                neuralNetService.save(vm.entity, function (successResult) {
                 console.log(successResult);
-                    $state.go('cidadeEdit.main', {id: successResult.id}, {reload: true});
+                    $state.go('neuralNetEdit.main', {id: successResult.id}, {reload: true});
 
             });
         };
@@ -67,11 +67,11 @@ angular.module('medicamentosApp')
         // ******************************************************************************************
         // Modals methods definitions
         // ******************************************************************************************
-        // Create Cidade Modal Window
+        // Create neuralNet Modal Window
             vm.open = function (size) {
                 vm.searchSelects.toEntity(vm.entity);
             var modalInstance = $modal.open({
-                templateUrl: 'createCidadeModal.html', controller: 'ModalCidadeController', size: size,
+                templateUrl: 'createneuralNetModal.html', controller: 'ModalneuralNetController', size: size,
                 resolve: {
                     data: function () {
                         return vm.entity;
@@ -81,14 +81,14 @@ angular.module('medicamentosApp')
             modalInstance.result.then(function (selectedItem) {
                     vm.selected = selectedItem;
                 // Refreshing Result List
-                    vm.entity = cidadeService.create();
+                    vm.entity = neuralNetService.create();
                     vm.search();
             }, function () {
                 //dismiss
             });
         };
 
-        // Create Cidade Modal Window
+        // Create neuralNet Modal Window
             vm.view = function (size, entityName) {
                 vm.searchSelects.toEntity(vm.entity);
             var modalInstance = $modal.open({
@@ -105,8 +105,8 @@ angular.module('medicamentosApp')
 
         vm.remove = function (obj) {
             var modalInstance = $modal.open({
-                templateUrl: 'confirmRemoveCidadeModal.html',
-                controller: 'ModalCidadeController',
+                templateUrl: 'confirmRemoveneuralNetModal.html',
+                controller: 'ModalneuralNetController',
                 size: 'lg',
                 resolve: {
                     data: function () {
@@ -119,16 +119,16 @@ angular.module('medicamentosApp')
             });
             modalInstance.result.then(function (selectedItem) {
                 //vm.search();
-                    $state.go('cidadeSearch', {}, {reload: true});
+                    $state.go('neuralNetSearch', {}, {reload: true});
             }, function () {
                 //dismiss
             });
         };
 
         // Inline Update Modal
-            vm.editCidade = function (obj) {
+            vm.editneuralNet = function (obj) {
             var modalInstance = $modal.open({
-                templateUrl: 'createCidadeModal.html', controller: 'ModalCidadeController', size: 'lg',
+                templateUrl: 'createneuralNetModal.html', controller: 'ModalneuralNetController', size: 'lg',
                 resolve: {
                     data: function () {
                         return obj;
@@ -150,13 +150,13 @@ angular.module('medicamentosApp')
         // ****************************************
         // Controller init (on load) service calls
         // ****************************************
-        // if in edit mode get the wanted cidade
+        // if in edit mode get the wanted neuralNet
         if ($stateParams.id) {
             var id = $stateParams.id;
 
             console.log('retrieving rename.id = ' + id  );
 
-            cidadeService.get( {'id': id} , function (data) {
+            neuralNetService.get( {'id': id} , function (data) {
                 vm.entity = data;                           // set managed entity from service
                 vm.original = vm.entity;                // backup original values;
                 vm.searchSelects.fromEntity(vm.entity); // update search selects values;

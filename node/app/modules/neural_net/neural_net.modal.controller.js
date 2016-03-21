@@ -5,53 +5,52 @@
  *  license url http://www.apache.org/licenses/LICENSE-2.0.txt
  *
  * @ngdoc function
- * @name medicamentosApp.controller:cidadeController
+ * @name jarvisApp.controller:neuralNetController
  * @description
- * # cidadeController
- * Modal Controller for Cidade of the medicamentosApp
+ * # neuralNetController
+ * Modal Controller for neuralNet of the jarvisApp
  */
 (function() {
 
-    'use strict';
+	'use strict';
 
-    angular.module('medicamentosApp')
-        .controller('ModalCidadeController', ModalCidadeController);
+    angular.module('jarvisApp')
+        .controller('ModalneuralNetController', ModalneuralNetController);
 
-    ModalCidadeController.$inject = ['$scope', '$state', '$location', '$modalInstance', 'jsog', 'cidadeService', 'solicitacaoService', 'data'];
+    ModalneuralNetController.$inject = ['$scope', '$state', '$location', '$modalInstance', 'jsog', 'neuralNetService'];
 
-    function ModalCidadeController($scope, $state, $location, $modalInstance, jsog, cidadeService , solicitacaoService , data, readonly) {
+    function ModalneuralNetController($scope, $state, $location, $modalInstance, jsog, neuralNetService  , data, readonly) {
 
-        $scope.entity = data;  //.cidade;
-        $scope.searchSelects = cidadeService.factorySearchSelect();
+        $scope.searchSelects = neuralNetService.factorySearchSelect();
         $scope.searchSelects.fromEntity($scope.entity);
 
         if (!readonly) {
             // Selects to Fullfill select boxes
             // Begin block
-        }
+                                                }
         // end block
 
-        $scope.save = function () {
+            $scope.save = function () {
             console.log('Saving Modal');
-            $scope.searchSelects.toEntity($scope.entity);
-            cidadeService.save($scope.entity, function (successResult) {
+                $scope.searchSelects.toEntity($scope.entity);
+                neuralNetService.save($scope.entity, function (successResult) {
                 console.log(successResult);
-                $scope.entity = {};
-                $modalInstance.close($scope.entity);
+                    $scope.entity = {};
+                    $modalInstance.close($scope.entity);
             });
         };
 
         $scope.remove = function () {
-            console.log('Deleting cidade with id:' + $scope.entity.id);
-            cidadeService.remove({id: $scope.entity.id}, function (successResult) {
+            console.log('Deleting neuralNet with id:' + $scope.entity.id);
+                neuralNetService.remove({id: $scope.entity.id}, function (successResult) {
                 console.log(successResult);
-                $modalInstance.close($scope.entity);
-                $state.go('cidadeEdit.main', {}, {reload: true});
+                    $modalInstance.close($scope.entity);
+                    $state.go('neuralNetEdit.main', {}, {reload: true});
             });
         };
 
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
         };
 
     }

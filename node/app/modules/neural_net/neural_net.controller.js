@@ -8,33 +8,33 @@
  *  license url http://www.apache.org/licenses/LICENSE-2.0.txt
  *
  * @ngdoc function
- * @name medicamentosApp.controller:cidadeController
+ * @name jarvisApp.controller:neuralNetController
  * @description
- * # cidadeController
- * Controller of the medicamentosApp
+ * # neuralNetController
+ * Controller of the jarvisApp
  */
-angular.module('medicamentosApp')
-    .controller('cidadeController', cidadeController);
+angular.module('jarvisApp')
+    .controller('neuralNetController', neuralNetController);
 
-    cidadeController.$inject = ['$scope', '$stateParams', '$modal', '$location', 'jsog', 'cidadeService' , 'solicitacaoService'];
+    neuralNetController.$inject = ['$scope', '$stateParams', '$modal', '$location', 'jsog', 'neuralNetService' ];
 
-    function cidadeController($scope, $stateParams , $modal, $location, jsog, cidadeService , solicitacaoService ) {
+    function neuralNetController($scope, $stateParams , $modal, $location, jsog, neuralNetService  ) {
 
         var vm = this;
 
         // ***************************
         // Model Initializations
         // ***************************
-        vm.entity = cidadeService.create();
+        vm.entity = neuralNetService.create();
         vm.options = { language: 'en', allowedContent: true, entities: false };
         vm.editMode = false;
         vm.maxSelectBoxSize = 300;
         vm.textSearchActive = true;
         vm.searchField = {text: ''};
-        vm.searchSelects = cidadeService.factorySearchSelect(); // Text Search Select utility Object
+        vm.searchSelects = neuralNetService.factorySearchSelect(); // Text Search Select utility Object
 
         // Elementos usados pelo ui-grid DEVEM estar no $scope
-        $scope.gridOptions = cidadeService.createGridOptions( true);
+        $scope.gridOptions = neuralNetService.createGridOptions( true);
         $scope.pagination = $scope.gridOptions.getPagination(); // just for ease use/access
         $scope.resultPage = {}; // Paged result for search filter
 
@@ -48,10 +48,10 @@ angular.module('medicamentosApp')
         // ******************************************************************************************
         // Modals methods definitions
         // ******************************************************************************************
-        // Create Cidade Modal Window
+        // Create neuralNet Modal Window
         vm.open = open;
 
-        // Create Cidade Modal Window
+        // Create neuralNet Modal Window
         vm.view = view;
 
         vm.setTextSearchActive = setTextSearchActive;
@@ -63,14 +63,14 @@ angular.module('medicamentosApp')
             console.log('Realizando busca');
             // prepare page request
             if (vm.textSearchActive) {
-                    cidadeService.searchText( {'content': vm.searchField.text ,'pagination':$scope.pagination.getPageRequest()} , function (data) {
+                    neuralNetService.searchText( {'content': vm.searchField.text ,'pagination':$scope.pagination.getPageRequest()} , function (data) {
                     $scope.resultPage = data;
                     $scope.resultPage.content = jsog.decode(data.content);
                 });
             } else {
                 // prepare search(d) text object
                 vm.searchSelects.toEntity(vm.entity);
-                    cidadeService.search( {'content':vm.entity,'pagination':$scope.pagination.getPageRequest()} , function (data) {
+                    neuralNetService.search( {'content':vm.entity,'pagination':$scope.pagination.getPageRequest()} , function (data) {
                     $scope.resultPage = data;
                     try {
                         $scope.resultPage.content = jsog.decode(data.content);
@@ -88,7 +88,7 @@ angular.module('medicamentosApp')
 
         function clearForm() {
             console.log('Limpando form filter');
-            vm.entity = cidadeService.create();
+            vm.entity = neuralNetService.create();
             vm.searchField.text = '';
             vm.searchSelects.clear();
         }
@@ -96,7 +96,7 @@ angular.module('medicamentosApp')
         function open(size) {
             vm.searchSelects.toEntity(vm.entity);
             var modalInstance = $modal.open({
-                templateUrl: 'createCidadeModal.html', controller: 'ModalCidadeController', size: size,
+                templateUrl: 'createneuralNetModal.html', controller: 'ModalneuralNetController', size: size,
                 resolve: {
                     data: function () {return vm.entity;}
                 }
@@ -104,7 +104,7 @@ angular.module('medicamentosApp')
             modalInstance.result.then(function (selectedItem) {
                 vm.selected = selectedItem;
                 // Refreshing Result List
-                vm.entity = cidadeService.create();
+                vm.entity = neuralNetService.create();
                 vm.search();
             }, function () {
                 //dismiss
@@ -133,7 +133,7 @@ angular.module('medicamentosApp')
 
         // Search de todos os elementos inicial ( quando entra na tela )
     if (!vm.editMode) {
-            cidadeService.findAll( $scope.pagination.getPageRequest() , function (data) {
+            neuralNetService.findAll( $scope.pagination.getPageRequest() , function (data) {
                 $scope.resultPage = data;
                 $scope.resultPage.content = jsog.decode(data.content);
             });

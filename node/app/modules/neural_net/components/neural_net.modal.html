@@ -1,15 +1,15 @@
-        <script type="text/ng-template" id="createCidadeModal.html">
-            <form name="createCidadeModalForm">
+        <script type="text/ng-template" id="createneuralNetModal.html">
+            <form name="createneuralNetModalForm">
                 <div class="modal-header">
                     <button type="button" class="close" ng-click="$event.stopPropagation(); cancel()" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Cidade</h4>
+                    <h4 class="modal-title">neuralNet</h4>
                 </div>
                 <div class="modal-body">
                     <div class="box box-primary">
                         <div class="box-header"></div>
                         <div class="box-body">
                             <div class="row">
-                                <div ng-include src="'modules/neural_net/components/cidade.fieldset.html'"></div>
+                                <div ng-include src="'modules/neural_net/components/neuralNet.fieldset.html'"></div>
                             </div>
                         </div>
                     </div>
@@ -21,16 +21,16 @@
             </form>
         </script>
 
-        <script type="text/ng-template" id="viewCidadeModal.html">
+        <script type="text/ng-template" id="viewneuralNetModal.html">
             <div class="modal-header">
-                <h4 class="modal-title">Cidade</h4>
+                <h4 class="modal-title">neuralNet</h4>
             </div>
             <div class="modal-body">
                 <div class="box box-primary">
                     <div class="box-header"></div>
                     <div class="box-body">
                         <div class="row">
-                            <div ng-include src="'modules/neural_net/components/cidade.readonly.html'"></div>
+                            <div ng-include src="'modules/neural_net/components/neuralNet.readonly.html'"></div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
             <div class="modal-footer">
             </div>
         </script>
-        <script type="text/ng-template" id="confirmRemoveCidadeModal.html">
+        <script type="text/ng-template" id="confirmRemoveneuralNetModal.html">
             <div class="modal-header">
                 <h4 class="modal-title has-warning">Atenção: Deseja excluir o registro ?</h4>
             </div>
@@ -47,7 +47,7 @@
                      <div class="box-header"></div>
                      <div class="box-body">
                          <div class="row">
-                            <div ng-include src="'modules/neural_net/components/cidade.readonly.html'"></div>
+                            <div ng-include src="'modules/neural_net/components/neuralNet.readonly.html'"></div>
                          </div>
                      </div>
                 </div>

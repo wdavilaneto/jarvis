@@ -8,24 +8,24 @@
  *  license url http://www.apache.org/licenses/LICENSE-2.0.txt
  *
  * @ngdoc function
- * @name medicamentosApp.controller:cidadeExtController
+ * @name jarvisApp.controller:neuralNetExtController
  * @description
- * # cidadeExtController
- * Extended Controller pr Master Detail and other specific operations of the medicamentosApp
+ * # neuralNetExtController
+ * Extended Controller pr Master Detail and other specific operations of the jarvisApp
  */
-    angular.module('medicamentosApp')
-        .controller('cidadeExtController', cidadeExtController);
+    angular.module('jarvisApp')
+        .controller('neuralNetExtController', neuralNetExtController);
 
-    cidadeExtController.$inject = ['$scope', '$stateParams', '$modal', '$location', 'jsog', 'cidadeService' , 'solicitacaoService'];
+    neuralNetExtController.$inject = ['$scope', '$stateParams', '$modal', '$location', 'jsog', 'neuralNetService' ];
 
-    function cidadeExtController($scope, $stateParams , $modal, $location, jsog, cidadeService , solicitacaoService) {
+    function neuralNetExtController($scope, $stateParams , $modal, $location, jsog, neuralNetService ) {
 
         $scope.masterDetail = null;
 
         $scope.create = function ( parent ) {
             $scope.selected = null;
             $scope.selected = {
-                cidade:parent
+                neuralNet:parent
             };
         };
 
@@ -35,8 +35,8 @@
 
         $scope.back = function (){
             if ($stateParams.child) {
-                console.log('Redirecting to /Cidade/'+ $stateParams.id + '/' + $stateParams.child);
-                $location.path('/cidade/'+ $stateParams.id + '/' + $stateParams.child);
+                console.log('Redirecting to /neuralNet/'+ $stateParams.id + '/' + $stateParams.child);
+                $location.path('/neuralNet/'+ $stateParams.id + '/' + $stateParams.child);
             } else {
                 $window.history.back();
             }

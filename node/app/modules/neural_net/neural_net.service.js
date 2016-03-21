@@ -3,21 +3,21 @@
 
 /**
  * @ngdoc service
- * @name medicamentosApp.medicamentosService
+ * @name jarvisApp.neuralNetService
  * @description
  * # myService
- * Factory in the medicamentosApp.
+ * Factory in the jarvisApp.
  */
-angular.module('medicamentosApp').factory('cidadeService', cidadeService);
+angular.module('jarvisApp').factory('neuralNetService', neuralNetService);
 
-    cidadeService.$inject = ['$resource', 'gridService', 'ENV_CONFIG'];
+    neuralNetService.$inject = ['$resource', 'gridService', 'ENV_CONFIG'];
 
-    function cidadeService($resource, gridService, ENV_CONFIG) {
-        var service = $resource('/medicamentos/api/cidade/:id', {}, {
-            'findAll': { method: 'GET', url: '/medicamentos/api/cidade', isArray: false},
-            'search': { method: 'POST', url: '/medicamentos/api/cidade/search', isArray: false},
-            'searchText': { method: 'POST', url: '/medicamentos/api/cidade/searchText', isArray: false},
-            'findAllOverdue':{ method: 'GET', url: '/medicamentos/api/cidade/overdue', isArray: false},
+    function neuralNetService($resource, gridService, ENV_CONFIG) {
+        var service = $resource('/neuralNet/api/neuralNet/:id', {}, {
+            'findAll': { method: 'GET', url: '/neuralNet/api/neuralNet', isArray: false},
+            'search': { method: 'POST', url: '/neuralNet/api/neuralNet/search', isArray: false},
+            'searchText': { method: 'POST', url: '/neuralNet/api/neuralNet/searchText', isArray: false},
+            'findAllOverdue':{ method: 'GET', url: '/neuralNet/api/neuralNet/overdue', isArray: false},
             'get': { method: 'GET'},
             'save': { method: 'POST'},
             'remove': { method: 'DELETE'}
@@ -61,14 +61,14 @@ angular.module('medicamentosApp').factory('cidadeService', cidadeService);
         service.createGridOptions = function (entitySelected, isEditMode){
             var options = gridService.createGridOptions(isEditMode);
             //options.rowTemplate= '<div ng-dblclick="detalhar(row.entity)" ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}"><div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div><div ng-cell></div></div>';
-            //options.rowTemplate= '<div ng-dblclick="editcidade(row.entity)" ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}"><div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div><div ng-cell></div></div>';
+            //options.rowTemplate= '<div ng-dblclick="editneuralNet(row.entity)" ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}"><div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div><div ng-cell></div></div>';
             options.columnDefs = [];
 
             options.columnDefs.push({field: 'ufed', displayName: 'Ufed', sortable: false});
             options.columnDefs.push({field: 'nome', displayName: 'Nome', sortable: false});
-            options.columnDefs.push({name:'btn_detail', displayName: '', enableColumnResizing: false, enableSorting: false, enableFiltering: false, cellTemplate: ENV_CONFIG.baseURL + 'modules/cidade/components/neura_net.grid.cell.detalhar.html', width : '35', resizable: false});
+            options.columnDefs.push({name:'btn_detail', displayName: '', enableColumnResizing: false, enableSorting: false, enableFiltering: false, cellTemplate: ENV_CONFIG.baseURL + 'modules/neuralNet/components/neural_net.grid.cell.detalhar.html', width : '35', resizable: false});
             if (isEditMode) {
-                options.columnDefs.push({name:'btn_delete', displayName: '', enableColumnResizing: false, enableSorting: false, enableFiltering: false,  cellTemplate: ENV_CONFIG.baseURL + 'modules/cidade/components/neura_net.grid.cell.delete.html' , width : '35', resizable: false});
+                options.columnDefs.push({name:'btn_delete', displayName: '', enableColumnResizing: false, enableSorting: false, enableFiltering: false,  cellTemplate: ENV_CONFIG.baseURL + 'modules/neuralNet/components/neural_net.grid.cell.delete.html' , width : '35', resizable: false});
             }
             return options;
         };
