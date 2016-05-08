@@ -1,0 +1,12 @@
+find_package(Boost 1.59 REQUIRED COMPONENTS system thread)
+find_package(Threads)
+
+add_library(server server.cpp server.h MainRequestHandler.hpp TrainingDataService.hpp)
+
+target_link_libraries( server
+        PocoNet
+        PocoUtil
+        PocoFoundation
+        pthread
+        ${Boost_LIBRARIES}
+)

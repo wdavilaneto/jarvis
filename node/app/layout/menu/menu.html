@@ -1,0 +1,39 @@
+<span class="app-name hidden-sm hidden-xs">
+    <span></span>
+    <p ng-bind-html="'aplicacao'|translate">{{"aplicacao" | translate}}</p>
+</span>
+
+<div class="menu" accordion>
+    <div accordion close-others="oneAtATime">
+        <div class="panel panel-default ng-scope">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a href="#/dashboard" class="ng-binding"><i class="fa fa-home-o"></i> Home </a>
+                </h4>
+            </div>
+        </div>
+        <div accordion-group>
+            <div accordion-heading>
+                <span>{{"menu.fann" | translate}}</span>
+                <i class="pull-right mdi"></i>
+            </div>
+            <a href="#/neuralNet"><i class="mdi mdi-apps"></i>{{"menu.neural_net" | translate}}</a>
+        </div>
+        <div accordion-group>
+            <div accordion-heading>
+                <span>{{"menu.meta" | translate}}</span>
+                <i class="pull-right mdi"></i>
+            </div>
+            <a href="#/meta"><i class="mdi mdi-apps"></i>{{"menu.sobre" | translate}}</a>
+        </div>
+        <div accordion-group>
+            <div accordion-heading>
+                <span>{{"menu.sistema" | translate}}</span>
+                <i class="pull-right mdi"></i>
+            </div>
+            <a href="#/sobre"><i class="mdi mdi-apps"></i>{{"menu.sobre" | translate}}</a>
+            <a href="/swagger-ui" target="_blank"><i class="mdi mdi-apps"></i>{{"menu.restapi" | translate}}</a>
+        </div>
+
+    </div>
+</div>

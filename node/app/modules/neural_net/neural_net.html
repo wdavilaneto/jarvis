@@ -1,0 +1,57 @@
+<!-- sessões -->
+<section class="content-header">
+    <h1><i class="fa fa-home"></i> Inicial </h1>
+</section>
+
+<section class="content">
+
+    <div class="box box-primary">
+        <form name="neuralNetForm" novalidate ng-submit="vm.newSearch()">
+            <div class="nav-tabs-custom">
+                <div class="tab-content">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-3 form-group" show-errors>
+                                <label class="control-label" for="nome">Busca por nome </label>
+                                <input class="form-control" type="text" ng-maxlength="40" ng-model="vm.entity.nome" required placeholder="Nome"  id="nome" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer hidden-sm hidden-xs">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="bt bt-sky" href="" ng-click="vm.clearForm()"><i class="mdi mdi-eraser"></i> Limpar Filtro</a>
+                                <a class="bt bt-emerald" href="" ng-click="vm.newSearch()"><i class="mdi mdi-magnify"></i> Buscar</a>
+                                <a class="bt bt-asphalt" href="" ng-click="vm.open('lg')"><i class="mdi mdi-open-in-new"></i> Novo </a>
+                                <a class="bt bt-asphalt" href="" ui-sref="neuralNetEdit.main()"><i class="mdi mdi-plus"></i> Novo </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer hidden-md hidden-lg">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a class="bt bt-sky" href="" ng-click="vm.clearForm()"><i class="mdi mdi-eraser"></i> </a>
+                                <a class="bt bt-emerald" href="" ng-click="vm.newSearch()"><i class="mdi mdi-magnify"></i> </a>
+                                <a class="bt bt-asphalt" href="" ng-click="vm.open('lg')"><i class="mdi mdi-open-in-new"></i> </a>
+                                <a class="bt bt-asphalt" href="" ui-sref="neuralNetEdit.main()"><i class="mdi mdi-plus"></i> </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- fim sessão -->
+    <!-- sessão -->
+    <!--<div class="box box-primary">-->
+    <!--<div class="box-body">-->
+    <!--<div class="box-header">-->
+    <!--<h3 class="box-title color-asphalt"><i class="mdi mdi-filter"></i> {{"grid.titulo" | translate}}</h3>-->
+    <!--</div>-->
+    <!--<div ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns ui-grid-pagination ui-grid-auto-resize block-ui block-ui-pattern="/.*\/api\neuralNet/.*/"></div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div ng-include="'modules/neural_net/components/neural_net.modal.html'"></div>-->
+
+</section>

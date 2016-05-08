@@ -68,6 +68,5 @@ namespace brain {
     };
 
     // Empty Contructor
-
 };
 #endif //JARVIS_NEURONGROUP_H
