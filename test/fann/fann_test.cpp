@@ -1,18 +1,18 @@
 #define BOOST_TEST_MODULE FannTestTestSuite
 
-#include <boost/test/unit_test.hpp>
-#include <boost/make_shared.hpp>
-
 #include <fann.h>
 #include <fann_cpp.h>
 
 #include <iostream>
+#include <boost/make_shared.hpp>
+
+#include <boost/test/unit_test.hpp>
 
 using namespace FANN;
 using boost::shared_ptr;
 using boost::make_shared;
 
-BOOST_AUTO_TEST_CASE(FannTest) {
+BOOST_AUTO_TEST_CASE( FannTest ) {
 
     const unsigned int num_layers = 3;
     const unsigned int num_input = 2;

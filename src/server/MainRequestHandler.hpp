@@ -5,7 +5,7 @@
 #ifndef JARVIS_MAINREQUESTHANDLER_HPP
 #define JARVIS_MAINREQUESTHANDLER_HPP
 
-#include <TrainingDataService.hpp>
+//#include <TrainingDataService.hpp>
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
 #include <boost/smart_ptr/shared_ptr.hpp>
 #include <boost/smart_ptr/make_shared_object.hpp>
@@ -43,7 +43,7 @@ private:
 public:
 
     MainRequestHandlerFactory() : handlers() {
-        handlers.push_back(boost::make_shared(TrainingDataService));
+//        handlers.push_back(boost::make_shared(TrainingDataService));
     }
 
     HTTPRequestHandler *createRequestHandler(const HTTPServerRequest &request) {
