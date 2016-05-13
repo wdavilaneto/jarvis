@@ -8,8 +8,6 @@ find_library(SQLITE3_LIBRARY sqlite3 static)
 find_library(soci_core static)
 find_library(soci_sqlite static)
 
-#SET(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
-#SET(CMAKE_EXE_LINKER_FLAGS "-static")
 
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
