@@ -13,7 +13,6 @@ int main(int arg, char *argv[]) {
 
 //    RestfulServer server;
 //    return server.run(arg,argv);
-
 //    try {
 //        server.run();
 //    } catch (std::exception &ex) {

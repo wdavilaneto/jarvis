@@ -31,6 +31,7 @@ BOOST_AUTO_TEST_CASE( FannTest ) {
     net.set_activation_function_hidden(activation_function_enum::SIGMOID_SYMMETRIC);
     net.set_activation_function_output(activation_function_enum::SIGMOID_SYMMETRIC);
     net.train_on_file("xor_float.data", max_epochs, epochs_between_reports, desired_error);
+
     net.save("xor_float.net");
 
     BOOST_TEST_MESSAGE("Testing NN");

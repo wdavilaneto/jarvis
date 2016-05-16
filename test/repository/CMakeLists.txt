@@ -16,5 +16,8 @@ target_link_libraries(
         RepositoryTest
         soci_core
         soci_sqlite3
+        soci_postgresql
+        pq
+        dl
         ${Boost_LIBRARIES}
 )
