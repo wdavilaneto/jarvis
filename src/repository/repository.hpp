@@ -7,12 +7,16 @@
 
 #include <soci/soci.h>
 
-struct text_dto {
-    // nr_mp , destino , movimento , tipo_movimento
+namespace dto {
 
-    std::vector<std::string> classifications;
-    soci::blob pdf;
+    struct text_data {
+        // nr_mp , destino , movimento , tipo_movimento
 
+        std::vector<std::string> classifications;
+        std::vector<double> values;
+        std::string text;
+
+    };
 };
 
 #endif //JARVIS_REPOSITORY_HPP

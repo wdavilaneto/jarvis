@@ -1,9 +1,10 @@
 #define BOOST_TEST_MODULE RepositoryTestSuite
 
+#include <repository/repository.hpp>
+
 #include "soci/soci.h"
 //#include "soci/sqlite3/soci-sqlite3.h"?
 #include "soci/postgresql/soci-postgresql.h"
-
 #include <boost/property_tree/ini_parser.hpp>
 
 #include <iostream>
@@ -30,10 +31,12 @@ BOOST_AUTO_TEST_CASE(RepositoryTest) {
 
         soci::session session(soci::postgresql, conn);
 
-        auto total_manifestacao = 0;
-        session << "select count(*) from bi_manifestacao ", soci::into(total_manifestacao);
+        dto::text_data text_data;
+        long total =0 ;
+        session << "select count(*) from bi_manifestacao ", soci::into(total);
+        cout << total  << '\n';
 
-        BOOST_CHECK_GT( total_manifestacao , 0 );
+        BOOST_CHECK_GT( total , 0 );
 
     } catch (exception const &e) {
         std::cerr << "Error: " << e.what() << '\n';

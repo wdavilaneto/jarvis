@@ -38,3 +38,5 @@ node/.bowerrc
 node/.jshintrc
 node/.travis.yml
 node/.yo-rc.json
+
+resources/database/fann.database
