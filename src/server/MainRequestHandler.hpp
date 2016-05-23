@@ -5,6 +5,8 @@
 #ifndef JARVIS_MAINREQUESTHANDLER_HPP
 #define JARVIS_MAINREQUESTHANDLER_HPP
 
+#include <boost/algorithm/string/predicate.hpp>
+
 //#include <TrainingDataService.hpp>
 #include <Poco/Net/HTTPRequestHandlerFactory.h>
 #include <boost/smart_ptr/shared_ptr.hpp>
@@ -14,46 +16,53 @@
 #include "Poco/Net/HTTPServerResponse.h"
 #include "Poco/Net/HTTPServerParams.h"
 
+#include "FannHandler.hpp"
+
 using Poco::Util::Application;
 using Poco::Net::HTTPServerRequest;
 using Poco::Net::HTTPServerResponse;
 using Poco::Net::HTTPRequestHandler;
 using Poco::Net::HTTPRequestHandlerFactory;
 
-class RootHandler : public HTTPRequestHandler {
-public:
+namespace server {
 
-    void handleRequest(HTTPServerRequest &request, HTTPServerResponse &response) {
+    class RootHandler : public HTTPRequestHandler {
+    public:
 
-        Application &app = Application::instance();
-        app.logger().information("Request from " + request.clientAddress().toString());
-        response.setChunkedTransferEncoding(true);
-        response.setContentType("text/html");
-        std::ostream &ostr = response.send();
-        ostr << "<html><head><title>HTTP Server powered by POCO C++ Libraries</title></head>";
-        ostr << "<body> bla bla bla </body></html>";
+        void handleRequest(HTTPServerRequest &request, HTTPServerResponse &response) {
 
-    }
+            Application &app = Application::instance();
+            app.logger().information("Request from " + request.clientAddress().toString());
+            response.setChunkedTransferEncoding(true);
+            response.setContentType("text/html");
+            std::ostream &ostr = response.send();
+            ostr << "<html><head><title>HTTP Server powered by POCO C++ Libraries</title></head>";
+            ostr << "<body> bla bla bla </body></html>";
 
-};
+        }
+    };
 
-class MainRequestHandlerFactory : public HTTPRequestHandlerFactory {
-private:
-    std::vector<boost::shared_ptr<HTTPRequestHandler> > handlers;
-public:
+    class MainRequestHandlerFactory : public HTTPRequestHandlerFactory {
+    private:
+        std::vector<boost::shared_ptr<HTTPRequestHandler> > handlers;
+    public:
 
-    MainRequestHandlerFactory() : handlers() {
+        MainRequestHandlerFactory() : handlers() {
 //        handlers.push_back(boost::make_shared(TrainingDataService));
-    }
+        }
 
-    HTTPRequestHandler *createRequestHandler(const HTTPServerRequest &request) {
+        HTTPRequestHandler *createRequestHandler(const HTTPServerRequest &request) {
 
-        if (request.getURI() == "/")
-            return new RootHandler();
-        else
-            return new RootHandler();
-    }
+            if (request.getURI() == "/")
+                return new RootHandler;
+            else if (boost::starts_with(request.getURI() , "fann/" ) ) {
+                return new FannHandler;
+            } else {
+                return new RootHandler;
+            }
+
+        }
+    };
+
 };
-
-
 #endif //JARVIS_MAINREQUESTHANDLER_HPP

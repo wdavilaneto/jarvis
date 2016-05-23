@@ -4,13 +4,22 @@
     'use strict';
 
     angular.module('jarvisApp.main').controller('MainController', MainController);
-    function MainController($scope, $location,  ENV_CONFIG, toaster, $filter, $translate) {
 
-        var self = this;
+    MainController.$inject = ['$scope', '$stateParams', '$modal', '$location', 'jsog', 'neuralNetService' ];
 
-        // Public Metods
+    function MainController($scope, $stateParams , $modal, $location, jsog, neuralNetService ) {
 
-        this.envConfig = ENV_CONFIG;
+        var vm = this;
+
+        vm.gridOptions = neuralNetService.createGridOptions( true);
+        vm.pagination = vm.gridOptions.getPagination(); // just for ease use/access
+        vm.resultPage = {}; // Paged result for search filter
+
+        // Search de todos os elementos inicial ( quando entra na tela )
+        neuralNetService.findAll( vm.pagination.getPageRequest() , function (data) {
+            vm.resultPage = data;
+            vm.resultPage.content = jsog.decode(data.content);
+        });
     }
 
 })();

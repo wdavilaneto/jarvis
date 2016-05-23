@@ -13,8 +13,7 @@
  * # neuralNetController
  * Controller of the jarvisApp
  */
-angular.module('jarvisApp')
-    .controller('neuralNetController', neuralNetController);
+angular.module('jarvisApp').controller('neuralNetController', neuralNetController);
 
     neuralNetController.$inject = ['$scope', '$stateParams', '$modal', '$location', 'jsog', 'neuralNetService' ];
 
@@ -132,7 +131,7 @@ angular.module('jarvisApp')
         }
 
         // Search de todos os elementos inicial ( quando entra na tela )
-    if (!vm.editMode) {
+        if (!vm.editMode) {
             neuralNetService.findAll( $scope.pagination.getPageRequest() , function (data) {
                 $scope.resultPage = data;
                 $scope.resultPage.content = jsog.decode(data.content);

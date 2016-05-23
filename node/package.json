@@ -1,7 +1,9 @@
 {
   "name": "jarvis",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "sqlite3":"latest"
+  },
   "main": "app/main.js",
   "devDependencies": {
     "grunt": "^0.4.2",
