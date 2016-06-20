@@ -26,6 +26,7 @@
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     app.on('ready', function() {
+
         // Create the browser window.
         mainWindow = new BrowserWindow({width: 1024, height: 800, 'min-width': 1024, 'min-height': 800});
 
@@ -42,6 +43,7 @@
             // when you should delete the corresponding element.
             mainWindow = null;
         });
+
     });
 
 })();

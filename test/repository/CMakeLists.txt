@@ -12,6 +12,7 @@ find_library(soci_sqlite static)
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
 add_executable(RepositoryTest RepositoryTest.cpp)
+
 target_link_libraries(
         RepositoryTest
         soci_core

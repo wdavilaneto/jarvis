@@ -3,40 +3,30 @@
 #include <repository/repository.hpp>
 
 #include "soci/soci.h"
-//#include "soci/sqlite3/soci-sqlite3.h"?
+#include "soci/sqlite3/soci-sqlite3.h"
 #include "soci/postgresql/soci-postgresql.h"
 #include <boost/property_tree/ini_parser.hpp>
 
 #include <iostream>
 #include <boost/test/unit_test.hpp>
 
-
 BOOST_AUTO_TEST_CASE(RepositoryTest) {
 
-    using namespace std;
+    #define CONFIG_FILE_PATH "../../resources/application.cfg"
 
+    using namespace std;
     BOOST_TEST_MESSAGE("Repository toolkit tests");
 
     try {
-        boost::property_tree::ptree pt;
-        boost::property_tree::ini_parser::read_ini("../../resources/application.cfg", pt);
-
-        string conn = " hostaddr=" + pt.get<std::string>("database.host");
-        conn += " user=" + pt.get<std::string>("database.usename");
-        conn += " password=" + pt.get<std::string>("database.password");
-
-        //session sql(sqlite3, "../../resources/database/fann.database");
-        //string name;
-        //sql << "select name from neural_network where id = :id ", into(name), use(1);
-
-        soci::session session(soci::postgresql, conn);
+        boost::property_tree::ptree config;
+        boost::property_tree::ini_parser::read_ini(CONFIG_FILE_PATH, config);
+        soci::session session(config.get<string>("database.dbname"), config.get<string>("database.connection"));
 
         dto::text_data text_data;
-        long total =0 ;
-        session << "select count(*) from bi_manifestacao ", soci::into(total);
-        cout << total  << '\n';
-
-        BOOST_CHECK_GT( total , 0 );
+        long total = 0;
+        session << "select count(*) from bi_manifestacao where nr_mp = :1", soci::into(total), soci::use(201100742214);
+        BOOST_CHECK_GT(total, 0);
+        cout << total << '\n';
 
     } catch (exception const &e) {
         std::cerr << "Error: " << e.what() << '\n';
