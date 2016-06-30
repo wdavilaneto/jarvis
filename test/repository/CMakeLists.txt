@@ -1,13 +1,8 @@
-find_package(Boost REQUIRED COMPONENTS unit_test_framework log log_setup system filesystem date_time)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DBOOST_LOG_DYN_LINK")
-
 ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK)
 
-find_library(SQLITE3_LIBRARY sqlite3 static)
-find_library(soci_core static)
-find_library(soci_sqlite static)
-
+#find_library(SQLITE3_LIBRARY sqlite3 static)
+#find_library(soci_core static)
+#find_library(soci_sqlite static)
 
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
@@ -20,5 +15,5 @@ target_link_libraries(
         soci_postgresql
         pq
         dl
-        ${Boost_LIBRARIES}
+        ${CONAN_LIBS}
 )
