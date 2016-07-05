@@ -3,12 +3,17 @@ project(jarvis)
 
 #SET(CMAKE_CXX_COMPILER mpic++)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+## ************************************
+## Conan managed Dependencies
+## ************************************
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/build/conanbuildinfo.cmake) #Clion, with conanbuildinfo.cmake in build folder
     include(${CMAKE_CURRENT_SOURCE_DIR}/build/conanbuildinfo.cmake)
 else()
     include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake) # Not CLion
 endif()
 conan_basic_setup()
+
 
 find_package(Threads)
 
@@ -32,6 +37,10 @@ target_link_libraries( jarvis
         ${CONAN_LIBS}
 )
 
+
+## ****************
+## Install Block
+## ****************
 install(TARGETS jarvis
         RUNTIME
         DESTINATION bin
