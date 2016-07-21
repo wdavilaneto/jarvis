@@ -1,21 +1,35 @@
 #include <iostream>
 
 #include <server/server.hpp>
-#include <unordered_map>
-#include <fstream>
+#include <boost/iostreams/copy.hpp>
+#include "Poco/FileStream.h"
+#include "Poco/StreamCopier.h"
+#include "Poco/StringTokenizer.h"
 
+#include "domain.hpp"
 
-#define TEXT_FILE_PATH "../resources/test/ciencia.txt"
+#define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
-class TextProccessPipeline  {
+using namespace std;
+using namespace Poco;
+using domain::TextData;
+
+class TextProccessPipeline {
 public:
 
-    void thinkAboutIt(std::string){
+    void thinkAboutIt(string text) {
+        textData.original = text;
+        StringTokenizer tokenized(text, ",;.\n", StringTokenizer::TOK_TRIM | StringTokenizer::TOK_IGNORE_EMPTY);
+
+        std::string s(cat(std::string("|"), tokenized.begin(), tokenized.end()));
+
+        cout << s << endl;
 
     }
 
 protected:
-    std::unordered_map<std::string, int> data;
+    TextData textData;
+
 };
 
 int main(int arg, char *argv[]) {
@@ -26,8 +40,9 @@ int main(int arg, char *argv[]) {
 //        std::cout << "Initializing Jarvis on 8080" << std::endl;
 //        return server.run(arg, argv);
 
-        std::ifstream inputStream (TEXT_FILE_PATH);
-        std::string text((std::istreambuf_iterator<char>(inputStream)), std::istreambuf_iterator<char>());
+        string text;
+        FileStream fstream(TEXT_FILE_PATH);
+        StreamCopier::copyToString(fstream, text);
 
         boost::shared_ptr<TextProccessPipeline> tpp = boost::make_shared<TextProccessPipeline>();
         tpp->thinkAboutIt(text);
