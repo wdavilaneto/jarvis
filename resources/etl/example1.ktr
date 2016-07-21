@@ -80,7 +80,7 @@
     <type>SQLITE</type>
     <access>Native</access>
     <database>&#x2f;home&#x2f;walter&#x2f;develop&#x2f;cpp&#x2f;jarvis&#x2f;resources&#x2f;database&#x2f;fann.database</database>
-    <port/>
+    <port>-1</port>
     <username/>
     <password>Encrypted </password>
     <servername/>
@@ -125,64 +125,6 @@
   <hop> <from>manifestacao</from><to>manifestacao_local</to><enabled>Y</enabled> </hop>
   <hop> <from>anotacao</from><to>Table output 2</to><enabled>Y</enabled> </hop>
   </order>
-  <step>
-    <name>manifestacao_local</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>Jarvis SQLite</connection>
-    <schema/>
-    <table>bi_manifestacao</table>
-    <commit>100</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-        <field>
-          <column_name>nr_mp</column_name>
-          <stream_name>nr_mp</stream_name>
-        </field>
-        <field>
-          <column_name>destino</column_name>
-          <stream_name>destino</stream_name>
-        </field>
-        <field>
-          <column_name>movimento</column_name>
-          <stream_name>movimento</stream_name>
-        </field>
-        <field>
-          <column_name>tipo_movimento</column_name>
-          <stream_name>tipo_movimento</stream_name>
-        </field>
-        <field>
-          <column_name>pdf</column_name>
-          <stream_name>pdf</stream_name>
-        </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>608</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
   <step>
     <name>Table output 2</name>
     <type>TableOutput</type>
@@ -284,6 +226,64 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>160</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>manifestacao_local</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>Jarvis SQLite</connection>
+    <schema/>
+    <table>bi_manifestacao</table>
+    <commit>100</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+        <field>
+          <column_name>nr_mp</column_name>
+          <stream_name>nr_mp</stream_name>
+        </field>
+        <field>
+          <column_name>destino</column_name>
+          <stream_name>destino</stream_name>
+        </field>
+        <field>
+          <column_name>movimento</column_name>
+          <stream_name>movimento</stream_name>
+        </field>
+        <field>
+          <column_name>tipo_movimento</column_name>
+          <stream_name>tipo_movimento</stream_name>
+        </field>
+        <field>
+          <column_name>pdf</column_name>
+          <stream_name>pdf</stream_name>
+        </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>608</xloc>
       <yloc>80</yloc>
       <draw>Y</draw>
       </GUI>

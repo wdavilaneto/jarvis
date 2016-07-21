@@ -18,7 +18,7 @@ namespace server {
 
         void handleRequest(HTTPServerRequest &request, HTTPServerResponse &response) {
             Application &app = Application::instance();
-            app.logger().information(" fann context request with url: " + request.clientAddress().toString());
+//            app.logger().information(" fann context request with url: " + request.clientAddress().toString());
 
             response.setChunkedTransferEncoding(true);
             response.setContentType("json");

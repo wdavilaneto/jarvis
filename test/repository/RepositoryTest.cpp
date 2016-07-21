@@ -12,6 +12,8 @@
 
 #include <boost/test/included/unit_test.hpp>
 
+
+
 BOOST_AUTO_TEST_SUITE(test_suite1)
 
     BOOST_AUTO_TEST_CASE(repository_test_case_1) {
@@ -21,7 +23,6 @@ BOOST_AUTO_TEST_SUITE(test_suite1)
         using namespace std;
 
         boost::filesystem::path full_path(boost::filesystem::current_path());
-
         BOOST_TEST_MESSAGE(string() << full_path);
 
         try {

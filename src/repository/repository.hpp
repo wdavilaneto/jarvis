@@ -11,12 +11,10 @@ namespace dto {
 
     struct text_data {
         // nr_mp , destino , movimento , tipo_movimento
-
         double id;
         std::vector<std::string> classifications;
         std::vector<double> values;
         std::string text;
-
     };
 };
 
