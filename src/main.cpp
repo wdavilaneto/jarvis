@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include <server/server.hpp>
-#include <boost/iostreams/copy.hpp>
 #include "Poco/FileStream.h"
 #include "Poco/StreamCopier.h"
 #include "Poco/StringTokenizer.h"
@@ -19,17 +18,13 @@ public:
 
     void thinkAboutIt(string text) {
         textData.original = text;
-        StringTokenizer tokenized(text, ",;.\n", StringTokenizer::TOK_TRIM | StringTokenizer::TOK_IGNORE_EMPTY);
-
+        StringTokenizer tokenized(text, ";.", StringTokenizer::TOK_TRIM | StringTokenizer::TOK_IGNORE_EMPTY);
         std::string s(cat(std::string("|"), tokenized.begin(), tokenized.end()));
-
-        cout << s << endl;
-
+        cout << text << endl;
     }
 
 protected:
     TextData textData;
-
 };
 
 int main(int arg, char *argv[]) {

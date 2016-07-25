@@ -4,7 +4,6 @@
 
 #include "soci/soci.h"
 #include "soci/sqlite3/soci-sqlite3.h"
-#include "soci/postgresql/soci-postgresql.h"
 
 #include <boost/filesystem.hpp>
 #include <iostream>

@@ -5,7 +5,6 @@
 #include <unordered_set>
 #include <vector>
 #include "meta/util/aligned_alloc.h"
-
 #include "meta/analyzers/analyzer.h"
 #include "meta/analyzers/tokenizers/icu_tokenizer.h"
 #include "meta/analyzers/filters/all.h"
