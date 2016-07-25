@@ -17,10 +17,10 @@ class TextProccessPipeline {
 public:
 
     void thinkAboutIt(string text) {
-        textData.original = text;
-        StringTokenizer tokenized(text, ";.", StringTokenizer::TOK_TRIM | StringTokenizer::TOK_IGNORE_EMPTY);
-        std::string s(cat(std::string("|"), tokenized.begin(), tokenized.end()));
-        cout << text << endl;
+        textData.original = Poco::replace(text,"\n\n","\n");
+        StringTokenizer tokenized(textData.original, ".", StringTokenizer::TOK_TRIM | StringTokenizer::TOK_IGNORE_EMPTY);
+        std::string s(cat(std::string("\n"), tokenized.begin(), tokenized.end()));
+        cout << textData.original << endl;
     }
 
 protected:
