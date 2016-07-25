@@ -1,11 +1,15 @@
-#include <iostream>
+#include <domain.hpp>
 
+#include <iostream>
 #include <server/server.hpp>
+
 #include "Poco/FileStream.h"
 #include "Poco/StreamCopier.h"
-#include "Poco/StringTokenizer.h"
+#include <dlib/svm.h>
+#include <dlib/data_io.h>
+#include <boost/tokenizer.hpp>
 
-#include "domain.hpp"
+#include <mitie.h>
 
 #define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
@@ -13,18 +17,31 @@ using namespace std;
 using namespace Poco;
 using domain::TextData;
 
+
 class TextProccessPipeline {
 public:
+    TextProccessPipeline() {};
+
+    ~TextProccessPipeline() {
+
+    };
 
     void thinkAboutIt(string text) {
-        textData.original = Poco::replace(text,"\n\n","\n");
-        StringTokenizer tokenized(textData.original, ".", StringTokenizer::TOK_TRIM | StringTokenizer::TOK_IGNORE_EMPTY);
-        std::string s(cat(std::string("\n"), tokenized.begin(), tokenized.end()));
-        cout << textData.original << endl;
+        // save the original text
+        data.original = Poco::replace(text, "\n\n", "\n");
+
+        boost::tokenizer<> tokenizer(data.original);
+        for (boost::tokenizer<>::iterator beg = tokenizer.begin(); beg != tokenizer.end(); ++beg) {
+            data.words.push_back(std::move(*beg));
+        }
+
+        string str(cat(std::string("\n"), data.words.begin(), data.words.end()));
+        cout << str << endl;
+
     }
 
 protected:
-    TextData textData;
+    TextData data;
 };
 
 int main(int arg, char *argv[]) {

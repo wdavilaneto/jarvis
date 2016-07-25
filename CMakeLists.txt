@@ -13,7 +13,7 @@ find_package(Boost 1.59 REQUIRED COMPONENTS system thread)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 
-include_directories(
+include_directories (
         "${PROJECT_SOURCE_DIR}/src"
         "/usr/include/postgresql"
 )
@@ -22,7 +22,9 @@ add_subdirectory(src/brain)
 add_subdirectory(src/server)
 add_subdirectory(test)
 
-add_executable(jarvis src/main.cpp)
+set(DOMAIN src/domain.hpp src/domain/TextData.hpp)
+
+add_executable(jarvis ${DOMAIN} src/main.cpp )
 
 target_link_libraries( jarvis
         server
