@@ -1,6 +1,7 @@
 
 #include <service/TextService.hpp>
 
+#include <repository/repository.hpp>
 #include <server/server.hpp>
 
 #include "Poco/FileStream.h"
@@ -13,7 +14,6 @@ using namespace std;
 using namespace Poco;
 using domain::TextData;
 using service::TextService;
-
 
 class TextProccessPipeline {
 public:
@@ -47,19 +47,22 @@ int main(int arg, char *argv[]) {
 
         string text;
         FileStream fstream(TEXT_FILE_PATH);
-        if (!fstream){
-            throw errno;
-        }
         StreamCopier::copyToString(fstream, text);
+
+
+        repository::TextDataRepository textRepository;
+        auto result = textRepository.findAll();
+        for (auto each : result){
+            std::cout << each.toString() << std::endl;
+        }
+
 
         boost::shared_ptr<TextProccessPipeline> tpp = boost::make_shared<TextProccessPipeline>();
         tpp->thinkAboutIt(text);
 
-
-
         return EXIT_SUCCESS;
     } catch (std::exception &ex) {
-        //std::cerr << ex.what();
+        std::cerr << ex.what();
         return EXIT_FAILURE;
     }
 

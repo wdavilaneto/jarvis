@@ -1,17 +1,16 @@
-ADD_DEFINITIONS(-DBOOST_TEST_DYN_LINK)
+find_package(Boost REQUIRED COMPONENTS log log_setup thread system filesystem)
 
-find_package(Boost REQUIRED COMPONENTS unit_test_framework log log_setup system filesystem date_time)
-find_library(SQLITE3_LIBRARY sqlite3 static)
-find_library(soci_core static)
-find_library(soci_sqlite static)
+#find_library(SQLITE3_LIBRARY sqlite3 static)
+#find_library(soci_core static)
+#find_library(soci_sqlite static)
 
-set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+#set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DBOOST_LOG_DYN_LINK")
 
 add_executable(RepositoryTest RepositoryTest.cpp)
 
 target_link_libraries(
         RepositoryTest
-        soci_core
-        soci_sqlite3
+        repository
         ${Boost_LIBRARIES}
 )
