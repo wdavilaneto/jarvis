@@ -10,13 +10,11 @@
 
 #include <boost/test/included/unit_test.hpp>
 
-
-
 BOOST_AUTO_TEST_SUITE(test_suite1)
 
     BOOST_AUTO_TEST_CASE(repository_test_case_1) {
 
-        #define CONFIG_FILE_PATH "resources/application.cfg"
+        #define CONFIG_FILE_PATH "../../resources/application.cfg"
 
         using namespace std;
 
@@ -28,14 +26,19 @@ BOOST_AUTO_TEST_SUITE(test_suite1)
             boost::property_tree::ptree config;
             boost::property_tree::ini_parser::read_ini(CONFIG_FILE_PATH, config);
             soci::session session(config.get<string>("database.dbname"), config.get<string>("database.connection"));
+            session.set_log_stream(&std::cout);
 
-            dto::text_data text_data;
+            domain::TextData doc;
             // BI_MANIFESTACAO ( nr_mp , tipo_movimento , destino, movimento , pdf )
-            session << "select pdf from bi_manifestacao where nr_mp = :1", soci::into(text_data.text), soci::use(201100742214);
-            //BOOST_CHECK_GT(total, 0);
-            cout << text_data.text << '\n';
+            //session << "select nr_mp, pdf from bi_manifestacao ", soci::into(doc.id) , soci::into(doc.original);
 
-            Poco::Mon
+            soci::statement st = (session.prepare << "select nr_mp as ID, pdf as TEXT from bi_manifestacao order by nr_mp", soci::into(doc));
+            //BOOST_CHECK_GT(total, 0);
+            st.execute();
+            while (st.fetch())
+            {
+                cout << doc.id << '\n';
+            }
 
 
         } catch (exception const &e) {
