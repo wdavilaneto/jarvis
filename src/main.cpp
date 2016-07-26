@@ -1,21 +1,18 @@
-#include <domain.hpp>
 
-#include <iostream>
+#include <service/TextService.hpp>
+
 #include <server/server.hpp>
 
 #include "Poco/FileStream.h"
 #include "Poco/StreamCopier.h"
-#include <dlib/svm.h>
-#include <dlib/data_io.h>
-#include <boost/tokenizer.hpp>
 
-#include <mitie.h>
 
 #define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
 using namespace std;
 using namespace Poco;
 using domain::TextData;
+using service::TextService;
 
 
 class TextProccessPipeline {
@@ -27,16 +24,12 @@ public:
     };
 
     void thinkAboutIt(string text) {
+
         // save the original text
         data.original = Poco::replace(text, "\n\n", "\n");
 
-        boost::tokenizer<> tokenizer(data.original);
-        for (boost::tokenizer<>::iterator beg = tokenizer.begin(); beg != tokenizer.end(); ++beg) {
-            data.words.push_back(std::move(*beg));
-        }
-
-        string str(cat(std::string("\n"), data.words.begin(), data.words.end()));
-        cout << str << endl;
+        TextService textService;
+        data.wordCount = textService.wordCount(data.original);
 
     }
 
@@ -54,10 +47,15 @@ int main(int arg, char *argv[]) {
 
         string text;
         FileStream fstream(TEXT_FILE_PATH);
+        if (!fstream){
+            throw errno;
+        }
         StreamCopier::copyToString(fstream, text);
 
         boost::shared_ptr<TextProccessPipeline> tpp = boost::make_shared<TextProccessPipeline>();
         tpp->thinkAboutIt(text);
+
+
 
         return EXIT_SUCCESS;
     } catch (std::exception &ex) {

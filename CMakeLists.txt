@@ -22,7 +22,7 @@ add_subdirectory(src/brain)
 add_subdirectory(src/server)
 add_subdirectory(test)
 
-set(DOMAIN src/domain.hpp src/domain/TextData.hpp)
+set(DOMAIN src/domain.hpp src/domain/TextData.hpp src/service/TextService.hpp src/repository/repository.hpp)
 
 add_executable(jarvis ${DOMAIN} src/main.cpp )
 

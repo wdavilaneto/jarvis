@@ -2,7 +2,6 @@
 
 #include <repository/repository.hpp>
 
-#include "soci/soci.h"
 #include "soci/sqlite3/soci-sqlite3.h"
 
 #include <boost/filesystem.hpp>
@@ -35,6 +34,9 @@ BOOST_AUTO_TEST_SUITE(test_suite1)
             session << "select pdf from bi_manifestacao where nr_mp = :1", soci::into(text_data.text), soci::use(201100742214);
             //BOOST_CHECK_GT(total, 0);
             cout << text_data.text << '\n';
+
+            Poco::Mon
+
 
         } catch (exception const &e) {
             std::cerr << "Error: " << e.what() << '\n';

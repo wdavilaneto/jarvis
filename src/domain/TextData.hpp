@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <Poco/StringTokenizer.h>
 #include <boost/shared_ptr.hpp>
+#include <bits/unordered_set.h>
 
 using std::string;
 
@@ -18,9 +19,9 @@ namespace domain {
     public:
         TextData() {};
 
+        size_t id;
         std::string original;
-        std::unordered_map<string, string> data;
-        std::vector<string> words;
+        std::unordered_map<string,size_t> wordCount;
         std::vector<string> labels;
 
     };

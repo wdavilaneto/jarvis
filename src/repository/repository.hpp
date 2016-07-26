@@ -5,7 +5,9 @@
 #ifndef JARVIS_REPOSITORY_HPP
 #define JARVIS_REPOSITORY_HPP
 
+#include <domain.hpp>
 #include <soci/soci.h>
+
 
 namespace dto {
 
