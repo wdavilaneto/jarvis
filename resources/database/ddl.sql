@@ -18,6 +18,13 @@ create table neural_network (
 
 );
 
+create table corpus {
+    id integer PRIMARY KEY,
+
+
+
+};
+
 ALTER TABLE neural_network ADD trained text;
 
 commit;

@@ -7,6 +7,9 @@
 #include "Poco/FileStream.h"
 #include "Poco/StreamCopier.h"
 
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/serialization/unordered_map.hpp>
 
 #define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
@@ -43,27 +46,46 @@ int main(int arg, char *argv[]) {
     // Only tests are running for awhile server::RestfulServer server;
     try {
 //        std::cout << "Initializing Jarvis on 8080" << std::endl;
-//        return server.run(arg, argv);
+//        return server.run(arg, argv)
 
-        string text;
-        FileStream fstream(TEXT_FILE_PATH);
-        StreamCopier::copyToString(fstream, text);
-
+        std::unordered_map<string, size_t> corpus;
 
         repository::TextDataRepository textRepository;
         auto result = textRepository.findAll();
-        for (auto each : result){
-            std::cout << each.toString() << std::endl;
+
+        TextService textService;
+
+        cout << result.size() << endl;
+        for (auto doc : result) {
+            doc.wordCount = textService.wordCount(doc.original);
+            for (auto each : doc.wordCount) {
+                if (corpus.count(each.first)) {
+                    corpus[each.first] += each.second;
+                } else {
+                    corpus[each.first] = 1;
+                }
+            }
         }
+        cout << corpus.size() << endl;
 
+//        std::ofstream ofs("corpus.dat");
+//        boost::archive::binary_oarchive objectArchive(ofs);
+//        objectArchive << corpus;
+//
+//        std::ifstream ifs("corpus.dat");
+//        boost::archive::binary_iarchive ia(ifs);
+//        std::unordered_map<string, size_t> corpus2;
+//        ia >> corpus2;
+//
+//        for(auto each : corpus2) {
+//            cout << "{'"<< each.first<< "': "<< each.second<<"},\n" ;
+//        }
 
-        boost::shared_ptr<TextProccessPipeline> tpp = boost::make_shared<TextProccessPipeline>();
-        tpp->thinkAboutIt(text);
 
         return EXIT_SUCCESS;
     } catch (std::exception &ex) {
         std::cerr << ex.what();
-        return EXIT_FAILURE;
+        throw errno;
     }
 
 };

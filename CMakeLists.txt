@@ -4,7 +4,7 @@ project(jarvis)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 find_package(Threads)
-find_package(Boost 1.59 REQUIRED COMPONENTS system thread)
+find_package(Boost 1.59 REQUIRED COMPONENTS system thread serialization)
 
 ## Checking BOOST dependency block
 #set(Boost_USE_STATIC_LIBS OFF)
