@@ -47,7 +47,6 @@ int main(int arg, char *argv[]) {
     try {
 //        std::cout << "Initializing Jarvis on 8080" << std::endl;
 //        return server.run(arg, argv)
-
         std::unordered_map<string, size_t> corpus;
 
         repository::TextDataRepository textRepository;

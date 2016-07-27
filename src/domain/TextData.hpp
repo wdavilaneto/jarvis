@@ -15,13 +15,26 @@ using std::string;
 
 namespace domain {
 
+    class KeyWord {
+        string stemmed;
+        size_t count;
+        size_t tfidf;
+        size_t nDocs;
+    };
+
+    typedef std::unordered_map<string, size_t> WordCollection;
+
+    class Corpus {
+        WordCollection words;
+    };
+
     class TextData {
     public:
         TextData() {};
 
         size_t id;
         std::string original;
-        std::unordered_map<string, size_t> wordCount;
+        WordCollection wordCount;
         std::vector<string> labels;
 
         virtual std::string toString() {

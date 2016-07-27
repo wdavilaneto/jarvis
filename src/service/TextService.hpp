@@ -20,8 +20,8 @@ namespace service {
 
     class TextService {
     public:
-        TextService(){};
-        ~TextService(){};
+        TextService()= default;
+        ~TextService() = default;
 
         std::unordered_map<string, size_t> wordCount (const string & text) {
             std::unordered_map<string, size_t> map;
@@ -37,6 +37,8 @@ namespace service {
             }
             return map;
         }
+
+
 
         /**
          * Todo implement some kind of stemming algorithm
