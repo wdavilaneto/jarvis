@@ -23,9 +23,10 @@ add_subdirectory(src/repository)
 add_subdirectory(src/server)
 add_subdirectory(test)
 
-set(DOMAIN src/domain.hpp src/domain/TextData.hpp src/service/TextService.hpp )
+set(CORE src/core/Application.hpp)
+set(DOMAIN src/domain.hpp src/domain/TextData.hpp src/service/TextService.hpp)
 
-add_executable(jarvis ${DOMAIN} src/main.cpp )
+add_executable(jarvis ${DOMAIN} ${CORE} src/main.cpp )
 
 target_link_libraries( jarvis
         server

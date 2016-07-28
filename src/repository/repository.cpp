@@ -18,13 +18,12 @@ namespace repository {
 
     std::vector<TextData> TextDataRepository::findAll() {
 
-        soci::session session(config.get<string>("database.dbname"), config.get<string>("database.connection"));
+        soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
         session.set_log_stream(&std::cout);
 
         domain::TextData doc;
 
-        soci::statement st = (session.prepare << "select nr_mp as ID, pdf as TEXT from bi_manifestacao order by nr_mp", soci::into(doc));
-
+        soci::statement st = dynamic_cast<>(session.prepare << "select nr_mp as ID, pdf as TEXT from bi_manifestacao order by nr_mp", soci::into(doc));
         st.execute();
 
         std::vector<TextData> result;
@@ -36,7 +35,7 @@ namespace repository {
 
     TextData TextDataRepository::get(size_t id) {
 
-        soci::session session(config.get<string>("database.dbname"), config.get<string>("database.connection"));
+        soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
         session.set_log_stream(&std::cout);
 
         domain::TextData doc;

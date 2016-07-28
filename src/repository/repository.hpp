@@ -7,11 +7,11 @@
 
 #define CONFIG_FILE_PATH "../../resources/application.cfg"
 
+#include <core/Application.hpp>
 #include <domain.hpp>
 #include <soci/soci.h>
 #include "soci/sqlite3/soci-sqlite3.h"
 #include <boost/property_tree/ini_parser.hpp>
-#include <iostream>
 
 namespace soci {
     using domain::TextData;
@@ -39,7 +39,7 @@ namespace repository {
 
     using domain::TextData;
 
-    class TextDataRepository {
+    class TextDataRepository : public core::ApplicationAware {
     public:
 
         TextDataRepository();
@@ -50,8 +50,6 @@ namespace repository {
 
         TextData get(size_t id);
 
-    private:
-        boost::property_tree::ptree config;
     };
 
 };
