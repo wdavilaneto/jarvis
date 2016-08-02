@@ -9,7 +9,7 @@ namespace repository {
     using domain::TextData;
 
     TextDataRepository::TextDataRepository() {
-        boost::property_tree::ini_parser::read_ini(CONFIG_FILE_PATH, config);
+        boost::property_tree::ini_parser::read_ini(CONFIG_FILE_PATH, getConfig());
     };
 
     TextDataRepository::~TextDataRepository() {
@@ -23,7 +23,9 @@ namespace repository {
 
         domain::TextData doc;
 
-        soci::statement st = dynamic_cast<>(session.prepare << "select nr_mp as ID, pdf as TEXT from bi_manifestacao order by nr_mp", soci::into(doc));
+        soci::statement st = static_cast<soci::statement>(
+                session.prepare << "select nr_mp as ID, pdf as TEXT from bi_manifestacao order by nr_mp", soci::into(doc)
+        );
         st.execute();
 
         std::vector<TextData> result;

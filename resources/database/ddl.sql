@@ -15,16 +15,22 @@ create table neural_network (
     epochs_between_reports integer,
     activation_hidden integer REFERENCES activation_function(id) ,
     activation_output integer  REFERENCES activation_function(id)
-
 );
 
-create table corpus {
-    id integer PRIMARY KEY,
-
-
-
-};
-
 ALTER TABLE neural_network ADD trained text;
+
+create table corpus (
+    id integer PRIMARY KEY,
+    name text not null,
+    language TEXT
+);
+
+create table stop_word  (
+    id integer primary key,
+    word text not null,
+    language TEXT
+);
+
+-- TODO STEM tabel and STEMMING TYPES (ADJ (ATION ITY MENT..)...)
 
 commit;

@@ -19,15 +19,15 @@ namespace core {
         ApplicationAware() {
             boost::property_tree::ini_parser::read_ini(DEFAULT_PATH, config);
         }
+
         ~ApplicationAware() = default;
 
-        ptree& getConfig() {
+        ptree &getConfig() {
             return config;
         }
 
-
     private:
-        static string DEFAULT_PATH = "../../resources/application.cfg"; // Thank you C++11 !!!
+        string DEFAULT_PATH = "../../resources/application.cfg"; // Thank you C++14 !!!
         ptree config;
     };
 
