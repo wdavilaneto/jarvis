@@ -17,6 +17,7 @@ using namespace Poco;
 using domain::TextData;
 using service::TextService;
 
+
 class TextProccessPipeline {
 public:
     TextProccessPipeline() {};
@@ -54,6 +55,7 @@ int main(int arg, char *argv[]) {
         TextService textService;
 
         cout << result.size() << endl;
+
         for (auto doc : result) {
             doc.wordCount = textService.wordCount(doc.original);
             for (auto each : doc.wordCount) {

@@ -26,10 +26,12 @@ create table corpus (
 );
 
 create table stop_word  (
-    id integer primary key,
-    word text not null,
-    language TEXT
+    language TEXT primary key,
+    words text not null
 );
+
+
+CREATE UNIQUE INDEX one_for_language ON stop_word(word,language);
 
 -- TODO STEM tabel and STEMMING TYPES (ADJ (ATION ITY MENT..)...)
 

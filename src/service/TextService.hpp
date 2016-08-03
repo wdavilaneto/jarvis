@@ -39,7 +39,6 @@ namespace service {
         }
 
 
-
         /**
          * Todo implement some kind of stemming algorithm
          * @param original
@@ -48,6 +47,14 @@ namespace service {
         std::string stem(const string& original) {
             return string(original);
         };
+
+        std::string removeStopWords(const string& original) {
+            return string(original);
+        }
+
+        boost::shared_ptr<Corpus> processCorpus (boost::shared_ptr<Corpus> corpus){
+
+        }
 
     };
 }

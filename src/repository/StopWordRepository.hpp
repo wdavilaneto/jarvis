@@ -5,11 +5,9 @@
 #ifndef JARVIS_STOPWORDREPOSITORY_HPP
 #define JARVIS_STOPWORDREPOSITORY_HPP
 
+
 #include <core/Application.hpp>
 #include <soci/soci.h>
-#include "soci/sqlite3/soci-sqlite3.h"
-#include <boost/property_tree/ini_parser.hpp>
-
 
 namespace repository {
 
@@ -27,38 +25,21 @@ namespace repository {
 
         ~StopWordRepository() = default;
 
-        vector<string> findAll() {
-
+        string get(const string& language_id) {
             string stop_word;
-            soci::statement st = dynamic_cast<>(session.prepare
-                    << "select nr_mp as ID, pdf as TEXT from bi_manifestacao order by nr_mp", soci::into(stop_word)
-            );
+            session << "select words from stop_word where language = :language ", soci::into(stop_word), use(language_id);
+            return stop_word;
+        };
 
-            st.execute();
+        void insert( const string &language, const string &stop_words) {
+            session << "insert into stop_word (language , words) values ( :language , :words ) ",  use(language), use(stop_words);
+        };
 
-            vector<string> result;
-            while (st.fetch()) {
-                result.push_back(std::move(stop_word));
-            }
-            return result;
-        }
+        void remove ( const string &language) {
+            session << "delete from stop_word where language = :language", use(language);
+        };
 
-        void insertAll(vector words) {
-            soci::statement st = dynamic_cast<>(session.prepare
-                    << "insert into stop_word (word, language) values ( :word , :language ) " << use(words)
-            );
-            st.execute();
-            while (st.fetch()) {
 
-            }
-        }
-
-        bool insert(const string &word) {
-            soci::statement st = dynamic_cast<>(session.prepare
-                    << "insert into stop_word (word, language) values ( :word , :language ) " << use(word)
-            );
-            return st.execute();
-        }
 
     private:
         soci::session session;
