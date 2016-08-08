@@ -32,7 +32,7 @@ public:
         data.original = Poco::replace(text, "\n\n", "\n");
 
         TextService textService;
-        data.wordCount = textService.wordCount(data.original);
+        data.words = textService.wordCount(data.original);
 
     }
 
@@ -53,12 +53,11 @@ int main(int arg, char *argv[]) {
         auto result = textRepository.findAll();
 
         TextService textService;
-
         cout << result.size() << endl;
 
         for (auto doc : result) {
-            doc.wordCount = textService.wordCount(doc.original);
-            for (auto each : doc.wordCount) {
+            doc.words = textService.wordCount(doc.original);
+            for (auto each : doc.words) {
                 if (corpus.count(each.first)) {
                     corpus[each.first] += each.second;
                 } else {

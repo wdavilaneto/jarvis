@@ -10,31 +10,31 @@
 #include <Poco/StringTokenizer.h>
 #include <boost/shared_ptr.hpp>
 #include <bits/unordered_set.h>
+#include <set>
 
 using std::string;
 
 namespace domain {
 
     class KeyWord {
+    public:
         string stemmed;
         size_t count;
         size_t tfidf;
         size_t nDocs;
     };
 
-    typedef std::unordered_map<string, size_t> WordCollection;
-
-    class Corpus {
-        WordCollection words;
-    };
+    typedef std::unordered_map<string, KeyWord> WordCollection;
+    typedef std::set<std::string> StopWordCollection;
 
     class TextData {
     public:
         TextData() {};
 
-        size_t id;
+        string uuid;
+        size_t id = 0;
         std::string original;
-        WordCollection wordCount;
+        WordCollection words;
         std::vector<string> labels;
 
         virtual std::string toString() {
@@ -47,6 +47,22 @@ namespace domain {
             return strm << toString();
         };
 
+    };
+
+
+    class Corpus {
+    public:
+        WordCollection words; // Replicated Data
+        StopWordCollection stopWords;
+        WordCollection documents;
+
+        bool hasStopWord(const string &word) {
+            return stopWords.count(word) > 0;
+        }
+
+        size_t getTFIDF(const string& word) {
+            return words[word].tfidf;
+        }
     };
 
     // std::ostream &operator<<(std::ostream &o, domain::TextData &b) { return b.toStream(o); }

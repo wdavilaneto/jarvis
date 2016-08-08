@@ -6,6 +6,7 @@
 #define JARVIS_TEXTSERVICE_HPP
 
 #include <domain.hpp>
+#include <core/identifiable.hpp>
 #include <vector>
 #include <string>
 #include <domain/TextData.hpp>
@@ -20,10 +21,11 @@ namespace service {
 
     class TextService {
     public:
-        TextService()= default;
+        TextService() = default;
+
         ~TextService() = default;
 
-        std::unordered_map<string, size_t> wordCount (const string & text) {
+        std::unordered_map<string, size_t> wordCount(const string &text) {
             std::unordered_map<string, size_t> map;
 
             // Tokenize to words only
@@ -44,17 +46,33 @@ namespace service {
          * @param original
          * @return stemmed text
          */
-        std::string stem(const string& original) {
+        std::string stem(const string &original) {
             return string(original);
         };
 
-        std::string removeStopWords(const string& original) {
+        std::string removeStopWords(const string &original) {
             return string(original);
-        }
+        };
 
-        boost::shared_ptr<Corpus> processCorpus (boost::shared_ptr<Corpus> corpus){
+        boost::shared_ptr<Corpus> addToCorpus(boost::shared_ptr<Corpus> corpus, string &text) {
+            TextData textData;
+            textData.uuid = core::Identifiable::Generate();
+            textData.original = std::move(text);
+            boost::tokenizer<> tokenizer(textData.original);
 
-        }
+            for (auto word : tokenizer) {
+                if (! corpus->hasStopWord(word) ) {
+                    // TODO implement as matrix
+                    string stemmedWord = stem(word);
+                    if (textData.words.count(stemmedWord)){
+                        textData.words[stemmedWord].count += 1;
+                    } else {
+                        textData.words[stemmedWord] = KeyWord();
+                        textData.words[stemmedWord].tfidf = corpus->getTFIDF(stemmedWord);
+                    }
+                }
+            }
+        };
 
     };
 }

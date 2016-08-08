@@ -13,7 +13,7 @@ find_package(Boost 1.59 REQUIRED COMPONENTS system thread serialization)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 
-include_directories (
+include_directories(
         "${PROJECT_SOURCE_DIR}/src"
         "/usr/include/postgresql"
 )
@@ -23,17 +23,17 @@ add_subdirectory(src/repository)
 add_subdirectory(src/server)
 add_subdirectory(test)
 
-set(CORE src/core/Application.hpp)
+set(CORE src/core/Application.hpp src/core/identifiable.hpp)
 set(DOMAIN src/domain.hpp src/domain/TextData.hpp src/service/TextService.hpp)
 
-add_executable(jarvis ${DOMAIN} ${CORE} src/main.cpp )
+add_executable(jarvis ${DOMAIN} ${CORE} src/main.cpp)
 
-target_link_libraries( jarvis
+target_link_libraries(jarvis
         server
         repository
         pthread
         ${Boost_LIBRARIES}
-)
+        )
 
 ## ****************
 ## Install Block
@@ -42,14 +42,14 @@ install(TARGETS jarvis
         RUNTIME
         DESTINATION bin
         CONFIGURATIONS All
-)
+        )
 
 install(DIRECTORY
         ${CMAKE_SOURCE_DIR}/resources/
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
-)
+        )
 
 install(DIRECTORY
         ${CMAKE_SOURCE_DIR}/resources/
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/Debug
-)
+        )
