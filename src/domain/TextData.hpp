@@ -19,9 +19,9 @@ namespace domain {
     class KeyWord {
     public:
         string stemmed;
-        size_t count;
-        size_t tfidf;
-        size_t nDocs;
+        size_t count = 0;
+        size_t tfidf = 0;
+        size_t nDocs = 0;
     };
 
     typedef std::unordered_map<string, KeyWord> WordCollection;
@@ -61,7 +61,10 @@ namespace domain {
         }
 
         size_t getTFIDF(const string& word) {
-            return words[word].tfidf;
+            if ( words.count(word)>0) {
+                return words[word].tfidf;
+            }
+            return 0;
         }
     };
 

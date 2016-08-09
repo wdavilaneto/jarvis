@@ -46,7 +46,7 @@ namespace service {
          * @param original
          * @return stemmed text
          */
-        std::string stem(const string &original) {
+        std::string getStemmedWord(const string &original) {
             return string(original);
         };
 
@@ -55,16 +55,17 @@ namespace service {
         };
 
         boost::shared_ptr<Corpus> addToCorpus(boost::shared_ptr<Corpus> corpus, string &text) {
+
             TextData textData;
             textData.uuid = core::Identifiable::Generate();
             textData.original = std::move(text);
-            boost::tokenizer<> tokenizer(textData.original);
 
+            boost::tokenizer<> tokenizer(textData.original);
             for (auto word : tokenizer) {
-                if (! corpus->hasStopWord(word) ) {
-                    // TODO implement as matrix
-                    string stemmedWord = stem(word);
-                    if (textData.words.count(stemmedWord)){
+                // ignoring stop words
+                if (!corpus->hasStopWord(word)) {
+                    string stemmedWord = getStemmedWord(word);
+                    if (textData.words.count(stemmedWord)) {
                         textData.words[stemmedWord].count += 1;
                     } else {
                         textData.words[stemmedWord] = KeyWord();
