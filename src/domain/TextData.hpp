@@ -9,8 +9,10 @@
 #include <unordered_map>
 #include <Poco/StringTokenizer.h>
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 #include <bits/unordered_set.h>
 #include <set>
+#include <cmath>
 
 using std::string;
 
@@ -20,8 +22,8 @@ namespace domain {
     public:
         string stemmed;
         size_t count = 0;
-        size_t tfidf = 0;
         size_t nDocs = 0;
+        double tfidf = 0;
     };
 
     typedef std::unordered_map<string, KeyWord> WordCollection;
@@ -60,11 +62,13 @@ namespace domain {
             return stopWords.count(word) > 0;
         }
 
-        size_t getTFIDF(const string& word) {
-            if ( words.count(word)>0) {
+        double getTFIDF(const string& word) {
+            if ( words.count(word) > 0) {
                 return words[word].tfidf;
             }
-            return 0;
+            // TODO: This assumes this new words to be add to corpus. move this to service ?
+            size_t size = std::max(1 ,documents.size());
+            return log ( size / (size + 1) );
         }
     };
 

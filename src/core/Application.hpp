@@ -8,6 +8,9 @@
 #include <iostream>
 #include <boost/property_tree/ini_parser.hpp>
 
+#define USE_SHARED_PTR using boost::shared_ptr; \
+                        using boost::make_shared;
+
 namespace core {
 
     using std::string;
@@ -15,19 +18,24 @@ namespace core {
 
     class ApplicationAware {
     public:
-        //ApplicationAware(string path = DEFAULT_PATH) {
+
+        /**
+         * Initialize an aplication aware Class based on application config
+         * @return
+         */
         ApplicationAware() {
             boost::property_tree::ini_parser::read_ini(DEFAULT_PATH, config);
         }
 
-        ~ApplicationAware() = default;
+        virtual ~ApplicationAware() = default;
 
         ptree &getConfig() {
             return config;
         }
 
     private:
-        string DEFAULT_PATH = "../../resources/application.cfg"; // Thank you C++14 !!!
+        // TODO: Change to application runtime root ...
+        string DEFAULT_PATH = "../../resources/application.cfg"; // Thank you C++11 !!!
         ptree config;
     };
 

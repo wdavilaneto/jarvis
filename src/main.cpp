@@ -12,33 +12,14 @@
 
 #define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
+
+USE_SHARED_PTR
 using namespace std;
 using namespace Poco;
 using domain::TextData;
+using domain::Corpus;
+
 using service::TextService;
-
-
-class TextProccessPipeline {
-public:
-    TextProccessPipeline() {};
-
-    ~TextProccessPipeline() {
-
-    };
-
-    void thinkAboutIt(string text) {
-
-        // save the original text
-        data.original = Poco::replace(text, "\n\n", "\n");
-
-        TextService textService;
-        data.words = textService.wordCount(data.original);
-
-    }
-
-protected:
-    TextData data;
-};
 
 int main(int arg, char *argv[]) {
 
@@ -47,7 +28,7 @@ int main(int arg, char *argv[]) {
     try {
 //        std::cout << "Initializing Jarvis on 8080" << std::endl;
 //        return server.run(arg, argv)
-        std::unordered_map<string, size_t> corpus;
+        shared_ptr<Corpus> corpus = make_shared<Corpus>();
 
         repository::TextDataRepository textRepository;
         auto result = textRepository.findAll();
@@ -56,16 +37,8 @@ int main(int arg, char *argv[]) {
         cout << result.size() << endl;
 
         for (auto doc : result) {
-            doc.words = textService.wordCount(doc.original);
-            for (auto each : doc.words) {
-                if (corpus.count(each.first)) {
-                    corpus[each.first] += each.second;
-                } else {
-                    corpus[each.first] = 1;
-                }
-            }
+            textService.addToCorpus(corpus, doc.original);
         }
-        cout << corpus.size() << endl;
 
 //        std::ofstream ofs("corpus.dat");
 //        boost::archive::binary_oarchive objectArchive(ofs);
