@@ -5,8 +5,9 @@
 
 namespace repository {
 
+    using std::string;
     using soci::session;
-    using domain::TextData;
+    using domain::Document;
 
     TextDataRepository::TextDataRepository() {
         boost::property_tree::ini_parser::read_ini(CONFIG_FILE_PATH, getConfig());
@@ -16,31 +17,31 @@ namespace repository {
 
     };
 
-    std::vector<TextData> TextDataRepository::findAll() {
+    std::vector<Document> TextDataRepository::findAll() {
 
         soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
         session.set_log_stream(&std::cout);
 
-        domain::TextData doc;
+        domain::Document doc;
 
-        soci::statement st = static_cast<soci::statement>(
+        soci::statement st = (
                 session.prepare << "select nr_mp as ID, pdf as TEXT from bi_manifestacao order by nr_mp", soci::into(doc)
         );
         st.execute();
 
-        std::vector<TextData> result;
+        std::vector<Document> result;
         while (st.fetch()) {
             result.push_back(doc);
         }
         return result;
     };
 
-    TextData TextDataRepository::get(size_t id) {
+    Document TextDataRepository::get(size_t id) {
 
         soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
         session.set_log_stream(&std::cout);
 
-        domain::TextData doc;
+        domain::Document doc;
         session << "select nr_mp as ID, pdf as TEXT  from bi_manifestacao where nr_mp = :1", soci::into(doc), soci::use(id);
 
         return doc;

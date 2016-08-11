@@ -14,20 +14,21 @@
 #include <boost/property_tree/ini_parser.hpp>
 
 namespace soci {
-    using domain::TextData;
+    using std::string;
+    using domain::Document;
 
     template<>
-    struct type_conversion<TextData> {
+    struct type_conversion<Document> {
         typedef values base_type;
 
-        static void from_base(values const &v, indicator /* ind */, TextData &p) {
+        static void from_base(values const &v, indicator /* ind */, Document &p) {
             p.id = atoll(v.get<string>("ID").c_str());
             if (v.get_indicator("TEXT") == soci::i_ok) {
                 p.original = v.get<std::string>("TEXT");
             }
         }
 
-        static void to_base(const TextData &p, values &v, indicator &ind) {
+        static void to_base(const Document &p, values &v, indicator &ind) {
             v.set("ID", p.id);
             v.set("TEXT", p.original);
         }
@@ -37,7 +38,7 @@ namespace soci {
 
 namespace repository {
 
-    using domain::TextData;
+    using domain::Document;
 
     class TextDataRepository : public core::ApplicationAware {
     public:
@@ -46,9 +47,9 @@ namespace repository {
 
         virtual ~TextDataRepository();
 
-        std::vector<TextData> findAll();
+        std::vector<Document> findAll();
 
-        TextData get(size_t id);
+        Document get(size_t id);
 
     };
 

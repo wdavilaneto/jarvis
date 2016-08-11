@@ -9,7 +9,7 @@ BOOST_AUTO_TEST_SUITE(TextProccessTest_suite_1)
     BOOST_AUTO_TEST_CASE(TextProccessTest_test_case_1) {
 
         using namespace std;
-        using domain::TextData;
+        using domain::Document;
         using service::TextService;
 
         const string text("este..., deve ser, a priori ou não '''^. um ; bom / exemplo | de texto tokenizado + de {palavras}, ");

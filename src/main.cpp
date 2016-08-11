@@ -3,20 +3,17 @@
 #include <repository/repository.hpp>
 #include <server/server.hpp>
 
-#include "Poco/FileStream.h"
-#include "Poco/StreamCopier.h"
-
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/unordered_map.hpp>
+#include <repository/CorpusRepository.hpp>
 
 #define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
 
 USE_SHARED_PTR
-using namespace std;
-using namespace Poco;
-using domain::TextData;
+using std::string;
+using domain::Document;
 using domain::Corpus;
 
 using service::TextService;
@@ -28,17 +25,21 @@ int main(int arg, char *argv[]) {
     try {
 //        std::cout << "Initializing Jarvis on 8080" << std::endl;
 //        return server.run(arg, argv)
-        shared_ptr<Corpus> corpus = make_shared<Corpus>();
+
+        repository::CorpusRepository corpusRepository;
+        shared_ptr<Corpus> corpus = corpusRepository.get("pareceres");
 
         repository::TextDataRepository textRepository;
         auto result = textRepository.findAll();
 
         TextService textService;
-        cout << result.size() << endl;
+        std::cout << result.size() << std::endl;
 
         for (auto doc : result) {
             textService.addToCorpus(corpus, doc.original);
         }
+
+        std::cout << &corpus;
 
 //        std::ofstream ofs("corpus.dat");
 //        boost::archive::binary_oarchive objectArchive(ofs);

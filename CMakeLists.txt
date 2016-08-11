@@ -24,7 +24,7 @@ add_subdirectory(src/server)
 add_subdirectory(test)
 
 set(CORE src/core/Application.hpp src/core/identifiable.hpp)
-set(DOMAIN src/domain.hpp src/domain/TextData.hpp src/service/TextService.hpp)
+set(DOMAIN src/domain.hpp src/domain/Document.hpp src/service/TextService.hpp src/domain/Corpus.hpp)
 
 add_executable(jarvis ${DOMAIN} ${CORE} src/main.cpp)
 
