@@ -33,7 +33,7 @@ namespace domain {
         Document()  = default;
 
         string uuid;
-        size_t id = 0;
+        size_t id = 0; // original id (squence probably)
         std::string original;
         WordCollection words;
 

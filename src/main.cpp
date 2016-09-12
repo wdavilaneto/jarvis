@@ -39,7 +39,7 @@ int main(int arg, char *argv[]) {
             textService.addToCorpus(corpus, doc.original);
         }
 
-        std::cout << &corpus;
+        std::cout << (*corpus).toString() << std::endl;
 
 //        std::ofstream ofs("corpus.dat");
 //        boost::archive::binary_oarchive objectArchive(ofs);

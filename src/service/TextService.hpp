@@ -14,6 +14,7 @@
 #include <boost/tokenizer.hpp>
 #include <boost/log/sources/record_ostream.hpp>
 
+#include <dlib/unicode.h>
 #include <dlib/string.h>
 
 namespace service {
@@ -50,7 +51,6 @@ namespace service {
          * @return the new document created, added and processed
          */
         shared_ptr<Document> addToCorpus(shared_ptr<Corpus> corpus, string &text) {
-
 
             shared_ptr<Document> document = create(text);
             corpus->documents[document->uuid] = document;
@@ -95,6 +95,7 @@ namespace service {
                     keyword->stemmed = stemmedWord;
                     keyword->nDocs = 1;
                     keyword->tfidf = log(corpus->totalDocuments / (1));
+                    corpus->words[stemmedWord] = keyword;
                 }
             } else {
                 // if exists, get the reference to the keyword from

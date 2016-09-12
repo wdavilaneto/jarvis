@@ -9,6 +9,7 @@
 #include <cmath>
 
 #define ZERO_OCURRENCY_ON_COLLECTION 0
+#define GREATEST_STEMMED_WORD_LENGHT 60
 
 namespace domain {
 
@@ -43,7 +44,8 @@ namespace domain {
         DocumentCollection documents;
 
         bool hasStopWord(const string &word) {
-            return (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION);
+            return ((word.length() > GREATEST_STEMMED_WORD_LENGHT) ||
+                    (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION) || is_number(word.c_str()));
         }
 
         bool hasKeyWord(const string &word) {
@@ -55,7 +57,7 @@ namespace domain {
             std::string seed("Document@{totalDocuments:");
             seed.append(std::to_string(totalDocuments)).append(", keywords: [");
             for (auto each : words) {
-                seed.append(each.first).append(":");
+                seed.append(each.first).append(",\n");
             }
             seed.append("]");
             return seed;
@@ -64,6 +66,12 @@ namespace domain {
         virtual std::ostream &toStream(std::ostream &strm) {
             return strm << toString();
         };
+
+    private:
+
+        bool is_number(const std::string &s) {
+            return !s.empty() && std::find_if(s.begin(), s.end(), [](char c) { return !std::isdigit(c); }) == s.end();
+        }
 
     };
 
