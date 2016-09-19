@@ -11,6 +11,10 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+
+
 namespace domain {
 
     using std::string;
@@ -22,7 +26,7 @@ namespace domain {
         string stemmed;
         size_t count = 0;
         size_t nDocs = 0;
-        double tfidf = 0;
+        double tfidf = 0.0;
     };
 
     typedef std::unordered_map<string, size_t> WordCollection;
@@ -39,9 +43,13 @@ namespace domain {
 
 
         virtual std::string toString() {
-            std::string seed("Document@");
-            seed.append(std::to_string(refId)).append("{").append(original).append("}");
-            return seed;
+            boost::property_tree::ptree out;
+            out.put("uuid" , uuid);
+            out.put("id" , refId);
+
+            std::ostringstream oss;
+            boost::property_tree::write_json(oss, out);
+            return oss.str();
         };
 
         virtual std::ostream &toStream(std::ostream &strm) {
