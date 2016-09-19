@@ -8,6 +8,9 @@
 #include <domain/Document.hpp>
 #include <cmath>
 
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/property_tree/ptree.hpp>
+
 #define ZERO_OCURRENCY_ON_COLLECTION 0
 #define GREATEST_STEMMED_WORD_LENGHT 60
 
@@ -54,13 +57,26 @@ namespace domain {
 
         // TODO refafctor this to a json library for json output format...
         virtual std::string toString() {
-            std::string seed("Document@{totalDocuments:");
-            seed.append(std::to_string(totalDocuments)).append(", keywords: [");
+            boost::property_tree::ptree out;
+            out.put("id" , id);
+            out.put("language" , language);
+            out.put("name" , name);
+            out.put("totalDocuments" , totalDocuments);
+
+            boost::property_tree::ptree words_node;
             for (auto each : words) {
-                seed.append(each.first).append(",\n");
+                boost::property_tree::ptree word_node;
+                word_node.put("word.name" , each.first);
+                word_node.put("word.count" , each.second->count);
+                word_node.put("word.nDocs" , each.second->nDocs);
+                word_node.put("word.tfidf" , each.second->tfidf);
+                words_node.push_back(std::make_pair("", word_node));
             }
-            seed.append("]");
-            return seed;
+            out.add_child("words", words_node);
+
+            std::ostringstream oss;
+            boost::property_tree::write_json(oss, out);
+            return oss.str();
         };
 
         virtual std::ostream &toStream(std::ostream &strm) {

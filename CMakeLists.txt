@@ -19,19 +19,21 @@ include_directories(
 )
 
 add_subdirectory(src/brain)
-add_subdirectory(src/repository)
+#add_subdirectory(src/repository)
 add_subdirectory(src/server)
 add_subdirectory(test)
 
 set(CORE src/core/Application.hpp src/core/identifiable.hpp)
-set(DOMAIN src/domain.hpp src/domain/Document.hpp src/service/TextService.hpp src/domain/Corpus.hpp)
+set(REPOSITORY src/repository/TextRepository.hpp src/repository/CorpusRepository.hpp src/repository/StopWordRepository.hpp)
+set(DOMAIN src/domain.hpp src/domain/Document.hpp src/service/TextService.hpp src/domain/Corpus.hpp src/domain/TextDocument.hpp)
 
-add_executable(jarvis ${DOMAIN} ${CORE} src/main.cpp)
+add_executable(jarvis ${CORE} ${DOMAIN} ${REPOSITORY} src/main.cpp)
 
 target_link_libraries(jarvis
         server
-        repository
         pthread
+        soci_core
+        soci_sqlite3
         ${Boost_LIBRARIES}
         )
 

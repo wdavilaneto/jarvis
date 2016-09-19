@@ -1,6 +1,6 @@
 
 #include <service/TextService.hpp>
-#include <repository/repository.hpp>
+#include <repository/TextRepository.hpp>
 #include <server/server.hpp>
 
 #include <boost/archive/binary_iarchive.hpp>
@@ -29,17 +29,16 @@ int main(int arg, char *argv[]) {
         repository::CorpusRepository corpusRepository;
         shared_ptr<Corpus> corpus = corpusRepository.get("pareceres");
 
-        repository::TextDataRepository textRepository;
+        repository::TextRepository textRepository;
         auto result = textRepository.findAll();
 
         TextService textService;
-        std::cout << result.size() << std::endl;
 
         for (auto doc : result) {
-            textService.addToCorpus(corpus, doc.original);
+            textService.addToCorpus(corpus, doc);
         }
 
-        std::cout << (*corpus).toString() << std::endl;
+        std::cout << corpus->toString() << std::endl;
 
 //        std::ofstream ofs("corpus.dat");
 //        boost::archive::binary_oarchive objectArchive(ofs);

@@ -33,14 +33,14 @@ namespace domain {
         Document()  = default;
 
         string uuid;
-        size_t id = 0; // original id (squence probably)
+        size_t refId = 0; // original id (squence probably)
         std::string original;
         WordCollection words;
 
 
         virtual std::string toString() {
             std::string seed("Document@");
-            seed.append(std::to_string(id)).append("{").append(original).append("}");
+            seed.append(std::to_string(refId)).append("{").append(original).append("}");
             return seed;
         };
 

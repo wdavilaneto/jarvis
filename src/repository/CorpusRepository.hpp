@@ -33,7 +33,7 @@ namespace repository {
             shared_ptr<Corpus> corpus = make_shared<Corpus>();
             string stop_words;
             session
-                    << "select corpus.id, corpus.name, corpus.language , words from corpus left join stop_word on corpus.language = stop_word.language where corpus.name = :name ",
+                    << "select corpus.id, corpus.name, corpus.language , words from corpus left join stop_word on corpus.language = stop_word.language where corpus.name = :name",
                     soci::into(corpus->id), soci::into(corpus->name), soci::into(corpus->language), soci::into(stop_words)
                     , use(name);
 

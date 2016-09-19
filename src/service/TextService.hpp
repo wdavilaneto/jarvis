@@ -50,7 +50,7 @@ namespace service {
          * @param text
          * @return the new document created, added and processed
          */
-        shared_ptr<Document> addToCorpus(shared_ptr<Corpus> corpus, string &text) {
+        shared_ptr<Document> addToCorpus(shared_ptr<Corpus> corpus, TextDocument &text) {
 
             shared_ptr<Document> document = create(text);
             corpus->documents[document->uuid] = document;
@@ -73,10 +73,11 @@ namespace service {
          * @param text
          * @return
          */
-        shared_ptr<Document> create(string &text) {
+        shared_ptr<Document> create(TextDocument &text) {
             shared_ptr<Document> document = make_shared<Document>();
             document->uuid = core::Identifiable::Generate();
-            document->original = std::move(text); // TODO can I make that here ??
+            document->refId = text.id;
+            document->original = std::move(text.text); // TODO can I make that here ??
             return document;
         }
 

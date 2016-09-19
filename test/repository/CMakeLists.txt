@@ -7,19 +7,21 @@ find_package(Boost REQUIRED COMPONENTS log log_setup thread system filesystem)
 #set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DBOOST_LOG_DYN_LINK")
 
-add_executable(RepositoryTest RepositoryTest.cpp)
+add_executable(TextRepositoryTest TextRepositoryTest.cpp)
 add_executable(StopWordRepositoryTest StopWordRepositoryTest.cpp)
 
 
 target_link_libraries(
-        RepositoryTest
-        repository
+        TextRepositoryTest
+        soci_core
+        soci_sqlite3
         ${Boost_LIBRARIES}
 )
 
 target_link_libraries(
         StopWordRepositoryTest
-        repository
+        soci_core
+        soci_sqlite3
         PocoNet
         PocoUtil
         PocoFoundation

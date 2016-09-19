@@ -6,6 +6,7 @@
 #define JARVIS_DOMAIN_HPP_HPP
 
 #include <domain/Document.hpp>
+#include <domain/TextDocument.hpp>
 #include <domain/Corpus.hpp>
 
 #endif //JARVIS_DOMAIN_HPP_HPP
