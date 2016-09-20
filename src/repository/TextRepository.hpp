@@ -9,7 +9,6 @@
 #include <domain.hpp>
 #include <soci/soci.h>
 
-#define CONFIG_FILE_PATH "../../resources/application.cfg"
 
 namespace soci {
     using std::string;

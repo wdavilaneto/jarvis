@@ -40,6 +40,22 @@ namespace service {
             return string(original);
         };
 
+        shared_ptr<Document> toDocument(shared_ptr<Corpus> corpus, TextDocument &text) {
+            shared_ptr<Document> document = create(text);
+            auto word_collection = tokenizeit(document);
+
+            for (auto word : word_collection) {
+                // Implicit dlib dependency ... TODO check best dependency for suches..
+                string lcaseWord = dlib::tolower(word);
+                // is ths a Stop word on "Current Corpus"
+                if (!corpus->hasStopWord(lcaseWord)) {
+                    string stemmedWord = getStemmedWord(lcaseWord);
+                    document->addKeyWord(stemmedWord);
+                }
+            }
+            // TODO persist this new document on storage
+            return document;
+        };
 
         /**
          * Add a new text to the Corpus.. This method will create a new document
@@ -50,18 +66,12 @@ namespace service {
          * @param text
          * @return the new document created, added and processed
          */
-        shared_ptr<Document> addToCorpus(shared_ptr<Corpus> corpus, TextDocument &text) {
+        shared_ptr<Document> addToCorpus(shared_ptr<Corpus> corpus, shared_ptr<Document> document) {
 
-            shared_ptr<Document> document = create(text);
-            corpus->documents[document->uuid] = document;
+            corpus->addDocument(document);
 
-            auto word_collection = tokenizeit(document);
-
-            for (auto word : word_collection) {
-                string lcaseWord = dlib::tolower(word);
-                if (!corpus->hasStopWord(lcaseWord)) {
-                    proccessWord(corpus, document, lcaseWord);
-                }
+            for (auto word : document->words) {
+                proccessWord(corpus, document, word.first);
             }
 
             // TODO persist this new document on storage
@@ -83,10 +93,13 @@ namespace service {
 
     private:
 
-        void proccessWord(shared_ptr<Corpus> corpus, shared_ptr<Document> document, const auto &word) {
+        void proccessWord(shared_ptr<Corpus> corpus, shared_ptr<Document> document, auto &word) {
 
             string stemmedWord = getStemmedWord(word);
             shared_ptr<KeyWord> keyword(nullptr);
+
+            if (!document->hasKeyWord(stemmedWord)) {
+            }
 
             // if this is the first appearence of this word on corpus, we create an new
             // key word with initial values
@@ -95,7 +108,7 @@ namespace service {
                     keyword = make_shared<KeyWord>();
                     keyword->stemmed = stemmedWord;
                     keyword->nDocs = 1;
-                    keyword->tfidf = log(corpus->totalDocuments / (1));
+                    keyword->tfidf = log(corpus->getTotalDocuments() / (1));
                     corpus->words[stemmedWord] = keyword;
                 }
             } else {
@@ -105,8 +118,8 @@ namespace service {
 
             // if this is the first appearence on document ?
             if (document->words.count(keyword->stemmed) == 0) {
-                document->words[keyword->stemmed] = 1; // set value on document  to first apearence
-                keyword->nDocs += 1;// add to corpus contabilization of an new first apearence on document
+                document->words[keyword->stemmed] = 1; // set value on document  to first appearance
+                keyword->nDocs += 1;// add to corpus contabilization of an new first appearance on document
             } else {
                 document->words[keyword->stemmed] += 1;
             }

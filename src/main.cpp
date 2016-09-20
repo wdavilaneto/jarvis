@@ -7,6 +7,7 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/serialization/unordered_map.hpp>
 #include <repository/CorpusRepository.hpp>
+#include <repository/DocumentRepository.hpp>
 
 #define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
@@ -27,18 +28,24 @@ int main(int arg, char *argv[]) {
 //        return server.run(arg, argv)
 
         repository::CorpusRepository corpusRepository;
-        shared_ptr<Corpus> corpus = corpusRepository.get("pareceres");
-
         repository::TextRepository textRepository;
-        auto result = textRepository.findAll();
+        repository::DocumentRepository documentRepository;
 
         TextService textService;
 
-        for (auto doc : result) {
-            textService.addToCorpus(corpus, doc);
+        shared_ptr<Corpus> corpus = corpusRepository.get("pareceres");
+
+        auto result = textRepository.findAll();
+        for (auto td : result) {
+            shared_ptr<Document> document = textService.toDocument(corpus,td);
+            documentRepository.persist(document);
         }
 
-        std::cout << corpus->toString() << std::endl;
+        for (auto doc : result) {
+//            textService.addToCorpus(corpus, doc);
+        }
+
+//        std::cout << corpus->toString() << std::endl;
 
 //        std::ofstream ofs("corpus.dat");
 //        boost::archive::binary_oarchive objectArchive(ofs);

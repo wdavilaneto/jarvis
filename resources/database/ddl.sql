@@ -30,6 +30,16 @@ create table stop_word  (
     words text not null
 );
 
+create table document (
+    uuid text primary key,
+    ref_id integer
+);
+
+create table keyword (
+
+);
+
+
 
 CREATE UNIQUE INDEX one_for_language ON stop_word(word,language);
 
