@@ -36,6 +36,8 @@ create table document (
 );
 
 create table keyword (
+    name text primary key,
+    ajust_factor numeric default 1,
 
 );
 
