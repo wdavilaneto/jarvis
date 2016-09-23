@@ -59,9 +59,7 @@ namespace repository {
             soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
             session.set_log_stream(&std::cout);
 
-            soci::statement st = (
-                    session.prepare << getConfig().get<string>("repository.findAllTexts"), soci::into(doc)
-            );
+            soci::statement st = (session.prepare << getConfig().get<string>("repository.findAllTexts"), soci::into(doc));
             st.execute();
 
             while (st.fetch()) {

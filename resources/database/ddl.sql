@@ -32,15 +32,16 @@ create table stop_word  (
 
 create table document (
     uuid text primary key,
-    ref_id integer
+    corpus_id integer references corpus(corpus_id),
+    ref_id integer,
+    filterd_text text
 );
 
-create table keyword (
-    name text primary key,
-    ajust_factor numeric default 1,
-
-);
-
+create table word_document (
+    uuid text REFERENCES document(uuid),
+    word text,
+    count integer
+)
 
 
 CREATE UNIQUE INDEX one_for_language ON stop_word(word,language);

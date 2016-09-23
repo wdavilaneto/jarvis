@@ -48,13 +48,15 @@ namespace repository {
         };
 
         void persist(shared_ptr<Document> document) {
-            soci::session session(getConfig().get<string>("database.dbname"),
-                                  getConfig().get<string>("database.connection"));
+
+            soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
             session.set_log_stream(&std::cout);
-//            soci::statement st = (
-//                    session.prepare << getConfig().get<string>("repository.insertDocument"), soci::use(*document)
-//            );
-//            st.execute();
+
+            session << getConfig().get<string>("repository.insertDocument"), soci::use(*document);
+
+            for (auto word : document->words) {
+                //session << getConfig().get<string>("repository.insertWordOnDocument"), soci::use(*word);
+            }
         }
 
         std::vector<Document> findAll() {
@@ -62,13 +64,10 @@ namespace repository {
             std::vector<Document> result;
             Document doc;
 
-            soci::session session(getConfig().get<string>("database.dbname"),
-                                  getConfig().get<string>("database.connection"));
+            soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
             session.set_log_stream(&std::cout);
 
-            soci::statement st = (
-                    session.prepare << getConfig().get<string>("repository.findAllDocuments"), soci::into(doc)
-            );
+            soci::statement st = ( session.prepare << getConfig().get<string>("repository.findAllDocuments"), soci::into(doc) );
             st.execute();
 
             while (st.fetch()) {
