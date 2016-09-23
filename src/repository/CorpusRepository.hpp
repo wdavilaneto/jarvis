@@ -5,8 +5,7 @@
 #ifndef JARVIS_CORPUSREPOSITORY_HPP
 #define JARVIS_CORPUSREPOSITORY_HPP
 
-#include <core/Application.hpp>
-#include <soci/soci.h>
+#include <repository/BaseRepository.hpp>
 #include <domain.hpp>
 #include <boost/tokenizer.hpp>
 
@@ -18,16 +17,13 @@ namespace repository {
     using std::vector;
     using soci::use;
 
-    class CorpusRepository : core::ApplicationAware {
+    class CorpusRepository : BaseRepository {
     public:
 
         CorpusRepository() {
-            // TODO use connection pool
-            session.open(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
-            session.set_log_stream(&std::cout);
         };
 
-        ~CorpusRepository() = default;
+        virtual ~CorpusRepository() = default;
 
         shared_ptr<Corpus> get(const string &name) {
             shared_ptr<Corpus> corpus = make_shared<Corpus>();
@@ -47,9 +43,6 @@ namespace repository {
             }
             return corpus;
         };
-
-    private:
-        soci::session session;
 
     };
 

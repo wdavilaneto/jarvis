@@ -6,8 +6,7 @@
 #define JARVIS_STOPWORDREPOSITORY_HPP
 
 
-#include <core/Application.hpp>
-#include <soci/soci.h>
+#include <repository/BaseRepository.hpp>
 
 namespace repository {
 
@@ -15,15 +14,13 @@ namespace repository {
     using std::vector;
     using soci::use;
 
-    class StopWordRepository : core::ApplicationAware {
+    class StopWordRepository : BaseRepository {
     public:
         StopWordRepository() {
             // TODO use connection pool
-            session.open(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
-            session.set_log_stream(&std::cout);
         };
 
-        ~StopWordRepository() = default;
+        virtual ~StopWordRepository() = default;
 
         string get(const string& language_id) {
             string stop_word;
@@ -38,11 +35,6 @@ namespace repository {
         void remove ( const string &language) {
             session << "delete from stop_word where language = :language", use(language);
         };
-
-
-
-    private:
-        soci::session session;
     };
 
 };

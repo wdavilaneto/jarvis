@@ -73,7 +73,6 @@ namespace service {
             for (auto word : document->words) {
                 proccessWord(corpus, document, word.first);
             }
-
             // TODO persist this new document on storage
             return document;
         };
@@ -93,7 +92,7 @@ namespace service {
 
     private:
 
-        void proccessWord(shared_ptr<Corpus> corpus, shared_ptr<Document> document, auto &word) {
+        void proccessWord(shared_ptr<Corpus> corpus, shared_ptr<Document> document, const auto &word) {
 
             string stemmedWord = getStemmedWord(word);
             shared_ptr<KeyWord> keyword(nullptr);

@@ -5,9 +5,8 @@
 #ifndef JARVIS_TEXTREPOSITORY_HPP
 #define JARVIS_TEXTREPOSITORY_HPP
 
-#include <core/Application.hpp>
 #include <domain.hpp>
-#include <soci/soci.h>
+#include <repository/BaseRepository.hpp>
 
 
 namespace soci {
@@ -41,7 +40,7 @@ namespace repository {
     using domain::Document;
     using domain::TextDocument;
 
-    class TextRepository : public core::ApplicationAware {
+    class TextRepository : public BaseRepository {
     public:
 
         TextRepository() {
@@ -56,9 +55,6 @@ namespace repository {
             std::vector<TextDocument> result;
             TextDocument doc;
 
-            soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
-            session.set_log_stream(&std::cout);
-
             soci::statement st = (session.prepare << getConfig().get<string>("repository.findAllTexts"), soci::into(doc));
             st.execute();
 
@@ -70,12 +66,7 @@ namespace repository {
 
         TextDocument get(size_t id) {
             domain::TextDocument doc;
-
-            soci::session session(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
-            session.set_log_stream(&std::cout);
-
             session << "select nr_mp as ID, pdf as TEXT  from bi_manifestacao where nr_mp = :1", soci::into(doc), soci::use(id);
-
             return doc;
         };
 
