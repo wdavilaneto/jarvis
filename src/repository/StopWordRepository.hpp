@@ -24,16 +24,16 @@ namespace repository {
 
         string get(const string& language_id) {
             string stop_word;
-            session << "select words from stop_word where language = :language ", soci::into(stop_word), use(language_id);
+            session << getConfig().get<string>("repository.getStopWords"), soci::into(stop_word), use(language_id);
             return stop_word;
         };
 
         void insert( const string &language, const string &stop_words) {
-            session << "insert into stop_word (language , words) values ( :language , :words ) ",  use(language), use(stop_words);
+            session << getConfig().get<string>("repository.insertStopWords"),  use(language), use(stop_words);
         };
 
         void remove ( const string &language) {
-            session << "delete from stop_word where language = :language", use(language);
+            session << getConfig().get<string>("repository.deleteStopWords"), use(language);
         };
     };
 

@@ -1,14 +1,11 @@
 #define BOOST_TEST_MODULE StopWordRepositoryTestSuite
 
-#include <repository/repository.hpp>
 #include <repository/StopWordRepository.hpp>
 
 #include <boost/filesystem.hpp>
 #include <boost/test/included/unit_test.hpp>
 #include <boost/tokenizer.hpp>
 
-#include "Poco/FileStream.h"
-#include "Poco/StreamCopier.h"
 
 #define TEXT_FILE_PATH "../../resources/test/stop.txt"
 
@@ -23,24 +20,31 @@ BOOST_AUTO_TEST_SUITE(stop_word_test_suite1)
         using std::string;
         using repository::StopWordRepository;
 
-        const string lanugage ("pt_BR");
+        const string lanugage("pt_BR");
 
-        string text;
-        Poco::FileStream fstream(TEXT_FILE_PATH);
+        std::fstream fstream(TEXT_FILE_PATH);
         if (!fstream) {
             throw errno;
         }
-        Poco::StreamCopier::copyToString(fstream, text);
+        std::stringstream strStream;
+        strStream << fstream.rdbuf();   //read the file
+        string text = strStream.str();  //str holds the content of the file
         fstream.close();
 
         StopWordRepository repository;
-        repository.remove(lanugage);
-        repository.insert(lanugage, text);
-        auto result = repository.get(lanugage);
 
-        string example("teríamos");
+        repository.remove(lanugage);
+        auto result1 = repository.get(lanugage);
+        BOOST_REQUIRE_EQUAL(result1.empty(), true);
+
+        repository.insert(lanugage, text);
+        auto result2 = repository.get(lanugage);
+
+        BOOST_REQUIRE_EQUAL(result2.empty(), false);
+
+        string example("do");
         bool found = false;
-        boost::tokenizer<> tokenizer(result);
+        boost::tokenizer<> tokenizer(result2);
         for (auto each : tokenizer) {
             std::cout << each << std::endl;
             if (each == example) {
@@ -50,6 +54,5 @@ BOOST_AUTO_TEST_SUITE(stop_word_test_suite1)
         }
         BOOST_REQUIRE_EQUAL(found, true);
     };
-
 
 BOOST_AUTO_TEST_SUITE_END()

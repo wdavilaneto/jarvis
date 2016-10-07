@@ -15,7 +15,7 @@ BOOST_AUTO_TEST_SUITE(TextProccessTest_suite_1)
         const string text("este..., deve ser, a priori ou não '''^. um ; bom / exemplo | de texto tokenizado + de {palavras}, ");
 
         TextService textService;
-        auto map = textService.wordCount(text);
+        auto map = textService.getStemmedWord(text);
 
         for (auto each : map ) {
 

@@ -9,7 +9,7 @@
 #include <repository/CorpusRepository.hpp>
 #include <repository/DocumentRepository.hpp>
 
-#define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
+//#define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
 
 USE_SHARED_PTR

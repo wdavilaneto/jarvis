@@ -4,12 +4,13 @@ project(jarvis)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 
 find_package(Threads)
-find_package(Boost 1.59 REQUIRED COMPONENTS system thread serialization)
+find_package(Boost 1.59 REQUIRED COMPONENTS system thread log)
 
 ## Checking BOOST dependency block
 #set(Boost_USE_STATIC_LIBS OFF)
 #set(Boost_USE_MULTITHREADED ON)
 #set(Boost_USE_STATIC_RUNTIME OFF)
+ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_BINARY_DIR}/dist")
 
@@ -24,7 +25,7 @@ add_subdirectory(src/server)
 add_subdirectory(test)
 
 set(CORE src/core/Application.hpp src/core/identifiable.hpp)
-set(REPOSITORY src/repository/TextRepository.hpp src/repository/CorpusRepository.hpp src/repository/StopWordRepository.hpp src/repository/DocumentRepository.hpp src/repository/BaseRepository.hpp)
+set(REPOSITORY src/repository/TextRepository.hpp src/repository/CorpusRepository.hpp src/repository/StopWordRepository.hpp src/repository/DocumentRepository.hpp src/repository/BaseRepository.hpp src/repository/Page.hpp)
 set(DOMAIN src/domain.hpp src/domain/Document.hpp src/service/TextService.hpp src/domain/Corpus.hpp src/domain/TextDocument.hpp)
 
 add_executable(jarvis ${CORE} ${DOMAIN} ${REPOSITORY} src/main.cpp)

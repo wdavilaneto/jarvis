@@ -5,10 +5,10 @@
 #ifndef JARVIS_DOCUMENTREPOSITORY_HPP
 #define JARVIS_DOCUMENTREPOSITORY_HPP
 
-#include <repository/DocumentRepository.hpp>
 #include <domain.hpp>
-#include <soci/soci.h>
 #include "BaseRepository.hpp"
+#include <repository/DocumentRepository.hpp>
+#include <soci/soci.h>
 
 namespace soci {
 
@@ -18,15 +18,26 @@ namespace soci {
     template<>
     struct type_conversion<Document> {
         typedef values base_type;
-
         static void from_base(values const &v, indicator /* ind */, Document &p) {
             p.uuid = v.get<string>("UUID");
             p.refId = atoll(v.get<string>("REF_ID").c_str());
         }
-
         static void to_base(const Document &p, values &v, indicator &ind) {
             v.set("ID", p.uuid);
             v.set("TEXT", p.refId);
+        }
+    };
+
+    template<>
+    struct type_conversion<Document*> {
+        typedef values base_type;
+        static void from_base(values const &v, indicator /* ind */, Document*p) {
+            p->uuid = v.get<string>("UUID");
+            p->refId = atoll(v.get<string>("REF_ID").c_str());
+        }
+        static void to_base(Document*p, values &v, indicator &ind) {
+            v.set("ID", p->uuid);
+            v.set("TEXT", p->refId);
         }
     };
 };
@@ -49,10 +60,15 @@ namespace repository {
         };
 
         void persist(shared_ptr<Document> document) {
-            session << getConfig().get<string>("repository.insertDocument"), soci::use(*document);
-            //for (auto word : document->words) {
+            try {
+                string query = getConfig().get<string>("repository.insertDocument", "");
+                session << query, soci::use(document.get());
+                //for (auto word : document->words) {
                 //session << getConfig().get<string>("repository.insertWordOnDocument"), soci::use(*word);
-            //}
+                //}
+            } catch (std::exception *exception) {
+                BOOST_LOG_TRIVIAL(fatal) << "deu merda";
+            }
         }
 
         std::vector<Document> findAll() {
@@ -60,7 +76,7 @@ namespace repository {
             std::vector<Document> result;
             Document doc;
 
-            soci::statement st = ( session.prepare << getConfig().get<string>("repository.findAllDocuments"), soci::into(doc) );
+            soci::statement st = (session.prepare << getConfig().get<string>("repository.findAllDocuments"), soci::into(doc));
             st.execute();
 
             while (st.fetch()) {
@@ -71,7 +87,8 @@ namespace repository {
 
         Document get(size_t id) {
             domain::Document doc;
-            session << "select nr_mp as ID, pdf as TEXT  from bi_manifestacao where nr_mp = :1", soci::into(doc), soci::use(id);
+            session << "select nr_mp as ID, pdf as TEXT  from bi_manifestacao where nr_mp = :1", soci::into(
+                    doc), soci::use(id);
             return doc;
         };
 

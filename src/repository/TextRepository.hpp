@@ -10,11 +10,14 @@
 
 
 namespace soci {
+
     using std::string;
     using domain::Document;
     using domain::TextDocument;
 
-
+    /**
+     * Conversion betwen entity and Fields from Database
+     */
     template<>
     struct type_conversion<TextDocument> {
         typedef values base_type;
@@ -40,6 +43,9 @@ namespace repository {
     using domain::Document;
     using domain::TextDocument;
 
+    /**
+     * Class 'exemple' to import text from "somewhere" to jarvis Database
+     */
     class TextRepository : public BaseRepository {
     public:
 
