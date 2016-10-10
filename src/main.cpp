@@ -1,13 +1,12 @@
 
+#include <boost/serialization/unordered_map.hpp>
 #include <service/TextService.hpp>
 #include <repository/TextRepository.hpp>
-#include <server/server.hpp>
-
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/unordered_map.hpp>
 #include <repository/CorpusRepository.hpp>
 #include <repository/DocumentRepository.hpp>
+#include <server/server.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 
 //#define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
@@ -26,6 +25,20 @@ int main(int arg, char *argv[]) {
     try {
 //        std::cout << "Initializing Jarvis on 8080" << std::endl;
 //        return server.run(arg, argv)
+
+        try
+        {
+            // create an instance of our web server
+            server::RestfulServer server;
+            server.set_listening_port(9000);
+            server.start_async();
+//            std::cout << "Press enter to end this program" << std::endl;
+//            std::cin.get();
+        }
+        catch (std::exception& e)
+        {
+            std::cout << e.what() << std::endl;
+        }
 
         repository::CorpusRepository corpusRepository;
         repository::TextRepository textRepository;

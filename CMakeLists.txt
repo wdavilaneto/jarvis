@@ -31,6 +31,7 @@ set(DOMAIN src/domain.hpp src/domain/Document.hpp src/service/TextService.hpp sr
 add_executable(jarvis ${CORE} ${DOMAIN} ${REPOSITORY} src/main.cpp)
 
 target_link_libraries(jarvis
+        dlib
         server
         pthread
         soci_core

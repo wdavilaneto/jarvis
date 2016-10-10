@@ -4,9 +4,10 @@ find_package(Threads)
 add_library(server server.cpp server.hpp MainRequestHandler.hpp TrainingDataService.hpp FannHandler.hpp)
 
 target_link_libraries( server
-        PocoNet
-        PocoUtil
-        PocoFoundation
+        dlib
+#        PocoNet
+#        PocoUtil
+#        PocoFoundation
         pthread
         ${Boost_LIBRARIES}
 )

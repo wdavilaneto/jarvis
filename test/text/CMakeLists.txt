@@ -6,6 +6,7 @@ find_package(Boost REQUIRED COMPONENTS unit_test_framework log)
 add_executable(TextProccessTest TextProccessTest.cpp)
 target_link_libraries(
         TextProccessTest
+        dlib
         pthread
         ${Boost_LIBRARIES}
 )
@@ -13,6 +14,7 @@ target_link_libraries(
 add_executable(TextServiceSuite TextServiceSuite.cpp)
 target_link_libraries(
         TextServiceSuite
+        dlib
         pthread
         soci_core
         soci_sqlite3
