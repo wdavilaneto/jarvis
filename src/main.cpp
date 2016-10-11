@@ -5,9 +5,7 @@
 #include <repository/CorpusRepository.hpp>
 #include <repository/DocumentRepository.hpp>
 #include <server/server.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-
+#include <server/CorpusHandler.hpp>
 //#define TEXT_FILE_PATH "../../resources/test/ciencia.txt"
 
 
@@ -15,8 +13,9 @@ USE_SHARED_PTR
 using std::string;
 using domain::Document;
 using domain::Corpus;
-
 using service::TextService;
+
+using namespace server;
 
 int main(int arg, char *argv[]) {
 
@@ -31,9 +30,12 @@ int main(int arg, char *argv[]) {
             // create an instance of our web server
             server::RestfulServer server;
             server.set_listening_port(9000);
+            shared_ptr<IRequestHandler> handler = make_shared<CorpusHandler>();
+            server.addHandler(handler);
             server.start_async();
-//            std::cout << "Press enter to end this program" << std::endl;
-//            std::cin.get();
+            std::cout << "Press enter to end this program" << std::endl;
+            std::cin.get();
+            return 0;
         }
         catch (std::exception& e)
         {

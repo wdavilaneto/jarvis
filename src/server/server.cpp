@@ -7,7 +7,7 @@
 namespace server {
 
     RestfulServer::RestfulServer() {
-        std::cout << "sanity test \n";
+        std::cout << "sanity Restfull service running \n";
     }
 
     RestfulServer::~RestfulServer() {

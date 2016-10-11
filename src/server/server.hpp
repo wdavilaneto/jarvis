@@ -5,69 +5,55 @@
 #define JARVIS_SERVER_HPP
 
 #include <iostream>
+#include <core/Application.hpp>
 #include <dlib/server.h>
-
-//#include "Poco/Net/HTTPServer.h"
-//#include "Poco/Net/HTTPRequestHandler.h"
-//#include "Poco/Net/HTTPRequestHandlerFactory.h"
-//#include "Poco/Net/HTTPServerParams.h"
-//#include "Poco/Net/HTTPServerRequest.h"
-//#include "Poco/Net/HTTPServerResponse.h"
-//#include "Poco/Net/HTTPServerParams.h"
-//#include "Poco/Net/ServerSocket.h"
-//#include "Poco/Timestamp.h"
-//#include "Poco/DateTimeFormatter.h"
-//#include "Poco/DateTimeFormat.h"
-//#include "Poco/Exception.h"
-//#include "Poco/ThreadPool.h"
-//#include "Poco/Util/ServerApplication.h"
-//#include "Poco/Util/Option.h"
-//#include "Poco/Util/OptionSet.h"
-//#include "Poco/Util/HelpFormatter.h"
-#include "MainRequestHandler.hpp"
-
-//using Poco::Net::ServerSocket;
-//using Poco::Net::HTTPRequestHandler;
-//using Poco::Net::HTTPRequestHandlerFactory;
-//using Poco::Net::HTTPServer;
-//using Poco::Net::HTTPServerRequest;
-//using Poco::Net::HTTPServerResponse;
-//using Poco::Net::HTTPServerParams;
-//using Poco::Timestamp;
-//using Poco::DateTimeFormatter;
-//using Poco::DateTimeFormat;
-//using Poco::ThreadPool;
-//using Poco::Util::ServerApplication;
-//using Poco::Util::Application;
-//using Poco::Util::Option;
-//using Poco::Util::OptionSet;
-//using Poco::Util::OptionCallback;
-//using Poco::Util::HelpFormatter;
-
 
 namespace server {
 
+    USE_SHARED_PTR
     using std::ostringstream;
-    using namespace dlib;
+    using std::string;
+    using dlib::incoming_things;
+    using dlib::outgoing_things;
+    using dlib::server_http;
+    using dlib::key_value_map;
+    using dlib::key_value_map_ci;
 
-    class RestfulServer : public server_http {
+    class IRequestHandler {
     public:
-
-        RestfulServer();
-
-        ~RestfulServer();
-
-        const std::string on_request(const incoming_things &incoming, outgoing_things &outgoing) {
-            ostringstream sout;
-            return sout.str();
+        IRequestHandler() {
         }
 
+        virtual ~IRequestHandler() = default;
+
+
+        virtual const string doHandle(const incoming_things &incoming, outgoing_things &outgoing) {
+            try {
+                return onHandle(incoming, outgoing);
+            } catch (const std::exception &exception) {
+                BOOST_LOG_TRIVIAL(error)  << exception.what() ;
+                return exception.what();
+            }
+        }
+
+        virtual bool urlMatches(const std::string aGivenUrl)  = 0;
+
+    protected:
+
+        virtual const string onHandle(const incoming_things &incoming, outgoing_things &outgoing) = 0;
+
+    private:
+        string path;
     };
 
+    class DefaultHandler : public IRequestHandler {
+    public:
 
+        DefaultHandler() = default;
+        virtual ~DefaultHandler() override = default;
 
-    class web_server : public server_http {
-        const std::string on_request(const incoming_things &incoming, outgoing_things &outgoing) {
+    protected:
+        virtual const string onHandle(const incoming_things &incoming, outgoing_things &outgoing) override {
             ostringstream sout;
             // We are going to send back a page that contains an HTML form with two text input fields.
             // One field called name.  The HTML form uses the post method but could also use the get
@@ -116,8 +102,39 @@ namespace server {
             return sout.str();
         }
 
+    public:
+        virtual bool urlMatches(const std::string aGivenUrl) override {
+            return true;
+        }
+
     };
 
+
+    class RestfulServer : public server_http {
+    public:
+
+        RestfulServer();
+
+        ~RestfulServer();
+
+        const std::string on_request(const incoming_things &incoming, outgoing_things &outgoing) {
+            static DefaultHandler defaultHandler;
+            for ( auto handler : handlers) {
+                if (handler->urlMatches(incoming.path)) {
+                    return handler->doHandle(incoming,outgoing);
+                }
+            }
+            return defaultHandler.doHandle(incoming,outgoing);
+        }
+
+        void addHandler(shared_ptr<IRequestHandler> handler) {
+            handlers.push_back(handler);
+        }
+
+    private:
+        std::vector<shared_ptr<IRequestHandler> > handlers;
+
+    };
 };
 
 #endif //JARVIS_SERVER_HPP
