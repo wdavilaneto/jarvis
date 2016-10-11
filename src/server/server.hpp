@@ -31,7 +31,7 @@ namespace server {
             try {
                 return onHandle(incoming, outgoing);
             } catch (const std::exception &exception) {
-                BOOST_LOG_TRIVIAL(error)  << exception.what() ;
+                BOOST_LOG_TRIVIAL(error) << exception.what();
                 return exception.what();
             }
         }
@@ -50,6 +50,7 @@ namespace server {
     public:
 
         DefaultHandler() = default;
+
         virtual ~DefaultHandler() override = default;
 
     protected:
@@ -57,60 +58,46 @@ namespace server {
             ostringstream sout;
             // We are going to send back a page that contains an HTML form with two text input fields.
             // One field called name.  The HTML form uses the post method but could also use the get
-            // method (just change method='post' to method='get').
-            sout << " <html> <body> "
-                 << "<form action='/form_handler' method='post'> "
-                 << "User Name: <input name='user' type='text'><br>  "
-                 << "User password: <input name='pass' type='text'> <input type='submit'> "
-                 << " </form>";
+            // method (just change method='post' to method='get' /form_handler).
+            sout << "{path:'" << incoming.path << "',request_type:'" << incoming.request_type;
+            if (!incoming.content_type.empty()) {
+                sout << "',content_type:'" << incoming.content_type;
+            }
+            sout << "',protocol:'" << incoming.protocol
+                 << "',foreign_ip:'" << incoming.foreign_ip
+                 << "',foreign_port:" << incoming.foreign_port
+                 << ",local_ip:'" << incoming.local_ip
+                 << "',local_port:" << incoming.local_port;
 
-            // Write out some of the inputs to this request so that they show up on the
-            // resulting web page.
-            sout << "<br>  path = " << incoming.path << std::endl;
-            sout << "<br>  request_type = " << incoming.request_type << std::endl;
-            sout << "<br>  content_type = " << incoming.content_type << std::endl;
-            sout << "<br>  protocol = " << incoming.protocol << std::endl;
-            sout << "<br>  foreign_ip = " << incoming.foreign_ip << std::endl;
-            sout << "<br>  foreign_port = " << incoming.foreign_port << std::endl;
-            sout << "<br>  local_ip = " << incoming.local_ip << std::endl;
-            sout << "<br>  local_port = " << incoming.local_port << std::endl;
-            sout << "<br>  body = \"" << incoming.body << "\"" << std::endl;
+            if (!incoming.body.empty()) {
+                sout << ",body:'" << incoming.body << "'";
+            }
 
-            // If this request is the result of the user submitting the form then echo back
-            // the submission.
+
+            // If this request is the result of the user submitting the form then echo back the submission.
             if (incoming.path == "/form_handler") {
-                sout << "<h2> Stuff from the query string </h2>" << std::endl;
-                sout << "<br>  user = " << incoming.queries["user"] << std::endl;
-                sout << "<br>  pass = " << incoming.queries["pass"] << std::endl;
-                // save these form submissions as cookies.
+                sout << ",user:'" << incoming.queries["user"] << "',password:'" << incoming.queries["pass"] << "'";
                 outgoing.cookies["user"] = incoming.queries["user"];
                 outgoing.cookies["pass"] = incoming.queries["pass"];
             }
-            // Echo any cookies back to the client browser
-            sout << "<h2>Cookies the web browser sent to the server</h2>";
             for (key_value_map::const_iterator ci = incoming.cookies.begin(); ci != incoming.cookies.end(); ++ci) {
-                sout << "<br/>" << ci->first << " = " << ci->second << std::endl;
+                sout << "," << ci->first << ":'" << ci->second << "'";
             }
-            sout << "<br/><br/>";
-            sout << "<h2>HTTP Headers the web browser sent to the server</h2>";
-            // Echo out all the HTTP headers we received from the client web browser
             for (key_value_map_ci::const_iterator ci = incoming.headers.begin(); ci != incoming.headers.end(); ++ci) {
-                sout << "<br/>" << ci->first << ": " << ci->second << std::endl;
+                sout << "," << ci->first << ":'" << ci->second << "'";
             }
-
-            sout << "</body> </html>";
+            sout << "}";
             return sout.str();
-        }
+        };
 
     public:
         virtual bool urlMatches(const std::string aGivenUrl) override {
             return true;
-        }
+        };
 
     };
 
-
-    class RestfulServer : public server_http {
+    class RestfulServer : public server_http, public core::ApplicationAware {
     public:
 
         RestfulServer();
@@ -118,13 +105,12 @@ namespace server {
         ~RestfulServer();
 
         const std::string on_request(const incoming_things &incoming, outgoing_things &outgoing) {
-            static DefaultHandler defaultHandler;
-            for ( auto handler : handlers) {
+            for (auto handler : handlers) {
                 if (handler->urlMatches(incoming.path)) {
-                    return handler->doHandle(incoming,outgoing);
+                    return handler->doHandle(incoming, outgoing);
                 }
             }
-            return defaultHandler.doHandle(incoming,outgoing);
+            return defaultHandler.doHandle(incoming, outgoing);
         }
 
         void addHandler(shared_ptr<IRequestHandler> handler) {
@@ -133,6 +119,7 @@ namespace server {
 
     private:
         std::vector<shared_ptr<IRequestHandler> > handlers;
+        DefaultHandler defaultHandler;
 
     };
 };

@@ -29,11 +29,10 @@ int main(int arg, char *argv[]) {
         {
             // create an instance of our web server
             server::RestfulServer server;
-            server.set_listening_port(9000);
             shared_ptr<IRequestHandler> handler = make_shared<CorpusHandler>();
             server.addHandler(handler);
             server.start_async();
-            std::cout << "Press enter to end this program" << std::endl;
+            BOOST_LOG_TRIVIAL(info) << "Press enter to end this program" ;
             std::cin.get();
             return 0;
         }
