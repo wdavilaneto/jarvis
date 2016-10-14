@@ -8,9 +8,6 @@
 #include <repository/CorpusRepository.hpp>
 #include <repository/DocumentRepository.hpp>
 #include <service/TextService.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/serialization/unordered_map.hpp>
 
 #include <boost/test/included/unit_test.hpp>
 
@@ -22,9 +19,8 @@ BOOST_AUTO_TEST_SUITE(DocumentRepositorySuite)
         USE_SHARED_PTR;
 
         using std::string;
-        using domain::Document;
-        using domain::Corpus;
-        using domain::TextDocument;
+        using namespace domain;
+        using namespace repository;
 
         using service::TextService;
 

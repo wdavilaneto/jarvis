@@ -25,8 +25,8 @@ add_subdirectory(src/server)
 add_subdirectory(test)
 
 set(CORE src/core/Application.hpp src/core/identifiable.hpp)
-set(REPOSITORY src/repository/TextRepository.hpp src/repository/CorpusRepository.hpp src/repository/StopWordRepository.hpp src/repository/DocumentRepository.hpp src/repository/BaseRepository.hpp src/repository/Page.hpp)
-set(DOMAIN src/domain.hpp src/domain/Document.hpp src/service/TextService.hpp src/domain/Corpus.hpp src/domain/TextDocument.hpp)
+set(REPOSITORY src/repository/TextRepository.hpp src/repository/CorpusRepository.hpp src/repository/StopWordRepository.hpp src/repository/DocumentRepository.hpp src/repository/BaseRepository.hpp src/repository/Page.hpp src/repository/KeywordRepository.hpp)
+set(DOMAIN src/domain.hpp src/domain/Document.hpp src/service/TextService.hpp src/domain/Corpus.hpp src/domain/TextDocument.hpp src/domain/Word.hpp)
 
 add_executable(jarvis ${CORE} ${DOMAIN} ${REPOSITORY} src/main.cpp)
 

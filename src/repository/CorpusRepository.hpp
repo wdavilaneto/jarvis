@@ -26,13 +26,12 @@ namespace repository {
         virtual ~CorpusRepository() = default;
 
         shared_ptr<Corpus> get(const string &name) {
-            shared_ptr<Corpus> corpus = make_shared<Corpus>();
-            string stop_words;
-            session
-                    << "select corpus.id, corpus.name, corpus.language , words from corpus left join stop_word on corpus.language = stop_word.language where corpus.name = :name",
-                    soci::into(corpus->id), soci::into(corpus->name), soci::into(corpus->language), soci::into(stop_words)
-                    , use(name);
 
+            string stop_words;
+            shared_ptr<Corpus> corpus = make_shared<Corpus>();
+            string query = getConfig().get<string>("repository.getCorpus", "");
+
+            session << query, soci::into(corpus->id), soci::into(corpus->name), soci::into(corpus->language), soci::into(stop_words), use(name);
             if (!session.got_data()) {
                 return shared_ptr<Corpus>(nullptr);
             }
@@ -43,6 +42,7 @@ namespace repository {
             }
             return corpus;
         };
+
 
     };
 

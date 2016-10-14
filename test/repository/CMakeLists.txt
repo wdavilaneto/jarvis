@@ -31,3 +31,12 @@ target_link_libraries(
         ${Boost_LIBRARIES}
 )
 
+
+add_executable(KeywordRepositoryTest KeywordRepositoryTest.cpp)
+target_link_libraries(
+        KeywordRepositoryTest
+        soci_core
+        soci_sqlite3
+        ${Boost_LIBRARIES}
+)
+

@@ -13,6 +13,7 @@
 
 #define ZERO_OCURRENCY_ON_COLLECTION 0
 #define GREATEST_STEMMED_WORD_LENGHT 60
+#define SMALLEST_STEMMED_WORD_LENGHT 3
 
 namespace domain {
 
@@ -45,7 +46,7 @@ namespace domain {
         DocumentCollection documents;
 
         bool hasStopWord(const string &word) {
-            return ((word.length() > GREATEST_STEMMED_WORD_LENGHT) || (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION) || is_number(word.c_str()));
+            return ((word.length() > GREATEST_STEMMED_WORD_LENGHT) || (word.length() < SMALLEST_STEMMED_WORD_LENGHT) || (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION) || is_number(word.c_str()));
         }
 
         bool hasKeyWord(const string &word) {
@@ -87,7 +88,7 @@ namespace domain {
             out.add_child("words", words_node);
 
             std::ostringstream oss;
-            boost::property_tree::write_json(oss, out);
+            boost::property_tree::write_json(oss, out, false);
             return oss.str();
         };
 

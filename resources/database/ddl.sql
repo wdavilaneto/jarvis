@@ -37,14 +37,24 @@ create table document (
     filterd_text text
 );
 
+create table keyword (
+    stemmed TEXT primary key,
+    language TEXT
+);
+
 create table word_document (
     uuid text REFERENCES document(uuid),
-    word text,
+    keyword text references keyword(stemmed) ,
     count integer
-)
+);
+
+create table word_form (
+    word text primary key,
+    keyword text references keyword(stemmed)
+);
 
 
-CREATE UNIQUE INDEX one_for_language ON stop_word(word,language);
+
 
 -- TODO STEM tabel and STEMMING TYPES (ADJ (ATION ITY MENT..)...)
 

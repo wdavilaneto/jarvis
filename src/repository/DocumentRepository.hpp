@@ -6,9 +6,8 @@
 #define JARVIS_DOCUMENTREPOSITORY_HPP
 
 #include <domain.hpp>
-#include "BaseRepository.hpp"
+#include <repository/BaseRepository.hpp>
 #include <repository/DocumentRepository.hpp>
-#include <soci/soci.h>
 
 namespace soci {
 
@@ -32,10 +31,16 @@ namespace soci {
     struct type_conversion<Document*> {
         typedef values base_type;
         static void from_base(values const &v, indicator /* ind */, Document*p) {
+            if (!p) {
+                throw "Nullpointer Exception!";
+            }
             p->uuid = v.get<string>("UUID");
             p->refId = atoll(v.get<string>("REF_ID").c_str());
         }
         static void to_base(Document*p, values &v, indicator &ind) {
+            if (!p) {
+                throw "Nullpointer Exception!";
+            }
             v.set("ID", p->uuid);
             v.set("TEXT", p->refId);
         }

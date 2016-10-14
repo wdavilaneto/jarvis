@@ -22,7 +22,6 @@ namespace domain {
     using boost::shared_ptr;
     using boost::make_shared;
 
-
     typedef std::unordered_map<string, size_t> WordCollection;
 
     class Document {
@@ -64,7 +63,7 @@ namespace domain {
             out.add_child("words", words_node);
 
             std::ostringstream oss;
-            boost::property_tree::write_json(oss, out);
+            boost::property_tree::write_json(oss, out, false);
             return oss.str();
         };
 
@@ -81,6 +80,7 @@ namespace domain {
     class KeyWord {
     public:
         string stemmed;
+        string language;
         size_t count = 0;
         size_t nDocs = 0;
         double tfidf = 0.0;
@@ -96,7 +96,6 @@ namespace domain {
 
     private:
         std::map<string, shared_ptr<Document> > docs;
-
     };
 
     // std::ostream &operator<<(std::ostream &o, domain::Document &b) { return b.toStream(o); }
