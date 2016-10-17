@@ -5,7 +5,7 @@
 #ifndef JARVIS_KEYWORDREPOSITORY_HPP
 #define JARVIS_KEYWORDREPOSITORY_HPP
 
-#include <domain.hpp>
+#include <domain>
 #include <repository/BaseRepository.hpp>
 #include <repository/DocumentRepository.hpp>
 
@@ -62,7 +62,6 @@ namespace repository {
             string query (getConfig().get<string>("findAllKeyword"));
             return nullptr;
         }
-
     };
 };
 

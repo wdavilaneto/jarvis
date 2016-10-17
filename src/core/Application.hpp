@@ -6,6 +6,7 @@
 #define JARVIS_APPLICATION_HPP_HPP
 
 #include <iostream>
+#include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/log/trivial.hpp>
 #include <boost/property_tree/ini_parser.hpp>
