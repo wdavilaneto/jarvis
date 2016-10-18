@@ -56,6 +56,7 @@ create table word_form (
 
 
 
+
 -- TODO STEM tabel and STEMMING TYPES (ADJ (ATION ITY MENT..)...)
 
 commit;

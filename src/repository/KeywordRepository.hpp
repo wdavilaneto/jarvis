@@ -60,7 +60,6 @@ namespace repository {
         //TODO: Does this need pagination ?? probably yes...
         vector<shared_ptr<KeyWord> > findAll() {
             string query (getConfig().get<string>("findAllKeyword"));
-            return nullptr;
         }
     };
 };
