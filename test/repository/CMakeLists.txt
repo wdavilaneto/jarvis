@@ -12,6 +12,7 @@ target_link_libraries(
         TextRepositoryTest
         soci_core
         soci_sqlite3
+        pthread
         ${Boost_LIBRARIES}
 )
 
@@ -20,6 +21,7 @@ target_link_libraries(
         StopWordRepositoryTest
         soci_core
         soci_sqlite3
+        pthread
         ${Boost_LIBRARIES}
 )
 
@@ -28,6 +30,7 @@ target_link_libraries(
         DocumentRepositoryTest
         soci_core
         soci_sqlite3
+        pthread
         ${Boost_LIBRARIES}
 )
 
@@ -37,6 +40,7 @@ target_link_libraries(
         KeywordRepositoryTest
         soci_core
         soci_sqlite3
+        pthread
         ${Boost_LIBRARIES}
 )
 

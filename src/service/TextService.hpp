@@ -42,6 +42,7 @@ namespace service {
 
         shared_ptr<Document> toDocument(shared_ptr<Corpus> corpus, TextDocument &text) {
             shared_ptr<Document> document = create(text);
+            document->corpus_id = corpus->id;
             auto word_collection = tokenizeit(document);
 
             for (auto word : word_collection) {
@@ -53,7 +54,7 @@ namespace service {
                     document->addKeyWord(stemmedWord);
                 }
             }
-            // TODO persist this new document on storage
+            // TODO persist this new documents on storage
             return document;
         };
 
@@ -92,7 +93,7 @@ namespace service {
 
     private:
 
-        void proccessWord(shared_ptr<Corpus> corpus, shared_ptr<Document> document, const auto &word) {
+        void proccessWord(shared_ptr<Corpus> corpus, shared_ptr<Document> document, const string &word) {
 
             string stemmedWord = getStemmedWord(word);
             shared_ptr<KeyWord> keyword(nullptr);
@@ -124,7 +125,7 @@ namespace service {
             }
         };
 
-        shared_ptr<KeyWord> getKeyWordFromCorpus(shared_ptr<Corpus> corpus, auto &word) {
+        shared_ptr<KeyWord> getKeyWordFromCorpus(shared_ptr<Corpus> corpus, string &word) {
 
             // result key word (remeber each keyword should be unique*  )
             shared_ptr<KeyWord> keyword(nullptr);

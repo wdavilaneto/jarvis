@@ -31,6 +31,9 @@ int main(int arg, char *argv[]) {
             server::RestfulServer server;
             shared_ptr<IRequestHandler> handler = make_shared<CorpusHandler>();
             server.addHandler(handler);
+            //handler = make_shared<DocumentHandler>();
+            server.addHandler(handler);
+
             server.start_async();
             BOOST_LOG_TRIVIAL(info) << "Press enter to end this program" ;
             std::cin.get();
@@ -41,38 +44,6 @@ int main(int arg, char *argv[]) {
             std::cout << e.what() << std::endl;
         }
 
-        repository::CorpusRepository corpusRepository;
-        repository::TextRepository textRepository;
-        repository::DocumentRepository documentRepository;
-
-        TextService textService;
-
-        shared_ptr<Corpus> corpus = corpusRepository.get("pareceres");
-
-        auto result = textRepository.findAll();
-        for (auto td : result) {
-            shared_ptr<Document> document = textService.toDocument(corpus,td);
-            documentRepository.persist(document);
-        }
-
-        for (auto doc : result) {
-//            textService.addToCorpus(corpus, doc);
-        }
-
-//        std::cout << corpus->toString() << std::endl;
-
-//        std::ofstream ofs("corpus.dat");
-//        boost::archive::binary_oarchive objectArchive(ofs);
-//        objectArchive << corpus;
-//
-//        std::ifstream ifs("corpus.dat");
-//        boost::archive::binary_iarchive ia(ifs);
-//        std::unordered_map<string, size_t> corpus2;
-//        ia >> corpus2;
-//
-//        for(auto each : corpus2) {
-//            cout << "{'"<< each.first<< "': "<< each.second<<"},\n" ;
-//        }
 
         return EXIT_SUCCESS;
     } catch (std::exception &ex) {

@@ -7,23 +7,25 @@
 
 #include <domain.hpp>
 #include <repository/BaseRepository.hpp>
+#include <repository/Page.hpp>
 #include <repository/DocumentRepository.hpp>
 
 namespace soci {
 
     using std::string;
+    using boost::shared_ptr;
     using domain::Document;
 
     template<>
     struct type_conversion<Document> {
         typedef values base_type;
         static void from_base(values const &v, indicator /* ind */, Document &p) {
-            p.uuid = v.get<string>("UUID");
-            p.refId = atoll(v.get<string>("REF_ID").c_str());
+            p.uuid = v.get<string>("uuid");
+            throw "not implemented exception";
         }
         static void to_base(const Document &p, values &v, indicator &ind) {
-            v.set("ID", p.uuid);
-            v.set("TEXT", p.refId);
+            v.set("uuid", p.uuid);
+            throw "not implemented exception";
         }
     };
 
@@ -34,17 +36,20 @@ namespace soci {
             if (!p) {
                 throw "Nullpointer Exception!";
             }
-            p->uuid = v.get<string>("UUID");
-            p->refId = atoll(v.get<string>("REF_ID").c_str());
+            p->uuid = v.get<string>("uuid");
+            p->refId = v.get<size_t>("ref_id");
+            p->corpus_id = v.get<size_t>("corpus_id");
         }
         static void to_base(Document*p, values &v, indicator &ind) {
             if (!p) {
                 throw "Nullpointer Exception!";
             }
-            v.set("ID", p->uuid);
-            v.set("TEXT", p->refId);
+            v.set<string>("uuid", p->uuid);
+            v.set<size_t>("ref_id", p->refId);
+            v.set<size_t>("corpus_id", p->corpus_id);
         }
     };
+
 };
 
 namespace repository {
@@ -68,24 +73,24 @@ namespace repository {
             try {
                 string query = getConfig().get<string>("repository.insertDocument", "");
                 session << query, soci::use(document.get());
-                //for (auto word : document->words) {
-                //session << getConfig().get<string>("repository.insertWordOnDocument"), soci::use(*word);
-                //}
+//                for (auto word : document->words) {
+//                    //session << getConfig().get<string>("repository.insertWordOnDocument"), soci::use(word);
+//                }
             } catch (std::exception *exception) {
                 BOOST_LOG_TRIVIAL(fatal) << "deu merda";
             }
         }
 
-        std::vector<Document> findAll() {
+        std::vector<shared_ptr<Document> > findAll() {
 
-            std::vector<Document> result;
-            Document doc;
+            std::vector<shared_ptr<Document> > result;
+            Document* doc = new Document;
 
             soci::statement st = (session.prepare << getConfig().get<string>("repository.findAllDocuments"), soci::into(doc));
             st.execute();
 
             while (st.fetch()) {
-                result.push_back(doc);
+                result.push_back(make_shared<Document>(*doc));
             }
             return result;
         };

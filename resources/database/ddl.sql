@@ -26,14 +26,14 @@ create table corpus (
 );
 
 create table stop_word  (
-    language TEXT primary key,
+    language TEXT primary key not null,
     words text not null
 );
 
 create table document (
-    uuid text primary key,
-    corpus_id integer references corpus(corpus_id),
-    ref_id integer,
+    uuid text primary key not null,
+    corpus_id integer not null references corpus(corpus_id),
+    ref_id integer UNIQUE,
     filterd_text text
 );
 

@@ -46,7 +46,7 @@ namespace domain {
         DocumentCollection documents;
 
         bool hasStopWord(const string &word) {
-            return ((word.length() > GREATEST_STEMMED_WORD_LENGHT) || (word.length() < SMALLEST_STEMMED_WORD_LENGHT) || (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION) || is_number(word.c_str()));
+            return ((word.length() > GREATEST_STEMMED_WORD_LENGHT) || (word.length() <= SMALLEST_STEMMED_WORD_LENGHT) || (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION) || is_number(word.c_str()));
         }
 
         bool hasKeyWord(const string &word) {
