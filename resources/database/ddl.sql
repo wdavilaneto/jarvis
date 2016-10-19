@@ -14,49 +14,48 @@ create table neural_network (
     max_epochs integer ,
     epochs_between_reports integer,
     activation_hidden integer REFERENCES activation_function(id) ,
-    activation_output integer  REFERENCES activation_function(id)
+    activation_output integer  REFERENCES activation_function(id) ,
+    trained text
 );
+-- ALTER TABLE neural_network ADD trained text;
 
-ALTER TABLE neural_network ADD trained text;
-
+--drop table corpus;
 create table corpus (
     id integer PRIMARY KEY,
-    name text not null,
+    name text not null unique,
     language TEXT
 );
 
-create table stop_word  (
-    language TEXT primary key,
-    words text not null
+--drop table word;
+create table word (
+    id integer primary key,
+    corpus_id integer references corpus(id),
+    name text not null unique,
+    total integer not null default 0,
+    isStop boolean default false
 );
 
+--drop table document;
 create table document (
-    uuid text primary key,
-    corpus_id integer references corpus(corpus_id),
+    id integer PRIMARY KEY,
+    corpus_id integer references corpus(id),
     ref_id integer,
-    filterd_text text
+    words_json text
 );
 
-create table keyword (
-    stemmed TEXT primary key,
-    language TEXT
-);
-
-create table word_document (
-    uuid text REFERENCES document(uuid),
-    keyword text references keyword(stemmed) ,
-    count integer
-);
-
+--drop table word_document;
+--create table word_document (
+--    id integer PRIMARY KEY,
+--    word_id integer references word(id),
+--    doc_id text REFERENCES document(uuid),
+--    count integer
+--);
+--drop table word_form;
 create table word_form (
-    word text primary key,
-    keyword text references keyword(stemmed)
+    id integer primary key,
+    word_id integer not null references word (id),
+    form text
 );
-
-
-
 
 
 -- TODO STEM tabel and STEMMING TYPES (ADJ (ATION ITY MENT..)...)
-
-commit;
