@@ -26,13 +26,13 @@ create table corpus (
     language TEXT
 );
 
---drop table word;
+drop table word;
 create table word (
     id integer primary key,
     corpus_id integer references corpus(id),
     name text not null unique,
     total integer not null default 0,
-    isStop boolean default false
+    is_stop boolean default false
 );
 
 --drop table document;
