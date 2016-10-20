@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_SUITE(TextProccessTest_suite_1)
         using service::TextService;
 
         TextDocument text;
-        text.text = "este..., deve ?/ou nao deve, nao sei, ser, a priori, ou não '''^. um ; bom / exemplo | de texto tokenizado + de {palavras}, o.00 eco...eco...eco";
+        text.text = "este..., nº - deve ?/ou nao deve, nao sei, ser, a priori, ou não '''^. um ; bom / exemplo | de texto tokenizado + de {palavras}, o.00 eco...eco...eco";
 
         shared_ptr<Corpus> corpus = make_shared<Corpus>();
         TextService textService;

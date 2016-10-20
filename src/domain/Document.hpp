@@ -29,9 +29,17 @@ namespace domain {
 
         Document() = default;
 
+        Document(const Document &other) : uuid(other.uuid), refId(other.refId), original(other.original),
+                                          corpus_id(other.corpus_id) , words(other.words) {
+
+        }
+
+        virtual ~Document() = default;
+
         string uuid;
         size_t refId = 0; // original id (sequence probably)
         std::string original;
+        size_t corpus_id = 0;
         WordCollection words;
 
         bool hasKeyWord(string &word) {
@@ -43,7 +51,7 @@ namespace domain {
             if (!hasKeyWord(word)) {
                 words[word] = 1;
             } else {
-                words[word] = words[word] +1;
+                words[word] = words[word] + 1;
             }
         }
 

@@ -35,9 +35,19 @@ BOOST_AUTO_TEST_SUITE(DocumentRepositorySuite)
         std::vector<TextDocument> result = textRepository.findAll();
         for (TextDocument td : result) {
             shared_ptr <Document> document = textService.toDocument(corpus, td);
-            documentRepository.persist(document);
+            try {
+                //documentRepository.persist(document);
+            } catch (const std::exception& exception){
+                BOOST_LOG_TRIVIAL(info) << "already found values"; // TODO check exception
+            } catch (...){
+                BOOST_LOG_TRIVIAL(info) << "already found values"; // TODO check exception
+            }
+            for (auto word : document->words) {
+                std::cout << word.first << std::endl;
+            }
         }
 
+        auto docs = documentRepository.findAll();
         // TODO plan some testes here
     };
 

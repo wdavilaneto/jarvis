@@ -60,6 +60,18 @@ namespace repository {
         //TODO: Does this need pagination ?? probably yes...
         vector<shared_ptr<KeyWord> > findAll() {
             string query (getConfig().get<string>("findAllKeyword"));
+
+            std::vector<Document> result;
+            Document doc;
+
+            soci::statement st = (session.prepare << getConfig().get<string>("repository.findAllDocuments"), soci::into(doc));
+            st.execute();
+
+            while (st.fetch()) {
+                result.push_back(doc);
+            }
+            return result;
+
         }
     };
 };
