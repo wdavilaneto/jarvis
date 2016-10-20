@@ -26,6 +26,7 @@ create table corpus (
     language TEXT
 );
 
+
 drop table word;
 create table word (
     id integer primary key,
