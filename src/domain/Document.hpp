@@ -65,7 +65,7 @@ namespace domain {
             for (auto each : words) {
                 boost::property_tree::ptree word_node;
                 word_node.put("name", each.first);
-                word_node.put("count", each.second);
+                word_node.put("total", each.second);
                 words_node.push_back(std::make_pair("", word_node));
             }
             out.add_child("words", words_node);

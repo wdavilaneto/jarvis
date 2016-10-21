@@ -32,6 +32,7 @@ namespace core {
 
         virtual ~ApplicationAware() = default;
 
+    protected:
         ptree &getConfig() {
             return config;
         }

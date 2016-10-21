@@ -26,30 +26,44 @@ create table corpus (
     language TEXT
 );
 
-
 drop table word;
 create table word (
     id integer primary key,
-    corpus_id integer references corpus(id),
+    corpus_id integer not null references corpus(id),
     name text not null unique,
     total integer not null default 0,
+    hits_on_documents integer not null default 0,
     is_stop boolean default false
 );
 
---drop table document;
+drop table document;
 create table document (
     id integer PRIMARY KEY,
-    corpus_id integer references corpus(id),
-    ref_id integer,
-    words_json text
+    parent_id integer references document(id),
+    corpus_id integer not null references corpus(id),
+    ref_id integer default 0,
+    words_json text ,
+    last_process_date datetime
 );
+
+create table classifier (
+    id integer primary key,
+    name text not null unique
+);
+
+create table classification (
+    id integer primary key,
+    doc_id integer not null references document(id),
+    classifier_id integer not null references classifier(id),
+    certainty integer
+)
 
 --drop table word_document;
 --create table word_document (
 --    id integer PRIMARY KEY,
 --    word_id integer references word(id),
 --    doc_id text REFERENCES document(uuid),
---    count integer
+--    total integer
 --);
 --drop table word_form;
 create table word_form (

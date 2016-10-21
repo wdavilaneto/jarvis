@@ -21,8 +21,7 @@ namespace domain {
     using boost::shared_ptr;
     using boost::make_shared;
 
-
-    typedef std::unordered_map<string, shared_ptr<KeyWord> > KeyWordCollection;
+    typedef std::unordered_map<string, shared_ptr<Word> > KeyWordCollection;
     typedef std::unordered_map<string, shared_ptr<Document> > DocumentCollection; //(uuid , Document)
     typedef std::set<std::string> StopWordCollection;
 
@@ -35,9 +34,11 @@ namespace domain {
     class Corpus {
     public:
 
-        size_t id;
+        size_t id = 0;
+        size_t totalDocuments = 0;
         string language;
         string name;
+
         // map of unique reference of keywords of all corpus should be always on memory
         KeyWordCollection words;
         // set o all known stop words should be always on memory too
@@ -46,15 +47,15 @@ namespace domain {
         DocumentCollection documents;
 
         bool hasStopWord(const string &word) {
-            return ((word.length() > GREATEST_STEMMED_WORD_LENGHT) || (word.length() <= SMALLEST_STEMMED_WORD_LENGHT) || (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION) || is_number(word.c_str()));
+            return ((word.length() > GREATEST_STEMMED_WORD_LENGHT) || (word.length() <= SMALLEST_STEMMED_WORD_LENGHT) || (stopWords.count(word) > ZERO_OCURRENCY_ON_COLLECTION) ||
+                    is_number(word.c_str()));
         }
 
         bool hasKeyWord(const string &word) {
             return (words.count(word) > ZERO_OCURRENCY_ON_COLLECTION);
         }
 
-        size_t getTotalDocuments(){
-            //return documents.size();
+        size_t getTotalDocuments() {
             return totalDocuments;
         }
 
@@ -80,8 +81,8 @@ namespace domain {
             for (auto each : words) {
                 boost::property_tree::ptree word_node;
                 word_node.put("word.name", each.first);
-                word_node.put("word.count", each.second->count);
-                word_node.put("word.nDocs", each.second->nDocs);
+                word_node.put("word.total", each.second->total);
+                word_node.put("word.nDocs", each.second->hitsOnDocuments);
                 word_node.put("word.tfidf", each.second->tfidf);
                 words_node.push_back(std::make_pair("", word_node));
             }
@@ -98,7 +99,7 @@ namespace domain {
 
     private:
         // Stored total of documents ( redundant with uuid's counts )
-        size_t totalDocuments = 0;
+
 
         bool is_number(const std::string &s) {
             return !s.empty() && std::find_if(s.begin(), s.end(), [](char c) { return !std::isdigit(c); }) == s.end();

@@ -4,6 +4,7 @@
 
 #ifndef JARVIS_TEXTDOCUMENT_HPP
 #define JARVIS_TEXTDOCUMENT_HPP
+
 #include <iostream>
 
 namespace domain {
@@ -15,7 +16,7 @@ namespace domain {
         std::string text;
     };
 
-}
+};
 
 #endif //JARVIS_TEXTDOCUMENT_HPP
 

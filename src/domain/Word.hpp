@@ -14,17 +14,23 @@ namespace domain {
     using boost::shared_ptr;
     using boost::make_shared;
 
+    /**Forward Declaration */
+    class Corpus;
     /**
      * Each Instance of this class should be an Unique instance
      * with it Steemd version as "unique id"
      */
-    class KeyWord {
+    class Word {
     public:
-        string stemmed;
-        string language;
-        size_t count = 0;
-        size_t nDocs = 0;
+        size_t id;
+        string name;
+        size_t total = 0;
+        size_t hitsOnDocuments = 0;
+
+        bool isStop = false;
         double tfidf = 0.0;
+
+        shared_ptr<Corpus> corpus;
 
         bool hasAppereadOnDocument(shared_ptr<Document> d) {
             return docs.count(d->uuid);
@@ -32,7 +38,6 @@ namespace domain {
 
         bool addDocument(shared_ptr<Document> d) {
             docs[d->uuid] = d;
-            nDocs++;
         }
 
     private:

@@ -25,20 +25,11 @@ namespace repository {
 
         virtual ~CorpusRepository() = default;
 
-        shared_ptr<Corpus> get(const string &name) {
-
-            string stop_words;
+        shared_ptr<Corpus> get(const size_t &id) {
             shared_ptr<Corpus> corpus = make_shared<Corpus>();
-            string query = getConfig().get<string>("repository.getCorpus", "");
-
-            session << query, soci::into(corpus->id), soci::into(corpus->name), soci::into(corpus->language), soci::into(stop_words), use(name);
+            session << getConfig().get<string>("repository.getCorpus"), soci::into(*corpus), use(id);
             if (!session.got_data()) {
                 return shared_ptr<Corpus>(nullptr);
-            }
-
-            boost::tokenizer<> tokenizer(stop_words);
-            for (auto word : tokenizer) {
-                corpus->stopWords.insert(word);
             }
             return corpus;
         };

@@ -7,7 +7,7 @@
 
 #include <domain.hpp>
 #include <repository/BaseRepository.hpp>
-#include <repository/Page.hpp>
+#include <repository/pagination/Page.hpp>
 #include <repository/DocumentRepository.hpp>
 
 namespace soci {

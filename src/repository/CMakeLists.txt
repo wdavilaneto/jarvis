@@ -8,7 +8,7 @@ find_library(soci_sqlite static)
 
 #set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
-add_library(repository ${CORE} ${DOMAIN} StopWordRepository.hpp CorpusRepository.hpp TextRepository.hpp)
+add_library(repository ${CORE} ${DOMAIN} CorpusRepository.hpp TextRepository.hpp)
 
 target_link_libraries(repository
         soci_core

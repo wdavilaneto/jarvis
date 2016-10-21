@@ -16,15 +16,6 @@ target_link_libraries(
         ${Boost_LIBRARIES}
 )
 
-add_executable(StopWordRepositoryTest StopWordRepositoryTest.cpp)
-target_link_libraries(
-        StopWordRepositoryTest
-        soci_core
-        soci_sqlite3
-        pthread
-        ${Boost_LIBRARIES}
-)
-
 add_executable(DocumentRepositoryTest DocumentRepositoryTest.cpp)
 target_link_libraries(
         DocumentRepositoryTest
@@ -34,10 +25,9 @@ target_link_libraries(
         ${Boost_LIBRARIES}
 )
 
-
-add_executable(KeywordRepositoryTest KeywordRepositoryTest.cpp)
+add_executable(WordRepositoryTest WordRepositoryTest.cpp)
 target_link_libraries(
-        KeywordRepositoryTest
+        WordRepositoryTest
         soci_core
         soci_sqlite3
         pthread

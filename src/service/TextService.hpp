@@ -96,7 +96,7 @@ namespace service {
         void proccessWord(shared_ptr<Corpus> corpus, shared_ptr<Document> document, const string &word) {
 
             string stemmedWord = getStemmedWord(word);
-            shared_ptr<KeyWord> keyword(nullptr);
+            shared_ptr<Word> keyword(nullptr);
 
             if (!document->hasKeyWord(stemmedWord)) {
             }
@@ -105,8 +105,8 @@ namespace service {
             // key word with initial values
             if (!corpus->hasKeyWord(stemmedWord)) {
                 { // TODO synzchroneize this area...
-                    keyword = make_shared<KeyWord>();
-                    keyword->stemmed = stemmedWord;
+                    keyword = make_shared<Word>();
+                    keyword->name = stemmedWord;
                     keyword->nDocs = 1;
                     keyword->tfidf = log(corpus->getTotalDocuments() / (1));
                     corpus->words[stemmedWord] = keyword;
@@ -117,18 +117,18 @@ namespace service {
             }
 
             // if this is the first appearence on document ?
-            if (document->words.count(keyword->stemmed) == 0) {
-                document->words[keyword->stemmed] = 1; // set value on document  to first appearance
+            if (document->words.count(keyword->name) == 0) {
+                document->words[keyword->name] = 1; // set value on document  to first appearance
                 keyword->nDocs += 1;// add to corpus contabilization of an new first appearance on document
             } else {
-                document->words[keyword->stemmed] += 1;
+                document->words[keyword->name] += 1;
             }
         };
 
-        shared_ptr<KeyWord> getKeyWordFromCorpus(shared_ptr<Corpus> corpus, string &word) {
+        shared_ptr<Word> getKeyWordFromCorpus(shared_ptr<Corpus> corpus, string &word) {
 
             // result key word (remeber each keyword should be unique*  )
-            shared_ptr<KeyWord> keyword(nullptr);
+            shared_ptr<Word> keyword(nullptr);
 
             // already has an occurency of this word on the corpus return it
             if (corpus->words.count(word)) {
