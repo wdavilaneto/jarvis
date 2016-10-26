@@ -107,8 +107,8 @@ namespace service {
                 { // TODO synzchroneize this area...
                     keyword = make_shared<Word>();
                     keyword->name = stemmedWord;
-                    keyword->nDocs = 1;
-                    keyword->tfidf = log(corpus->getTotalDocuments() / (1));
+                    keyword->hitsOnDocuments = 1;
+                    keyword->tfidf = log(corpus->totalDocuments / (1));
                     corpus->words[stemmedWord] = keyword;
                 }
             } else {
@@ -119,7 +119,7 @@ namespace service {
             // if this is the first appearence on document ?
             if (document->words.count(keyword->name) == 0) {
                 document->words[keyword->name] = 1; // set value on document  to first appearance
-                keyword->nDocs += 1;// add to corpus contabilization of an new first appearance on document
+                keyword->hitsOnDocuments += 1;// add to corpus contabilization of an new first appearance on document
             } else {
                 document->words[keyword->name] += 1;
             }

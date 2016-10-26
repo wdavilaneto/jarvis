@@ -9,6 +9,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/log/trivial.hpp>
+#include <boost/exception/all.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 
 #define USE_SHARED_PTR using boost::shared_ptr; \

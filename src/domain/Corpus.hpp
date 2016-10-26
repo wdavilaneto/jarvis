@@ -55,14 +55,6 @@ namespace domain {
             return (words.count(word) > ZERO_OCURRENCY_ON_COLLECTION);
         }
 
-        size_t getTotalDocuments() {
-            return totalDocuments;
-        }
-
-        bool hasDocument(const Document &document) {
-            return (documents.count(document.uuid));
-        }
-
         void addDocument(shared_ptr<Document> document) {
             // FIXME TODO this should be Threadsafe (atomic)
             totalDocuments++;

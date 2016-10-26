@@ -17,7 +17,7 @@ namespace repository {
 
         BaseRepository() {
             session.open(getConfig().get<string>("database.dbname"), getConfig().get<string>("database.connection"));
-            //session.set_log_stream(&std::cout);
+            session.set_log_stream(&std::cout);
         };
 
         virtual ~BaseRepository() {
